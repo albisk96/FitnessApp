@@ -5,43 +5,38 @@ const { check, validationResult } = require('express-validator');
 // bring in normalize to give us a proper url, regardless of what user entered
 const normalize = require('normalize-url');
 
-const Profile = require('../../models/Profile');
+const Coach = require('../../models/Coach');
 const User = require('../../models/User');
-const Post = require('../../models/Post');
+const Workout = require('../../models/Workout');
 
-// @route    GET api/profile/me
-// @desc     Get current users profile
+// @route    GET api/coach/me
+// @desc     Get current users coach
 // @access   Private
 router.get('/me', auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({
-      user: req.user.id
-    });
+    const coach = await Coach.findOne({user: req.user.id}).populate('user');
 
-    if (!profile) {
-      return res.status(400).json({ msg: 'There is no profile for this user' });
+    if (!coach) {
+      return res.status(400).json({ msg: 'There is no coach for this user' });
     }
 
-    // only populate from user document if profile exists
-    res.json(profile.populate('user', ['name', 'avatar']));
+    // only populate from user document if coach exists
+    res.json(coach);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route    POST api/profile
-// @desc     Create or update user profile
+// @route    POST api/coach
+// @desc     Create or update user coach
 // @access   Private
 router.post(
   '/',
   [
     auth,
     [
-      check('status', 'Status is required')
-        .not()
-        .isEmpty(),
-      check('skills', 'Skills is required')
+      check('bio', 'Bio is required')
         .not()
         .isEmpty()
     ]
@@ -52,48 +47,43 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     const {
-      company,
-      location,
+      city,
       website,
       bio,
-      skills,
-      status,
+      DOB,
       youtube,
       twitter,
       instagram,
-      linkedin,
       facebook
     } = req.body;
 
-    const profileFields = {
+    const coachFields = {
       user: req.user.id,
-      company,
-      location,
+      name: req.user.name,
+      email: req.user.email,
+      DOB,
+      city,
       website: website === '' ? '' : normalize(website, { forceHttps: true }),
-      bio,
-      skills: Array.isArray(skills)
-        ? skills
-        : skills.split(',').map(skill => ' ' + skill.trim()),
-      status
+      bio
     };
 
-    // Build social object and add to profileFields
-    const socialfields = { youtube, twitter, instagram, linkedin, facebook };
+    // Build social object and add to coachFields
+    const socialfields = { youtube, twitter, instagram, facebook };
 
     for (const [key, value] of Object.entries(socialfields)) {
-      if (value.length > 0)
+      if (value)
         socialfields[key] = normalize(value, { forceHttps: true });
     }
-    profileFields.social = socialfields;
+    coachFields.social = socialfields;
 
     try {
       // Using upsert option (creates new doc if no match is found):
-      let profile = await Profile.findOneAndUpdate(
+      let coach = await Coach.findOneAndUpdate(
         { user: req.user.id },
-        { $set: profileFields },
+        { $set: coachFields },
         { new: true, upsert: true }
       );
-      res.json(profile);
+      res.json(coach);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -101,49 +91,49 @@ router.post(
   }
 );
 
-// @route    GET api/profile
-// @desc     Get all profiles
+// @route    GET api/coach
+// @desc     Get all coachs
 // @access   Public
 router.get('/', async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
-    res.json(profiles);
+    const coachs = await Coach.find().populate('user', ['name', 'avatar', 'email']);
+    res.json(coachs);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route    GET api/profile/user/:user_id
-// @desc     Get profile by user ID
+// @route    GET api/coach/user/:user_id
+// @desc     Get coach by user ID
 // @access   Public
 router.get('/user/:user_id', async (req, res) => {
   try {
-    const profile = await Profile.findOne({
+    const coach = await Coach.findOne({
       user: req.params.user_id
     }).populate('user', ['name', 'avatar']);
 
-    if (!profile) return res.status(400).json({ msg: 'Profile not found' });
+    if (!coach) return res.status(400).json({ msg: 'coach not found' });
 
-    res.json(profile);
+    res.json(coach);
   } catch (err) {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
-      return res.status(400).json({ msg: 'Profile not found' });
+      return res.status(400).json({ msg: 'coach not found' });
     }
     res.status(500).send('Server Error');
   }
 });
 
-// @route    DELETE api/profile
-// @desc     Delete profile, user & posts
+// @route    DELETE api/coach
+// @desc     Delete coach, user & workouts
 // @access   Private
 router.delete('/', auth, async (req, res) => {
   try {
-    // Remove user posts
-    await Post.deleteMany({ user: req.user.id });
-    // Remove profile
-    await Profile.findOneAndRemove({ user: req.user.id });
+    // Remove user workouts
+    await Workout.deleteMany({ user: req.user.id });
+    // Remove coach
+    await Coach.findOneAndRemove({ user: req.user.id });
     // Remove user
     await User.findOneAndRemove({ _id: req.user.id });
 
@@ -154,24 +144,17 @@ router.delete('/', auth, async (req, res) => {
   }
 });
 
-// @route    PUT api/profile/experience
-// @desc     Add profile experience
+// @route    PUT api/coach/achievements
+// @desc     Add coach achievements
 // @access   Private
 router.put(
-  '/experience',
+  '/achievements',
   [
     auth,
     [
       check('title', 'Title is required')
         .not()
-        .isEmpty(),
-      check('company', 'Company is required')
-        .not()
-        .isEmpty(),
-      check('from', 'From date is required and needs to be from the past')
-        .not()
         .isEmpty()
-        .custom((value, { req }) => (req.body.to ? value < req.body.to : true))
     ]
   ],
   async (req, res) => {
@@ -182,32 +165,22 @@ router.put(
 
     const {
       title,
-      company,
-      location,
-      from,
-      to,
-      current,
-      description
+      date
     } = req.body;
 
-    const newExp = {
+    const newAch = {
       title,
-      company,
-      location,
-      from,
-      to,
-      current,
-      description
+      date
     };
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id });
+      const coach = await Coach.findOne({ user: req.user.id });
 
-      profile.experience.unshift(newExp);
+      coach.achievements.unshift(newAch);
 
-      await profile.save();
+      await coach.save();
 
-      res.json(profile);
+      res.json(coach);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -215,28 +188,28 @@ router.put(
   }
 );
 
-// @route    DELETE api/profile/experience/:exp_id
-// @desc     Delete experience from profile
+// @route    DELETE api/coach/achievements/:ach_id
+// @desc     Delete achievements from coach
 // @access   Private
 
-router.delete('/experience/:exp_id', auth, async (req, res) => {
+router.delete('/achievements/:ach_id', auth, async (req, res) => {
   try {
-    const foundProfile = await Profile.findOne({ user: req.user.id });
+    const foundCoach = await Coach.findOne({ user: req.user.id });
 
-    foundProfile.experience = foundProfile.experience.filter(
-      exp => exp._id.toString() !== req.params.exp_id
+    foundCoach.achievements = foundCoach.achievements.filter(
+      ach => ach._id.toString() !== req.params.ach_id
     );
 
-    await foundProfile.save();
-    return res.status(200).json(foundProfile);
+    await foundCoach.save();
+    return res.status(200).json(foundCoach);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: 'Server error' });
   }
 });
 
-// @route    PUT api/profile/education
-// @desc     Add profile education
+// @route    PUT api/coach/education
+// @desc     Add coach education
 // @access   Private
 router.put(
   '/education',
@@ -285,13 +258,13 @@ router.put(
     };
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id });
+      const coach = await Coach.findOne({ user: req.user.id });
 
-      profile.education.unshift(newEdu);
+      coach.education.unshift(newEdu);
 
-      await profile.save();
+      await coach.save();
 
-      res.json(profile);
+      res.json(coach);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -299,18 +272,18 @@ router.put(
   }
 );
 
-// @route    DELETE api/profile/education/:edu_id
-// @desc     Delete education from profile
+// @route    DELETE api/coach/education/:edu_id
+// @desc     Delete education from coach
 // @access   Private
 
 router.delete('/education/:edu_id', auth, async (req, res) => {
   try {
-    const foundProfile = await Profile.findOne({ user: req.user.id });
-    foundProfile.education = foundProfile.education.filter(
+    const foundCoach = await Coach.findOne({ user: req.user.id });
+    foundCoach.education = foundCoach.education.filter(
       edu => edu._id.toString() !== req.params.edu_id
     );
-    await foundProfile.save();
-    return res.status(200).json(foundProfile);
+    await foundCoach.save();
+    return res.status(200).json(foundCoach);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: 'Server error' });

@@ -145,7 +145,9 @@ router.put(
     };
 
     try {
-      await User.findOneAndUpdate({_id:req.params.id}, {...newUser});
+      await User.findOneAndUpdate(
+        {_id: req.params.id}, 
+        {...newUser});
       res.sendStatus(204);
     } catch (err) {
       console.error(err.message);
