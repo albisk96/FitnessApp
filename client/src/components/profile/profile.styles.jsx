@@ -50,3 +50,10 @@ export const ProfileInfoContainer = styled(Jumbotron)`
 export const Line = styled.hr`
     width: 50%;
 `;
+
+export const PortfolioContainer = styled.div`
+    justify-content: space-between;
+    margin: 0 40%;
+    display: flex;
+    
+`

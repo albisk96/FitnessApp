@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import FormInput from '../form/form-input.component';
+import { Form } from 'react-bootstrap';
 import { useAuth } from '../../contexts';
 
 const Register = ({ id }) => {
@@ -18,7 +19,6 @@ const Register = ({ id }) => {
         axios.get(`/api/users/${id}`)
         .then(
             res => {
-                console.log(res.data)
                 setEmail(res.data.email)
                 setName(res.data.name)
                 setRole(res.data.role)
@@ -36,20 +36,19 @@ const Register = ({ id }) => {
   function createUser(e){
     e.preventDefault();
     if(password !== password2){
-      window.alert('Password do not match')
+      //window.alert('Password do not match')
+      console.log(role)
     } else {
       axios.post('/api/users', {email, password, name, role}).then(
         res => {
-          console.log(res.data)
           createSession(res.data)
+          console.log(role);
         }
       )
     }
   }
     
-
   function updateUser(e){
-      console.log(id)
     e.preventDefault();
     axios.put(`/api/users/${id}`, {email, name, role}).then(
         res => {
@@ -119,6 +118,19 @@ const Register = ({ id }) => {
       label='Confirm Password'
       required
     />
+    <hr />
+    <FormInput 
+        label="Whats is your main goal?"
+        type="role" 
+        as='select' 
+        name="role" 
+        value={role} 
+        onChange={e => setRole(e.target.value)}
+    >
+        <option value="user">To get fit</option>
+        <option value="coach">To help others</option>
+    </FormInput>
+    <br />
     <button onClick={e => createUser(e)} type="submit" className="btn btn-primary">Submit</button> 
     </Fragment>
     ) :

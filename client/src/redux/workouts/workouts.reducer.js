@@ -1,46 +1,44 @@
 import WorkoutsActionTypes from './workouts.types';
 
 const INITIAL_STATE = {
-    workout: [],
-    isFetching: false,
+    workouts: [],
+    workout: null,
+    loading: true,
     errorMessage: undefined,
 }
 
 const workoutsReducer = ( state = INITIAL_STATE, action) => {
-    switch(action.type){
-        case WorkoutsActionTypes.GET_WORKOUTS_START:
-            return {
-                ...state,
-                isFetching: true,
-            }
+    const { type, payload } = action;
+    switch(type){
         case WorkoutsActionTypes.GET_WORKOUTS_SUCCESS:
             return {
                 ...state,
-                workout: action.payload,
-                isFetching: false,
+                workouts: payload,
+                loading: false,
             }
-        case WorkoutsActionTypes.GET_WORKOUTS_FAILURE:
+        case WorkoutsActionTypes.GET_WORKOUT_SUCCESS:
             return {
                 ...state,
-                isFetching: false,
-                errorMessage: action.payload,
-            }
-        case WorkoutsActionTypes.POST_WORKOUTS_START:
-            return {
-                ...state,
-                isFetching: true,
+                workout: payload,
+                loading: false,
             }
         case WorkoutsActionTypes.POST_WORKOUTS_SUCCESS:
             return {
                 ...state,
-                workout: action.payload,
-                isFetching: false,
+                workouts: [payload, ...state.workouts],
+                loading: false,
             }
-        case WorkoutsActionTypes.POST_WORKOUTS_FAILURE:
+        case WorkoutsActionTypes.DELETE_WORKOUT_SUCESS:
             return {
                 ...state,
-                isFetching: false,
-                errorMessage: action.payload,
+                workouts: state.workouts.filter(workout => workout._id !== payload),
+                loading: false
+            };
+        case WorkoutsActionTypes.WORKOUTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                errorMessage: payload,
             }
         default:
             return state

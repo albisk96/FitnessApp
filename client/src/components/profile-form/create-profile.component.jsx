@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form/form-input.component';
-import { createProfile } from '../../redux/profile/profile.actions';
+import { createProfile } from '../../redux/profile/api';
+import { FormContainer, SubmitButton, Center, JumboContainer } from './profile-form.styles';
 
 const CreateMyProfile = ({ createProfile }) => {
     const [formData, setFormData] = useState({
@@ -29,19 +30,19 @@ const CreateMyProfile = ({ createProfile }) => {
 
       const onSubmit = e => {
         e.preventDefault();
-        console.log(formData);
         createProfile(formData);
         window.location.reload();
       };
 
   return (
-    <form onSubmit={onSubmit}>
+    <JumboContainer>
+    <FormContainer onSubmit={onSubmit}>
         <FormInput
             name='location'
             type='text'
             handleChange={onChange}
             value={location}
-            label='Location'
+            label='City'
             required
         />
         <FormInput
@@ -92,8 +93,11 @@ const CreateMyProfile = ({ createProfile }) => {
             label='Facebook'
             required
         /> 
-        <button type="submit" className="btn btn-primary">Submit</button> 
-  </form>
+        <Center>
+        <SubmitButton type="submit">Next</SubmitButton>
+        </Center>
+  </FormContainer>
+  </JumboContainer>
     );
 }
 

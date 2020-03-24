@@ -1,28 +1,34 @@
-import React, { Fragment } from 'react';
-import StripeCheckoutButton from '../stripe-button/stripe-button.component';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectWorkout } from '../../redux/workouts/workouts.selectors';
-import AddWorkout from './add-workout.component';
+import Spinner from '../spinner/spinner.component';
 import { useAuth } from '../../contexts';
-import Card from '../cards/card.component';
+import WorkoutCard from '../cards/workout-card.component';
+import { fetchWorkoutData } from '../../redux/workouts/workouts.action';
+import { CardColumnsContainer } from './workouts.styles';
 
-const WorkoutList = ({ workouts }) => {
-const { session } = useAuth();
-
+const WorkoutList = ({ workout: {workouts} }) => {
+  console.log(workouts)
   return (
     <div className='container'>
       <div style={{ marginTop: '5%'}}>
-      <AddWorkout className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Create a workout" buttonName="Add New" />
+      { 
+        <CardColumnsContainer>
+          {workouts.map((workout, index) => (
+            <WorkoutCard key={index} workout={workout} />
+          ))}
+          </CardColumnsContainer>
+      }
       </div>
-      <Card workouts={workouts} />
     </div>
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    workouts: selectWorkout
-  });
+const mapStateToProps = state => ({
+  workout: state.workout
+});
+
 
 
 export default connect(mapStateToProps)(WorkoutList);

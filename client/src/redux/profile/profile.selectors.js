@@ -4,5 +4,5 @@ const selectProfile = state => state.profile;
 
 export const selectProfilesIsFetching = createSelector(
     [selectProfile],
-    profile => profile.isLoading,
+    profile => profile.loading,
 );

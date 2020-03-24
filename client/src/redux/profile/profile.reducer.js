@@ -1,25 +1,41 @@
 import ProfileActionTypes from './profile.types';
 
 const INITIAL_STATE = {
-    profile: null,
+	profile: null,
     profiles: [],
-    isLoading: true,
-    error: {}
+	loading: true,
+	errorMessage: undefined,
 }
 
 const profileReducer = ( state = INITIAL_STATE, action) => {
-    switch(action.type){
+    const { type, payload } = action;
+
+    switch(type){
+        case ProfileActionTypes.UPDATE_PROFILE_SUCCESS:
         case ProfileActionTypes.GET_PROFILE_SUCCESS:
             return {
                 ...state,
-                profile: action.payload,
-                isLoading: false
+                profile: payload,
+                loading: false
             }
-        case ProfileActionTypes.GET_PROFILE_FAILURE:
+        case ProfileActionTypes.GET_PROFILES_SUCCESS:
             return {
                 ...state,
-                error: action.payload,
-                isLoading: false
+                profiles: payload,
+                loading: false
+            }
+        case ProfileActionTypes.GET_PROFILE_ERROR:
+            return {
+                ...state,
+                errorMessage: payload,
+                loading: false,
+                profile: null
+            }
+        case ProfileActionTypes.CLEAR_PROFILE_SUCCESS:
+            return {
+                ...state,
+                profile: null,
+                loading: false
             }
         default:
             return state

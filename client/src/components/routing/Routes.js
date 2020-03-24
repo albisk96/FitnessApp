@@ -1,23 +1,27 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import UserPage from '../../pages/user/user.component';
-import CoachPage from '../../pages/coach/coach.component';
+import CoachPage from '../../pages/coach/coach.page';
 import ProtectedRoutes from './ProtectedRoutes';
 import AdminPage from '../../pages/admin/admin.component.';
 import Workout from '../../pages/user/workout/workouts.page';
 import AddWorkout from '../workouts/add-workout.component';
-import CreateProfile from '../../pages/profile/profile.page';
+import MyProfile from '../../pages/profile/profile.page';
+import CoachProfile from '../../components/coaches/coach-profile.component';
 
 const Routes = () => {
 
     const routes = [
         { path: "/admin", component: AdminPage, exact: true, role: "admin"},
-        { path: "/coach", component: CoachPage, exact: true, role: "coach"},
         { path: "/user", component: UserPage, exact: true, role: "user"},
         { path: "/workouts", component: Workout, exact: true, role: "user"},
         { path: "/workouts", component: Workout, exact: true, role: "coach"},
         { path: "/workouts/create", component: AddWorkout, exact: true, role: "coach"},
-        { path: "/profile/create", component: CreateProfile, exact: true, role: "coach"},
+        { path: "/profile", component: MyProfile, exact: true, role: "coach"},
+        { path: "/coach", component: CoachPage, exact: true, role: "user"},
+        { path: "/coach", component: CoachPage, exact: true, role: "coach"},
+        { path: "/coach/user/:id", component: CoachProfile, exact: true, role:"coach"},
+        { path: "/coach/user/:id", component: CoachProfile, exact: true, role:"user"},
       ]
 
   return (

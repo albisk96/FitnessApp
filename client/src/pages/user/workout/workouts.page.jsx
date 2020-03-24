@@ -1,8 +1,7 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchWorkoutData } from '../../../redux/workouts/workouts.actions';
+import { fetchWorkoutData } from '../../../redux/workouts/workouts.action';
 
 import Spinner from '../../../components/spinner/spinner.component';
 
@@ -18,11 +17,7 @@ export const WorkoutsPage = ({ fetchWorkoutData, match }) => {
   console.log(match);
   return (
     <Suspense fallback={<Spinner />}>
-    <Route
-        exact
-        path={`${match.path}`}
-        component={WorkoutsListContainer}
-      />
+      <WorkoutsListContainer />
   </Suspense>
   );
 };

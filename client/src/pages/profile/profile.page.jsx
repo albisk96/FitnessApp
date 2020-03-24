@@ -1,7 +1,7 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { connect } from 'react-redux'
-import { getCurrentProfile } from '../../redux/profile/profile.actions'
-import { fetchWorkoutData } from '../../redux/workouts/workouts.actions'
+import { getCurrentProfile } from '../../redux/profile/api'
+import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
 import Spinner from '../../components/spinner/spinner.component'
 
 const ProfilePageContainer = lazy(() =>

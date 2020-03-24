@@ -92,12 +92,12 @@ router.post(
 );
 
 // @route    GET api/coach
-// @desc     Get all coachs
+// @desc     Get all coaches
 // @access   Public
 router.get('/', async (req, res) => {
   try {
-    const coachs = await Coach.find().populate('user', ['name', 'avatar', 'email']);
-    res.json(coachs);
+    const coaches = await Coach.find().populate('user', ['name', 'avatar', 'email']);
+    res.json(coaches);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

@@ -5,16 +5,16 @@ import { selectProfilesIsFetching } from '../../redux/profile/profile.selectors'
 
 import WithSpinner from '../with-spinner/with-spinner.component';
 
-import ProfileOverview from './profile.component';
+import CoachesList from './coaches-list.component';
 
 const mapStateToProps = createStructuredSelector({
     loading: selectProfilesIsFetching,
 });
 
 
-const ProfilePageContainer = compose (
+const CoachesPageContainer = compose (
     connect(mapStateToProps),
     WithSpinner
-)(ProfileOverview)
+)(CoachesList)
 
-export default ProfilePageContainer;
+export default CoachesPageContainer;

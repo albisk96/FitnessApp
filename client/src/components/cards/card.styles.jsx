@@ -3,11 +3,10 @@ import { CardColumns, Card } from 'react-bootstrap';
 
 export const CardColumnsContainer = styled(CardColumns)`
     margin-top: 10%;
-    padding-bottom: 50px;
 `;
 
 export const CardContainer = styled(Card)`
-    padding-bottom: 50px;
+    padding-bottom: 70px;
 `;
 
 export const CardImage = styled(Card.Img)`
@@ -15,7 +14,6 @@ export const CardImage = styled(Card.Img)`
 `;
 
 export const CardBody = styled(Card.Body)`
-    height: 15vh;
 `;
 
 export const CardFooter = styled(Card.Footer)`
@@ -23,3 +21,7 @@ export const CardFooter = styled(Card.Footer)`
     bottom: 0;
     width: 100%;
 `;
+
+export const CardHeader = styled(Card.Header)`
+    
+`

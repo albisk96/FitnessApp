@@ -17,9 +17,9 @@ const NavBar = () => {
 
     const CoachLinks = (
         <Nav className="mr-auto">
-            <LinkNav to='/profile/create'>Profile</LinkNav>
-            <Nav.Link href="#link">Calendar</Nav.Link>
-            <LinkNav to='/workouts'>My Workouts</LinkNav>
+            <LinkNav to='/profile'>Profile</LinkNav>
+            <LinkNav to='/coach'>Coaches</LinkNav>
+            <LinkNav to='/workouts'>Workouts</LinkNav>
             <button className="btn btn-outline-danger my-2 my-sm-0" onClick={removeSession} type="submit">Logout</button>
         </Nav>
     )
@@ -41,7 +41,7 @@ const NavBar = () => {
 
     const GuestLinks = (
         <Nav className="mr-auto">
-            <AddUser className="btn btn-outline-danger my-2 my-sm-0 mr-3" modalTitle="Register" buttonName="Register" />
+            <AddUser className="btn btn-outline-danger my-2 my-sm-0 mr-3" modalTitle="Create Account" buttonName="Register" />
             <button className="btn btn-outline-success my-2 my-sm-0 mr-3" onClick={(e) => handleShow(e)}>Login</button>
         </Nav>
     )

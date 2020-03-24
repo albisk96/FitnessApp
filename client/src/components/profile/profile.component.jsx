@@ -1,62 +1,87 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import ProfileForm from '../profile-form/create-profile.component';
 import { connect } from 'react-redux';
-import Experience from './experience/experience.component';
+import Education from './education-and-achievements/education.component';
+import Achievements from './education-and-achievements/achievements.component';
 import Information from './information/information.component';
-import Card from '../cards/card.component';
-import {JumboContainer, Avatar, Center, ProfileInfoContainer, Line } from './profile.styles.jsx'
+import MyWorkoutList from '../../components/workouts/profile-workout.component';
+import UpdateEducationForm from '../profile-form/update-education.component';
+import UpdateAchievementsForm from '../profile-form/update-achievements.component';
+import IconButton from '../icon-button/icon.component';
+import ProfileAvatar from './avatar/avatar.component';
+import AddWorkout from '../workouts/add-workout.component';
+import { Center, ProfileInfoContainer, Line, PortfolioContainer } from './profile.styles.jsx'
 import { useAuth } from '../../contexts';
 
-const Profile = ({ profile: { profile }, workouts }) => {
+const Profile = ({ profile: { profile }, workout: {workouts} }) => {
     const { session } = useAuth();
-
-    const myWorkouts = workouts.workout.filter(x => x.user === session.id)
-
+    
+    const myProfile = (
+        <Fragment>
+        <Center style={{marginBottom: "2%"}}>
+        <p>Update your portfolio</p>
+        </Center>
+        <PortfolioContainer>
+            <IconButton modalTitle="Update Education" iconName="fas fa-graduation-cap" componentInModal={<UpdateEducationForm education={profile.education} />} />
+            <IconButton modalTitle="Update Achievements" iconName="fas fa-trophy" componentInModal={<UpdateAchievementsForm achievements={profile.achievements} />} />
+        </PortfolioContainer>      
+        <Line />    
+        </Fragment>
+    );
+    const myWorkouts = workouts.filter(x => x.user === session.id)
+    const profileWorkouts = workouts.filter(x => x.user === profile.user._id)
     return(
         <div>
             {profile ? 
             <Fragment>
             <div>
-                <JumboContainer>
-                    <Center>
-                        <Avatar alt="" src={`https://picsum.photos/id/${Math.floor((Math.random() * 100) + 1)}/300/200`} />
-                    </Center>
-                </JumboContainer>
+                <ProfileAvatar profile={profile} />
             </div>
             <div className="container">
-                <ProfileInfoContainer>
+            <ProfileInfoContainer>
+                { profile.user._id === session.id ? myProfile : '' }
                     <Center>
                         <Information user={profile.user}/>
                     </Center>
                     <Center style={{ marginBottom: '5%', marginTop: '5%'}}>
-                        <h3>Experience</h3>
-                        <Line />
-                    </Center>
-                    <Experience />
-                    <Center style={{ marginBottom: '5%', marginTop: '5%'}}>
                         <h3>Education</h3>
                         <Line />
                     </Center>
-                    <Experience />
+                    { profile.education !== null ? <Education education={profile.education} /> : <center>You need to update your education profile</center>}
+                    <Center style={{ marginBottom: '5%', marginTop: '5%'}}>
+                        <h3>Achievements</h3>
+                        <Line />
+                    </Center>
+                    { profile.achievements !== null ? <Achievements achievements={profile.achievements} /> : <center>You need to update your achievements profile</center>}
                     <Center style={{ marginBottom: '5%', marginTop: '5%'}}>
                         <h3>Workouts</h3>
                         <Line />
-                        {myWorkouts ? 
-                            <Card workouts={myWorkouts} /> :
-                            <h3>You dont have any workouts</h3>
+                        { profile.user._id === session.id ? 
+                            <Fragment>
+                                <AddWorkout className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Create a workout" buttonName="Add New" /> 
+                                <MyWorkoutList workouts={myWorkouts} />
+                            </Fragment>
+                            : <MyWorkoutList workouts={profileWorkouts} />
                         }
-                        
+                         
                     </Center>
                 </ProfileInfoContainer>
             </div>
-            </Fragment> : <ProfileForm />}
+            </Fragment> : 
+            <div className="container" style={{ marginTop: '3%'}}>
+                <Center>
+                    <h3>Please, create your Coach profile!</h3>
+                </Center>
+                <ProfileForm />
+            </div>
+        }
         </div>
     )
 }
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    workouts: state.workouts
+    workout: state.workout
 });
 
 export default connect(mapStateToProps)(Profile);

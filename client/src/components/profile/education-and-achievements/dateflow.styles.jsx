@@ -113,3 +113,11 @@ export const ContentContainer = styled.div`
     position: relative;
     border-radius: 6px;
 `;
+
+export const BigText = styled.h3`
+    font-size: 2vw;
+
+    @media screen and (max-width: 1200px) {
+        display: grid;
+    }
+`;

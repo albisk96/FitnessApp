@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
-const selectWorkouts = state => state.workouts;
+const selectWorkouts = state => state.workout;
 
 export const selectWorkout = createSelector(
     [selectWorkouts],
-    workouts => workouts.workout
+    workout => workout.workouts
 );
 
 export const selectWorkoutsIsFetching = createSelector(
     [selectWorkouts],
-    workouts => workouts.isLoading,
+    workout => workout.loading,
 );

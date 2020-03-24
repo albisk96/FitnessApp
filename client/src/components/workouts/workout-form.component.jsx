@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form/form-input.component';
-import { createWorkout } from '../../redux/workouts/workouts.actions';
+import { createWorkout } from '../../redux/workouts/workouts.action';
 
 const AddWorkoutForm = ({ createWorkout }) => {
     const [formData, setFormData] = useState({

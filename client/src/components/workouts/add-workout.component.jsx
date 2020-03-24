@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AddWorkoutData from './workout-form.component';
 import Modal from '../modal/modal.component';
-import { fetchWorkoutData } from '../../redux/workouts/workouts.actions';
 
 const AddWorkout = ({ buttonName, className, modalTitle }) => {
 
