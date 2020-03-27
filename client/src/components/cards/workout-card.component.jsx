@@ -1,8 +1,19 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import WorkoutModal from '../workouts/workout-modal.component';
+import StripeCheckoutButton from '../stripe-button/stripe-button.component';
+import { Button } from 'react-bootstrap';
+import { useAuth } from '../../contexts';
+import { deleteWorkout } from '../../redux/workouts/workouts.action';
 import { CardContainer, CardImage, CardBody, CardFooter, CardHeader } from './card.styles';
 
-const WorkoutCard = ({ workout }) => {
+const WorkoutCard = ({ deleteWorkout, workout }) => {
+  const { session } = useAuth();
+
+  const mySession = ( session.id === workout.user ) 
+
+  const myCard = !mySession ? <StripeCheckoutButton id={workout._id} price={workout.price} /> : <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button>
+
   return(
         <CardContainer>
         <CardHeader>Featured</CardHeader>
@@ -13,10 +24,9 @@ const WorkoutCard = ({ workout }) => {
           </CardBody>
           <CardFooter>
             {workout.entries > 0 ? 
-              <div style={{ display: 'flex'}}>
+              <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                 <WorkoutModal workout={workout}/>
-              {//<StripeCheckoutButton id={workout._id} price='14.99' />
-              }
+                { myCard }
               </div> :
               <button className="btn btn-outline-danger float-left" disabled>
                   Sold Out
@@ -27,4 +37,4 @@ const WorkoutCard = ({ workout }) => {
   )
 }
 
-export default WorkoutCard;
+export default connect(null, {deleteWorkout})(WorkoutCard);

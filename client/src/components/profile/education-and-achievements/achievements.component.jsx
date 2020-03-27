@@ -1,6 +1,5 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Moment from 'react-moment';
-import { Badge } from 'react-bootstrap'
 import { TimeLineContainer, Container, LeftContainer, RightContainer, ContentContainer, BigText } from './dateflow.styles.jsx'
 import { connect } from 'react-redux';
 import { deleteAchievements } from '../../../redux/profile/api';

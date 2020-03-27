@@ -15,7 +15,6 @@ export function getCurrentProfile() {
 
 // Get all profiles
 export const getProfiles = () => async dispatch => {
-  dispatch(ClearProfileSuccess());
   try {
     const res = await axios.get('/api/coach');
     dispatch(getProfilesSuccess(res.data));

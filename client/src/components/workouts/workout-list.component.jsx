@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { selectWorkout } from '../../redux/workouts/workouts.selectors';
-import Spinner from '../spinner/spinner.component';
-import { useAuth } from '../../contexts';
 import WorkoutCard from '../cards/workout-card.component';
-import { fetchWorkoutData } from '../../redux/workouts/workouts.action';
+import Pagination from '../pagination/pagination';
 import { CardColumnsContainer } from './workouts.styles';
 
 const WorkoutList = ({ workout: {workouts} }) => {
-  console.log(workouts)
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(6);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = workouts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className='container'>
       <div style={{ marginTop: '5%'}}>
       { 
         <CardColumnsContainer>
-          {workouts.map((workout, index) => (
+          {currentPosts.map((workout, index) => (
             <WorkoutCard key={index} workout={workout} />
           ))}
           </CardColumnsContainer>
       }
+      <Pagination postsPerPage={postsPerPage} totalPosts={workouts.length} paginate={paginate}/>
       </div>
     </div>
     )

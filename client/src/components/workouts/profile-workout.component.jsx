@@ -3,7 +3,6 @@ import WorkoutCard from '../cards/workout-card.component';
 import { CardColumnsContainer } from './workouts.styles';
 
 const WorkoutList = ({ workouts }) => {
-    console.log(workouts)
   return (
     <div className='container'>
     { workouts ? 

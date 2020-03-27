@@ -1,14 +1,19 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
+const auth = require('./middleware/auth');
+
+const User = require('./models/User');
+const EMAIL_SECRET = 'asdf1093KMnzxcvnkljvasdu091asdasdasdsadaswqedwedfew23nlasdasdf';
 
 const app = express();
-
 // Connect Database
 connectDB();
 
 // Init Middleware
 app.use(express.json());
+
+
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
@@ -16,6 +21,7 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/coach', require('./routes/api/coach'));
 app.use('/api/workouts', require('./routes/api/workouts'));
 app.use('/api/payment', require('./routes/api/payment'));
+app.use('/api/athlete', require('./routes/api/athlete'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -26,6 +32,27 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+app.get('/confirmation', auth, async (req, res) => {
+  var userId = req.user.id;
+
+  var conditions = {
+    _id : userId 
+  }
+
+  var update = {
+    confirmed: true
+  }
+
+    User.findOneAndUpdate(conditions,update,function(error,result){
+      if(error){
+      }else{
+        console.log(result);
+      }
+    });
+    return res.redirect('http://localhost:3000');
+ });
+
 
 const PORT = process.env.PORT || 4000;
 

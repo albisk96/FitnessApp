@@ -7,8 +7,17 @@ const config = require('config');
 const cookie = require('cookie');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
+const nodemailer = require('nodemailer'); 
 
 const User = require('../../models/User');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: config.get('myGmailUser'),
+    pass: config.get('myGmailPassword'),
+  },
+});
 
 // @route    POST api/users
 // @desc     Register user
@@ -74,9 +83,17 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
+          const url = `http://localhost:4000/confirmation`;   
+
           res.set('Set-Cookie', cookie.serialize('jwtToken', token, {path: '/', httpOnly: true }))
-          res.json({ token, role: user.role });
-        }
+          res.json({ token });
+
+          transporter.sendMail({
+            to: email,
+            subject: 'Confirm Email',
+            html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
+          })
+        },
       );
     } catch (err) {
       console.error(err.message);

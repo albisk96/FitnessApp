@@ -8,6 +8,7 @@ import Workout from '../../pages/user/workout/workouts.page';
 import AddWorkout from '../workouts/add-workout.component';
 import MyProfile from '../../pages/profile/profile.page';
 import CoachProfile from '../../components/coaches/coach-profile.component';
+import Dashboard from '../../pages/user/user.component';
 
 const Routes = () => {
 
@@ -22,6 +23,7 @@ const Routes = () => {
         { path: "/coach", component: CoachPage, exact: true, role: "coach"},
         { path: "/coach/user/:id", component: CoachProfile, exact: true, role:"coach"},
         { path: "/coach/user/:id", component: CoachProfile, exact: true, role:"user"},
+        { path: "/dashboard", component: Dashboard, exact: true, role:"user"},
       ]
 
   return (

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import FormInput from '../form/form-input.component';
-import { Form } from 'react-bootstrap';
 import { useAuth } from '../../contexts';
 
 const Register = ({ id }) => {
@@ -127,6 +126,7 @@ const Register = ({ id }) => {
         value={role} 
         onChange={e => setRole(e.target.value)}
     >
+        <option>Choose your main goal</option>
         <option value="user">To get fit</option>
         <option value="coach">To help others</option>
     </FormInput>

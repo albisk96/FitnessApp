@@ -33,7 +33,7 @@ width: 50%;
     height: 25px;
     right: -13px;
     background-color: white;
-    border: 4px solid #FF9F55;
+    border: 4px solid #000000;
     top: 15px;
     border-radius: 50%;
     z-index: 1;

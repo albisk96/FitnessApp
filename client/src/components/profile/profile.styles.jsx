@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Jumbotron, Card } from 'react-bootstrap'
+import { Jumbotron } from 'react-bootstrap'
 
 export const JumboContainer = styled(Jumbotron)`
     width: 100vw;

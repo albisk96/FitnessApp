@@ -1,9 +1,9 @@
 import WorkoutsActionTypes from './workouts.types';
 import axios from 'axios';
 
-export function fetchWorkoutData() {
+export function fetchWorkoutData(pageNumber) {
   return (dispatch) => {
-    return axios.get('/api/workouts')
+    return axios.get(`/api/workouts?page=${pageNumber}`)
       .then(response => {
         const workouts = response.data
         dispatch(fetchWorkoutsSuccess(workouts))
@@ -27,10 +27,21 @@ export function createWorkout(formData) {
   };
 };
 
+// Delete workout
+export const deleteWorkout = id => async dispatch => {
+  console.log(id)
+  try {
+    await axios.delete(`/api/workouts/${id}`);
+    dispatch(DeleteWorkoutSuccess(id));
+    window.location.reload();
+  } catch (error) {
+    dispatch(WorkoutsFailure(error.message))
+  }
+};
+
 export const getWorkoutById = id => async dispatch => {
   try {
     const res = await axios.get(`/api/workouts/${id}`);
-
     dispatch(dispatch(fetchWorkoutSuccess(res.data)));
   } catch (error) {
     dispatch(dispatch(WorkoutsFailure(error.message)));
@@ -50,6 +61,11 @@ const fetchWorkoutSuccess = workout => ({
 const WorkoutsFailure = errorMessage => ({
     type: WorkoutsActionTypes.WORKOUTS_FAILURE,
     payload: errorMessage
+});
+
+const DeleteWorkoutSuccess = id => ({
+  type: WorkoutsActionTypes.DELETE_WORKOUT_SUCCESS,
+  payload: id
 });
 
 const postWorkoutsSuccess = workout => ({

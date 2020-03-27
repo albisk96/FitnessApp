@@ -8,12 +8,8 @@ import { useAuth } from '../../contexts'
 
 const NavBar = () => {
     const { session, removeSession } = useAuth();
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = (e) => {
-        e.preventDefault()
-        setShow(true)
-    };
+    const [modalShow, setModalShow] = useState(false);
+
 
     const CoachLinks = (
         <Nav className="mr-auto">
@@ -31,8 +27,8 @@ const NavBar = () => {
 
     const UserLinks = (
         <Nav className="mr-auto">
-            <LinkNav to='/profile/create'>Profile</LinkNav>
-            <Nav.Link href="#link">Dashboard</Nav.Link>
+            <LinkNav to='/dashboard'>Dashboard</LinkNav>
+            <Nav.Link href="/coach">Coaches</Nav.Link>
             <LinkNav to='/workouts'>Workouts</LinkNav>
             <Nav.Link href="#link">Shop</Nav.Link>
             <button className="btn btn-outline-danger my-2 my-sm-0 mr-3" onClick={removeSession} type="submit">Logout</button>
@@ -42,7 +38,7 @@ const NavBar = () => {
     const GuestLinks = (
         <Nav className="mr-auto">
             <AddUser className="btn btn-outline-danger my-2 my-sm-0 mr-3" modalTitle="Create Account" buttonName="Register" />
-            <button className="btn btn-outline-success my-2 my-sm-0 mr-3" onClick={(e) => handleShow(e)}>Login</button>
+            <button className="btn btn-outline-success my-2 my-sm-0 mr-3" onClick={() => setModalShow(true)}>Login</button>
         </Nav>
     )
 
@@ -65,7 +61,7 @@ const NavBar = () => {
         </Navbar.Collapse>
     </div>
     </Navbar>
-    <Modal show={show} handleClose={handleClose} title="Please login" component={<Login />} />
+    <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Please login" component={<Login />} />
     </div>
 )}
 export default NavBar;

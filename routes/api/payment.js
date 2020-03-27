@@ -27,7 +27,7 @@ const Workout = require('../../models/Workout');
 
     try{
         stripe.charges.create(body, (stripeErr, stripeRes) => {
-            if (stripeErr || workout.entries <= 0) {
+            if (stripeErr || workout.entries < 0) {
               console.log(`Failed: ${workout.entries}`)
               res.status(500).send({ error: stripeErr });
             } else {

@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
+const EMAIL_SECRET = 'asdf1093KMnzxcvnkljvasdu091asdasdasdsadaswqedwedfew23nlasdasdf';
 const User = require('../../models/User');
 
 // @route    GET api/auth
@@ -48,6 +49,11 @@ router.post(
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
+      if (!user.confirmed) {
+        throw new Error('Please confirm your email to login');
+      }
+    
+
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
@@ -78,5 +84,8 @@ router.post(
     }
   }
 );
+
+
+
 
 module.exports = router;

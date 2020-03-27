@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  confirmed: {
+    type: Boolean,
+    default: false
+  },
   role: {
     type: String,
     enum: ['user', 'coach', 'admin'],

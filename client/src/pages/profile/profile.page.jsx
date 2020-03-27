@@ -17,7 +17,6 @@ const ProfilePage = ({ getCurrentProfile, fetchWorkoutData }) => {
         fetchWorkoutData();
     }, [fetchWorkoutData]);
     
-
     return (
         <Suspense fallback={<Spinner />}>
             <div>

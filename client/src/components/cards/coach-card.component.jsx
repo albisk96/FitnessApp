@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import LinkButton from '../links/link-button.component';
 import { CardContainer, CardImage, CardBody, CardFooter } from './card.styles';
 

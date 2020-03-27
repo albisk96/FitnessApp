@@ -8,7 +8,6 @@
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
     "firebase": "^7.6.0",
-    "formik": "^2.1.4",
     "jquery": "^3.4.1",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
@@ -27,7 +26,8 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "semantic-ui-react": "^0.88.2",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "yup": "^0.28.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "formik": "^2.1.4",
     "moment": "^2.24.0",
     "redux-saga": "^1.1.3"
   }

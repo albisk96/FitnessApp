@@ -1,6 +1,5 @@
 import React from 'react';
-import Moment from 'react-moment';
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { deleteEducation } from '../../../redux/profile/api';
 
