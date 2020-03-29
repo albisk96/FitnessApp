@@ -4,18 +4,14 @@ import Modal from '../modal/modal.component';
 import { Button } from 'react-bootstrap';
 
 const WorkoutModal = ({ workout }) => {
-  const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true);
-    }
+    const [modalShow, setModalShow] = useState(false);
 
     return(
         <div>
             <center>
-                <Button variant="link" onClick={handleShow}>Read More</Button>
+                <Button variant="link" onClick={() => setModalShow(true)}>Read More</Button>
             </center>
-            <Modal show={show} title="Workout Information" handleClose={handleClose} component={<WorkoutModalInformation workout={workout} />} />
+            <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Workout Information" component={<WorkoutModalInformation workout={workout} />} />
         </div>
     );
 }

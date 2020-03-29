@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import Modal from '../modal/modal.component';
 
 const Icon = ({ modalTitle, iconName, componentInModal }) => {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true);
-    }
+    const [modalShow, setModalShow] = useState(false);
 
     return (
     <div>
-        <i style={{fontSize: '30px'}} onClick={handleShow} className={iconName}></i>
-        <Modal style={{ width: '50vw'}} show={show} title={modalTitle} handleClose={handleClose} component={componentInModal} />
+        <i style={{fontSize: '30px'}} onClick={() => setModalShow(true)} className={iconName}></i>
+        <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title={modalTitle} component={componentInModal} />
     </div>
     );
 }

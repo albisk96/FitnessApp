@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { getProfileSuccess, getProfilesSuccess, UpdateProfileSuccess, ClearProfileSuccess, getProfileError } from './profile.actions'
+import { getProfileSuccess, getProfilesSuccess, UpdateProfileSuccess, getProfileError, AddCommentSuccess,  RemoveCommentSuccess} from './profile.actions'
+import ProfileActionTypes from './profile.types';
 
 export function getCurrentProfile() {
     return (dispatch) => {
@@ -91,6 +92,28 @@ export const deleteEducation = id => async dispatch => {
     const res = await axios.delete(`/api/coach/education/${id}`);
     dispatch(UpdateProfileSuccess(res.data));
     window.location.reload();
+  } catch (error) {
+    dispatch(getProfileError(error.message));
+  }
+};
+
+// Add comment
+export const addComment = (coachId, formData) => async dispatch => {
+  try {
+    const res = await axios.post(
+      `/api/coach/comment/${coachId}`, formData);
+    dispatch(AddCommentSuccess(res.data));
+  } catch (error) {
+    dispatch(getProfileError(error.message));
+  }
+};
+
+// Delete comment
+export const deleteComment = (coachId, commentId) => async dispatch => {
+  try {
+    await axios.delete(`/api/coach/comment/${coachId}/${commentId}`);
+
+    dispatch(RemoveCommentSuccess(commentId));
   } catch (error) {
     dispatch(getProfileError(error.message));
   }

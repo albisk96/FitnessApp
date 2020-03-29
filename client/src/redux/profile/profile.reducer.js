@@ -37,6 +37,23 @@ const profileReducer = ( state = INITIAL_STATE, action) => {
                 profile: null,
                 loading: false
             }
+        case ProfileActionTypes.ADD_COMMENT:
+            return {
+                ...state,
+                profile: { ...state.profile, comments: payload },
+                loading: false
+            };
+        case ProfileActionTypes.REMOVE_COMMENT:
+            return {
+                ...state,
+                profile: {
+                ...state.profile,
+                comments: state.profile.comments.filter(
+                    comment => comment._id !== payload
+                )
+                },
+                loading: false
+        };           
         default:
             return state
     }

@@ -39,15 +39,6 @@ const Login = () => {
         touched,
         values,
         errors,
-        // values,
-        // touched,
-        // errors,
-        // dirty,
-        // handleChange,
-        // handleBlur,
-        // handleSubmit,
-        // handleReset,
-        // isSubmitting,
       }) => (
     <Form>
         <FormInput
@@ -58,10 +49,6 @@ const Login = () => {
           value={values.email}
           onChange={handleChange}
           onBlur={handleBlur}
-          //isInvalid={!!errors.email}
-          //isValid={touched.email && !errors.email}
-          // name='email'
-          // controlId="valid01"
       />
       <FormInput
         id="password"
@@ -71,10 +58,6 @@ const Login = () => {
         onBlur={handleBlur}
         label="Password"
         error={touched.password && errors.password}
-        //isValid={touched.password && !errors.password}
-        //isInvalid={!!errors.password}
-        // name='password'
-        // controlId="validationCustom02"
         />
       <button type="submit" className="btn btn-primary">Submit</button>
   </Form>

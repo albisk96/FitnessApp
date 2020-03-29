@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import AddUser from './add-user.component';
 import EditUser from './edit-user.component';
 import DeleteUser from './delete-user.component';
+import Pagination from '../pagination/pagination';
 import axios from 'axios';
 
 const AdminPage = () => {
 
     const [users, setUsers] = useState([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [usersPerPage] = useState(5);
+  
     useEffect(() => {
         function getUsers(){
         axios.get('/api/users')
@@ -19,6 +23,12 @@ const AdminPage = () => {
     } 
     getUsers()
     }, [])
+
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
     <div>
@@ -33,7 +43,7 @@ const AdminPage = () => {
             </tr>
             </thead>
             <tbody>
-                {users.map((user, index) => (
+                {currentUsers.map((user, index) => (
                     <tr key={index}>
                     <th scope="col">{index + 1}</th>
                     <td>{user.name}</td>
@@ -48,8 +58,11 @@ const AdminPage = () => {
                     </tr>
                 ))}
             </tbody>
-        </table>   
-        <AddUser className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Register" buttonName="Register" />
+        </table> 
+        <center style={{ marginLeft: '48%'}}>
+        <Pagination postsPerPage={usersPerPage} totalPosts={users.length} paginate={paginate}/>
+        </center>
+        <AddUser className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Register" buttonName="Add user" />
     </div>
     );
 };

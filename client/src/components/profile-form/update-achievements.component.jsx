@@ -18,7 +18,7 @@ const UpdateAchievements = ({ addAchievments, achievements }) => {
 
       const onChange = e => 
       setFormData({ ...formData, [e.target.name]: e.target.value });
-console.log(achievements)
+
   return (
     <Fragment>
     <FormContainer onSubmit={e => {

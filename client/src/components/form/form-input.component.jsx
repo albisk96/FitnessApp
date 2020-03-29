@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Form, Col } from 'react-bootstrap';
-import { Formik } from 'formik';
 
 export const InputFeedback = ({ error }) =>
   error ? <div style={{ color: 'red'}}>{error}</div> : null;

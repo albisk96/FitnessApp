@@ -74,6 +74,32 @@ const CoachSchema = new mongoose.Schema({
       type: String
     }
   },
+  comments: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+      },
+      stars: {
+        type: Number,
+        enum: [1, 2, 3, 4, 5]
+      },
+      text: {
+        type: String,
+        required: true
+      },
+      name: {
+        type: String
+      },
+      avatar: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now

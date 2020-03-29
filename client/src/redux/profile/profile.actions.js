@@ -19,6 +19,16 @@ export const ClearProfileSuccess = () => ({
   type: ProfileActionTypes.CLEAR_PROFILE_SUCCESS,
 });
 
+export const AddCommentSuccess = data => ({
+  type: ProfileActionTypes.ADD_COMMENT,
+  payload: data
+});
+
+export const RemoveCommentSuccess = id => ({
+  type: ProfileActionTypes.REMOVE_COMMENT,
+  payload: id
+});
+
 export const getProfileError = errorMessage => ({
   type: ProfileActionTypes.GET_PROFILE_ERROR,
   payload: errorMessage
