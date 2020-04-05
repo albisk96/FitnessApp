@@ -42,6 +42,28 @@ const WorkoutSchema = new Schema({
     enum: ['beginner', 'intermediate', 'expert', 'all levels'],
     default: 'all levels'
   },
+  when: {
+    type: Date,
+    required: true
+  },
+  reservations: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+      },
+      name: {
+        type: String
+      },
+      email: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now

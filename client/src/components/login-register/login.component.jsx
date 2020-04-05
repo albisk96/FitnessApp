@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FormInput from '../form/form-input.component';
-// import { InputFeedback, Label, TextInput } from '../form/formik';
 import axios from 'axios';
 import { useAuth } from '../../contexts'
 import { Formik, Form } from 'formik';

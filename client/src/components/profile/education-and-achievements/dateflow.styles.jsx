@@ -8,7 +8,7 @@ margin: 0 auto;
     content: '';
     position: absolute;
     width: 6px;
-    background-color: white;
+    background-color: black;
     top: 0;
     bottom: 0;
     left: 50%;
@@ -32,7 +32,7 @@ width: 50%;
     width: 25px;
     height: 25px;
     right: -13px;
-    background-color: white;
+    background-color: #f7f7f7;
     border: 4px solid #000000;
     top: 15px;
     border-radius: 50%;
@@ -48,7 +48,7 @@ width: 50%;
             position: absolute;
             width: 25px;
             height: 25px;
-            background-color: white;
+            background-color: #f7f7f7;
             border: 4px solid #FF9F55;
             top: 15px;
             border-radius: 50%;
@@ -69,7 +69,7 @@ left: 0;
     right: 30px;
     border: medium solid white;
     border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent white;
+    border-color: transparent transparent transparent #f7f7f7;
 }
     @media screen and (max-width: 600px) {
         ::after{
@@ -92,7 +92,7 @@ margin-left: 122%;
     left: 30px;
     border: medium solid white;
     border-width: 10px 10px 10px 0;
-    border-color: transparent white transparent transparent;
+    border-color: transparent #f7f7f7 transparent transparent;
 }
 ::after {
     left: -16px;
@@ -109,7 +109,7 @@ margin-left: 122%;
 
 export const ContentContainer = styled.div`
     padding: 20px 30px;
-    background-color: white;
+    background-color: #f7f7f7;
     position: relative;
     border-radius: 6px;
 `;

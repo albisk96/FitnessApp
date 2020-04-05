@@ -14,6 +14,7 @@ export const InputFeedback = ({ error }) =>
         name={name} 
         type="invalid"
         {...props} 
+        styles={{backgroundColor: '#b4b4b4'}}
         />
         <InputFeedback error={error} />
     </Form.Group>

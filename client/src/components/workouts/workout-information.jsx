@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Spinner from '../spinner/spinner.component';
 import { Table } from 'react-bootstrap';
-
+import Moment from 'react-moment';
 
 const WorkoutInformation = ({ workout }) => {
     console.log(workout)
@@ -10,7 +10,7 @@ const WorkoutInformation = ({ workout }) => {
         {workout === null ? (
             <Spinner />
         ) : (
-            <Table striped bordered hover>
+            <Table striped bordered style={{ color: 'black', backgroundColor: '#fff' }}>
             <tbody>
                 <tr>
                 <td>Title</td>
@@ -45,8 +45,8 @@ const WorkoutInformation = ({ workout }) => {
                 <td>{workout.entries}</td>
                 </tr>
                 <tr>
-                <td>Date</td>
-                <td>{workout.date}</td>
+                <td>Starts at</td>
+                <td><Moment format="YYYY-MM-DD HH:mm">{workout.when}</Moment></td>
                 </tr>
             </tbody>
             </Table>

@@ -17,7 +17,7 @@ export const CardBody = styled(Card.Body)`
 
 export const CardComponent = styled(Card)`
     margin: 5%;
-    background-color: #f7f7f7;
+    background-color: white;
 `;
 
 export const Rating = styled.div`

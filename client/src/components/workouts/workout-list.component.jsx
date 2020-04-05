@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import WorkoutCard from '../cards/workout-card.component';
 import Pagination from '../pagination/pagination';
 import { CardColumnsContainer } from './workouts.styles';
+import Moment from 'react-moment';
 
 const WorkoutList = ({ workout: {workouts} }) => {
 
@@ -11,8 +12,8 @@ const WorkoutList = ({ workout: {workouts} }) => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = workouts.slice(indexOfFirstPost, indexOfLastPost);
-
+  const currentPosts = workouts.filter(x => new Date(x.when) - new Date > 0).slice(indexOfFirstPost, indexOfLastPost);
+  
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (

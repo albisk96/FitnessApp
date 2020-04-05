@@ -4,55 +4,72 @@ import FormInput from '../form/form-input.component';
 import AchievementsTable from '../profile/tables/achievement-table.component'
 import { addAchievments } from '../../redux/profile/api';
 import { FormContainer, SubmitButton } from './profile-form.styles';
+import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 
 const UpdateAchievements = ({ addAchievments, achievements }) => {
-    const [formData, setFormData] = useState({
-        title: '',
-        date: '',
+
+      const schema = yup.object({
+        title: yup.string().required('title is required'),
+        date: yup.string().required('date is required'),
       });
 
-      const {
-        title,
-        date
-      } = formData;
-
-      const onChange = e => 
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+     const SubmitForm = (values) => {
+      addAchievments(values);
+       }
 
   return (
-    <Fragment>
-    <FormContainer onSubmit={e => {
-        e.preventDefault();
-        addAchievments(formData);
-      }}>
+    <div>
+    <FormContainer>
+    <Formik
+    validationSchema={schema}
+    onSubmit={SubmitForm}
+    initialValues={{
+      title: '',
+      date: '',
+    }}
+  >
+    {({
+      handleChange,
+      handleBlur,
+      touched,
+      values,
+      errors,
+    }) => (
+  <Form>
+      <FormInput
+          name='title'
+          type='text'
+          label='Title'
+          id='title'
+          error={touched.title && errors.title}
+          value={values.title}
+          onChange={handleChange}
+          onBlur={handleBlur}
+      />
         <FormInput
-            name='title'
-            type='text'
-            handleChange={onChange}
-            value={title}
-            label='Title'
-            required
-        />
-        <FormInput
-            name='date'
-            type='text'
-            onChange={onChange}
-            value={date}
-            label='Date'
-            required
+          name='date'
+          type='date'
+          label='Date'
+          id='date'
+          error={touched.date && errors.date}
+          value={values.date}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
         
-        <center>
-        <SubmitButton type="submit">Update</SubmitButton>
-        </center>
-        <AchievementsTable achievements={achievements} />
+        <SubmitButton type="submit" className="btn btn-primary">Submit</SubmitButton>
+        </Form>
+  )}
+  </Formik>
   </FormContainer>
-  </Fragment>
+        <AchievementsTable achievements={achievements} />
+        </div>
     );
 }
 
 const mapDispatchToProps = dispatch => ({
-    addAchievments: formData => dispatch(addAchievments(formData))
+    addAchievments: values => dispatch(addAchievments(values))
   });
   
 export default connect(null, mapDispatchToProps)(UpdateAchievements);

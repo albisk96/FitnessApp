@@ -19,7 +19,11 @@ router.post(
         .isEmpty(),
       check('entries', 'Entries is required')
         .not()
+        .isEmpty(),
+      check('when', 'Workout date is required and needs to be in the future')
+        .not()
         .isEmpty()
+        .custom((value, { req }) => (req.body.date ? value > req.body.date : true))
     ]
   ],
   async (req, res) => {
@@ -41,7 +45,8 @@ router.post(
         level: req.body.level,
         avatar: user.avatar,
         user: req.user.id,
-        entries: req.body.entries
+        entries: req.body.entries,
+        when: req.body.when
       });
 
       const workout = await newWorkout.save();

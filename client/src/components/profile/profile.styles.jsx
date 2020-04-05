@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Jumbotron } from 'react-bootstrap'
+import { Jumbotron, Tabs, Tab, Nav } from 'react-bootstrap'
 
 export const JumboContainer = styled(Jumbotron)`
     width: 100vw;
@@ -40,7 +40,7 @@ export const Avatar = styled.img`
 
 export const ProfileInfoContainer = styled(Jumbotron)`
     position: absolute;
-    background: #F7F7F7;
+    background: white;
     border-radius:20px!important;
     width: 65%;
     background-size: cover;
@@ -55,5 +55,8 @@ export const PortfolioContainer = styled.div`
     justify-content: space-between;
     margin: 0 40%;
     display: flex;
-    
+`;
+
+export const StyledWrap = styled(Nav)`
+    color: black;
 `

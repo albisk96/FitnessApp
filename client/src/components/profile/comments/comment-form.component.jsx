@@ -43,7 +43,7 @@ const Login = ({ id, addComment }) => {
           value={values.text}
           onChange={handleChange}
           onBlur={handleBlur}
-          style={{borderBottom: '1px solid'}}
+          style={{borderBottom: '1px solid #afafaf'}}
       />
       <FormInput
         id="stars"

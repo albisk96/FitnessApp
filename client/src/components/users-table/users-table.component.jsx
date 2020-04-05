@@ -39,6 +39,7 @@ const AdminPage = () => {
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Admin</th>
+                <th scope="col">Is Confirmed?</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -49,6 +50,7 @@ const AdminPage = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
+                    <td>{user.confirmed ? 'true' : 'false'}</td>
                     <td>
                     <div style={{ display: 'flex' }}>
                         <DeleteUser user_id={user._id} />

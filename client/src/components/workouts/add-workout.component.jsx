@@ -3,21 +3,15 @@ import AddWorkoutData from './workout-form.component';
 import Modal from '../modal/modal.component';
 
 const AddWorkout = ({ buttonName, className, modalTitle }) => {
-
-  const [show, setShow] = useState(false);
-    const [id, setId] = useState('');
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true);
-        setId('new')
-    }
+    const [id] = useState('new');
+    const [modalShow, setModalShow] = useState(false);
 
     return(
         <div>
             <center>
-                <button className={className} onClick={handleShow}>{buttonName}</button>
+                <button className={className} onClick={() => setModalShow(true)}>{buttonName}</button>
             </center>
-            <Modal show={show} title={modalTitle} handleClose={handleClose} component={<AddWorkoutData id={id} />} />
+            <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title={modalTitle} component={<AddWorkoutData id={id} />} />
         </div>
     );
 }

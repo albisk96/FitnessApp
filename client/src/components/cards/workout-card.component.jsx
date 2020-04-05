@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WorkoutModal from '../workouts/workout-modal.component';
+import MembersListModal from '../workouts/workout-reservations.component';
 import StripeCheckoutButton from '../stripe-button/stripe-button.component';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../contexts';
@@ -11,8 +12,11 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
   const { session } = useAuth();
 
   const mySession = ( session.id === workout.user ) 
-
-  const myCard = !mySession ? <StripeCheckoutButton id={workout._id} price={workout.price} /> : <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button>
+  const closed = (new Date(workout.when) - new Date < 0)
+  console.log(closed)
+  const myCard = !mySession
+  ? <StripeCheckoutButton id={workout._id} price={workout.price} /> 
+  : closed ? <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal workout={workout} size="modal-70w" />
 
   return(
         <CardContainer>
@@ -25,7 +29,7 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
           <CardFooter>
             {workout.entries > 0 ? 
               <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-                <WorkoutModal workout={workout}/>
+                <WorkoutModal workout={workout} size='modal-70w'/>
                 { myCard }
               </div> :
               <button className="btn btn-outline-danger float-left" disabled>

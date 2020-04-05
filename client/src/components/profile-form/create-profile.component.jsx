@@ -3,99 +3,129 @@ import { connect } from 'react-redux';
 import FormInput from '../form/form-input.component';
 import { createProfile } from '../../redux/profile/api';
 import { FormContainer, SubmitButton, Center, JumboContainer } from './profile-form.styles';
+import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 
 const CreateMyProfile = ({ createProfile }) => {
-    const [formData, setFormData] = useState({
-        location: '',
-        website: '',
-        bio: '',
-        youtube: '',
-        twitter: '',
-        instagram: '',
-        facebook: ''
+    const schema = yup.object({
+        location: yup.string().required('City is required'),
+        bio: yup.string().required('Description is required'),
       });
 
-      const {
-        location,
-        website,
-        bio,
-        youtube,
-        twitter,
-        instagram,
-        facebook
-      } = formData;
-
-      const onChange = e => 
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-
-      const onSubmit = e => {
-        e.preventDefault();
-        createProfile(formData);
+      const SubmitForm = (values) => {
+        createProfile(values);
         window.location.reload();
       };
 
   return (
     <JumboContainer>
-    <FormContainer onSubmit={onSubmit}>
+    <FormContainer>
+    <Formik
+        validationSchema={schema}
+        onSubmit={SubmitForm}
+        initialValues={{
+            city: '',
+            website: '',
+            bio: '',
+            DOB: '',
+            youtube: '',
+            twitter: '',
+            instagram: '',
+            facebook: '',
+        }}
+    >
+        {({
+        handleChange,
+        handleBlur,
+        touched,
+        values,
+        errors,
+        }) => (
+        <Form>
         <FormInput
-            name='location'
+            name='city'
             type='text'
-            handleChange={onChange}
-            value={location}
             label='City'
-            required
+            id='city'
+            error={touched.city && errors.city}
+            value={values.city}
+            onChange={handleChange}
+            onBlur={handleBlur}
         />
         <FormInput
             name='website'
             type='text'
-            onChange={onChange}
-            value={website}
             label='Website'
-            required
+            id='website'
+            error={touched.website && errors.website}
+            value={values.website}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
+        <FormInput
+            name='DOB'
+            type='date'
+            label='Date of birth'
+            id='DOB'
+            error={touched.DOB && errors.DOB}
+            value={values.DOB}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            /> 
         <FormInput
             name='bio'
             type='text'
-            onChange={onChange}
-            value={bio}
-            label='Bio'
-            required
-        /> 
+            label='Short description about yoursel'
+            id='bio'
+            error={touched.bio && errors.bio}
+            value={values.bio}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            /> 
         <FormInput
             name='youtube'
             type='text'
-            onChange={onChange}
-            value={youtube}
             label='Youtube channel'
-            required
+            id='youtube'
+            error={touched.youtube && errors.youtube}
+            value={values.youtube}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
         <FormInput
             name='twitter'
             type='text'
-            onChange={onChange}
-            value={twitter}
-            label='Twitter'
-            required
+            label='Twitter channel'
+            id='twitter'
+            error={touched.twitter && errors.twitter}
+            value={values.twitter}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
         <FormInput
             name='instagram'
             type='text'
-            onChange={onChange}
-            value={instagram}
-            label='Instagram'
-            required
+            label='Instagram account'
+            id='instagram'
+            error={touched.instagram && errors.instagram}
+            value={values.instagram}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
         <FormInput
             name='facebook'
             type='text'
-            onChange={onChange}
-            value={facebook}
-            label='Facebook'
-            required
+            label='Facebook profile'
+            id='facebook'
+            error={touched.facebook && errors.facebook}
+            value={values.facebook}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
-        <Center>
-        <SubmitButton type="submit">Next</SubmitButton>
-        </Center>
+        <SubmitButton type="submit" className="btn btn-primary">Submit</SubmitButton>
+        </Form>
+    )}
+  </Formik>
   </FormContainer>
   </JumboContainer>
     );

@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { Form, Button, Jumbotron } from 'react-bootstrap';
+import { Button, Jumbotron } from 'react-bootstrap';
 
-export const FormContainer = styled(Form)`
+export const FormContainer = styled.div`
     width: 50%;
     margin-left: 25%;
 `;
 
 export const SubmitButton = styled(Button)`
-    margin-top: 5%;
+    margin: 5% 35%;
 `;
 
 export const Center = styled.div`

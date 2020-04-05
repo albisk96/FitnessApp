@@ -1,119 +1,136 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'react-bootstrap';
 import FormInput from '../form/form-input.component';
 import EducationTable from '../profile/tables/education-table.component';
 import { addEducation } from '../../redux/profile/api';
 import { FormContainer, SubmitButton } from './profile-form.styles';
+import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 
 const UpdateEducation = ({ addEducation, education }) => {
-    const [formData, setFormData] = useState({
-        school: '',
-        degree: '',
-        fieldofstudy: '',
-        from: '',
-        to: '',
-        current: '',
-        description: ''
+    const schema = yup.object({
+        school: yup.string().required('title is required'),
+        degree: yup.string().required('degree is required'),
+        fieldofstudy: yup.string().required('Field of Study is required'),
+        from: yup.string().required('Date from is required'),
+        description: yup.string().required('Description is required'),
       });
 
       const [toDateDisabled, toggleDisabled] = useState(false);
 
-      const {
-        school,
-        degree,
-        fieldofstudy,
-        from,
-        to,
-        current,
-        description
-      } = formData;
-
-      const onChange = e => 
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-
-      const onSubmit = e => {
-        e.preventDefault();
-        addEducation(formData);
+      const SubmitForm = (values) => {
+        addEducation(values);
       };
 
   return (
     <Fragment>
-    <FormContainer onSubmit={onSubmit}>
+    <FormContainer>
+        <Formik
+        validationSchema={schema}
+        onSubmit={SubmitForm}
+        initialValues={{
+            school: '',
+            degree: '',
+            fieldofstudy: '',
+            from: '',
+            to: '',
+            current: false,
+            description: '',
+        }}
+    >
+        {({
+        handleChange,
+        handleBlur,
+        touched,
+        values,
+        errors,
+        }) => (
+    <Form>
         <FormInput
             name='school'
             type='text'
-            placeholder='* School or Bootcamp'
-            handleChange={onChange}
-            value={school}
             label='School'
-            required
+            id='school'
+            error={touched.school && errors.school}
+            value={values.school}
+            onChange={handleChange}
+            onBlur={handleBlur}
         />
         <FormInput
             name='degree'
             type='text'
-            placeholder='* Degree or Certificate'
-            onChange={onChange}
-            value={degree}
             label='Degree'
-            required
+            id='degree'
+            error={touched.degree && errors.degree}
+            value={values.degree}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
         <FormInput
             name='fieldofstudy'
             type='text'
-            onChange={onChange}
-            value={fieldofstudy}
             label='Field of Study'
-            required
+            id='fieldofstudy'
+            error={touched.fieldofstudy && errors.fieldofstudy}
+            value={values.fieldofstudy}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
         <FormInput
             name='from'
             type='date'
-            onChange={onChange}
-            value={from}
             label='From'
-            required
+            id='from'
+            error={touched.from && errors.from}
+            value={values.from}
+            onChange={handleChange}
+            onBlur={handleBlur}
         /> 
-        <Form.Check 
-            type='checkbox'
+        <label>Is it current?</label> <br />
+        <input
+            type="checkbox"
             name='current'
-            label="Current"
-            style={{ marginTop: '7%', marginBottom: '5%'}}
-            checked={current}
-            value={current}
-            onChange={() => {
-            setFormData({ ...formData, current: !current });
-            toggleDisabled(!toDateDisabled);
-            }}
+            id='current'
+            value={values.current}
+            onChange={() => { 
+                toggleDisabled(!toDateDisabled)
+            ;}}
         /> 
         <FormInput
-            label='To'
-            type='date'
             name='to'
-            value={to}
-            onChange={e => onChange(e)}
+            type='date'
+            label='To'
+            id='to'
+            error={touched.to && errors.to}
+            value={values.to}
+            onChange={handleChange}
+            onBlur={handleBlur}
             disabled={toDateDisabled ? 'disabled' : ''}
         /> 
         <FormInput
             name='description'
             type='text'
-            as="textarea" rows="3"
-            onChange={onChange}
-            value={description}
             label='Description'
-            required
+            id='description'
+            error={touched.description && errors.description}
+            value={values.description}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            as='textarea'
+            rows='3'
         /> 
-        <center>
-        <SubmitButton type="submit">Update</SubmitButton>
-        </center>
-        <EducationTable education={education} />
+        <SubmitButton type="submit" className="btn btn-primary">Submit</SubmitButton>
+    </Form>
+    )}
+  </Formik>
   </FormContainer>
+  <EducationTable education={education} />
   </Fragment>
     );
 }
 
 const mapDispatchToProps = dispatch => ({
-    addEducation: formData => dispatch(addEducation(formData))
+    addEducation: values => dispatch(addEducation(values))
   });
   
 export default connect(null, mapDispatchToProps)(UpdateEducation);
