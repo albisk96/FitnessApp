@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getProfileSuccess, getProfilesSuccess, UpdateProfileSuccess, getProfileError, AddCommentSuccess,  RemoveCommentSuccess} from './profile.actions'
-import ProfileActionTypes from './profile.types';
 
 export function getCurrentProfile() {
     return (dispatch) => {
@@ -37,17 +36,11 @@ export const getProfileById = (userId) => async dispatch => {
   
 
   // Create or update profile
-  export const createProfile = (
-    formData,
-    history,
-    edit = false
-  ) => async dispatch => {
+  export const createProfile = (formData) => async dispatch => {
     try {  
       const res = await axios.post('/api/coach', formData);
       dispatch(getProfileSuccess(res.data));
-      if (!edit) {
-        history.push('/dashboard');
-      }
+      window.location.reload();
     } catch (error) { 
       dispatch(getProfileError(error.message));
     }

@@ -126,7 +126,7 @@ const Register = ({ id }) => {
       required
     />
     
-    {session && session.role !== 'admin' ?
+    {!session  ?
     
     <div>
     <hr />

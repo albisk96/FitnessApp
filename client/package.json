@@ -27,7 +27,8 @@
     "reselect": "^4.0.0",
     "semantic-ui-react": "^0.88.2",
     "styled-components": "^4.4.1",
-    "yup": "^0.28.3"
+    "yup": "^0.28.3",
+    "zingchart-react": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

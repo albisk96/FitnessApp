@@ -14,7 +14,6 @@ const CreateMyProfile = ({ createProfile }) => {
 
       const SubmitForm = (values) => {
         createProfile(values);
-        window.location.reload();
       };
 
   return (

@@ -4,7 +4,9 @@ var container = {
          * weight must be in kg
          * height must be in m
          */
-         var bmi = weight/(height*height);
+        let heightInMeters = height / 100;
+
+         var bmi = weight/(heightInMeters*heightInMeters);
          return bmi;    
     },
 
