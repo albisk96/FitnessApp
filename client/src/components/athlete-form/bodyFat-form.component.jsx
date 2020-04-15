@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form/form-input.component';
 import { bodyFat } from '../../redux/athlete/api';
-import { FormContainer, SubmitButton, JumboContainer } from '../profile-form/profile-form.styles';
+import { FormContainer, SubmitButton } from '../profile-form/profile-form.styles';
 import { Formik, Form } from 'formik';
 
 const bodyFatForm = ({ bodyFat }) => {

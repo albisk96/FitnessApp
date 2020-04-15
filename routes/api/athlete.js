@@ -4,9 +4,12 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const bodyFat = require('../../helpers/bodyFat-helper');
 const bmi = require('../../helpers/bmi-helper');
+const PlanHelper = require('../../helpers/plan-helper');
 
 const User = require('../../models/User');
 const Athlete = require('../../models/Athlete');
+const Plan = require('../../models/Plan');
+const Exercise = require('../../models/Exercise');
 
 // @route    GET api/athlete
 // @desc     Get current users athlete
@@ -180,8 +183,6 @@ router.delete('/', auth, async (req, res) => {
   try {
     // Remove athlete
     await Athlete.findOneAndRemove({ user: req.user.id });
-    // Remove user
-    await User.findOneAndRemove({ _id: req.user.id });
 
     res.json({ msg: 'Athlete deleted' });
   } catch (err) {
@@ -189,6 +190,35 @@ router.delete('/', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+
+// @route   GET api/athlete/plan
+// @desc    Create an athlete workout program
+// @access  Private
+router.get(
+  '/plan',
+  [
+    auth,
+  ],
+  async (req, res) => {
+
+    try {
+        const athlete = await Athlete.findOne({ user: req.user.id });
+        const exercise = await Exercise.find();
+        const plan = PlanHelper.GeneratePlan(athlete, exercise);
+        // const newPLan = new Plan(plan);
+  
+        // const plan = await newPLan.save();
+  
+        res.json(plan);
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+      }
+    }
+  );
+
+
 
 
 module.exports = router;
