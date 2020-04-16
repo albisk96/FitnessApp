@@ -48,7 +48,7 @@ function GeneratePlan(athlete, exercise){
 
     const cardioExercises = exercise.filter(x => x.exerciseType === 'cardio')
     let musclesPerDay = null;
-    let exercisesNames = ['chest', 'back', 'shoulders', 'legs', 'triceps', 'biceps']
+    let muscleNames = ['chest', 'back', 'shoulders', 'legs', 'triceps', 'biceps']
 
     HowManyMusclesPerDay(days);
 
@@ -56,16 +56,9 @@ function GeneratePlan(athlete, exercise){
         let workout = []
         for(let i = 1; i <= days; i++){ 
             let dailyExercises = [];
-            GetCardioExercise(i, dailyExercises)
-            
-            
+            GetCardioExercise(i, dailyExercises)            
                 for(let k = 1; k <= musclesPerDay; k++){ // how many muscles per day
-                    const tempExercise = exercisesNames[Math.floor(Math.random() * exercisesNames.length)] 
-                    exercisesNames = exercisesNames.filter(x => x !== tempExercise);
-                     if(k == 1) {
-                         GetWarmUpExercise(stretchingExercises, dailyExercises);
-                     }
-                     HowManyExercisesPerMucle(tempExercise, dailyExercises)
+                    WorkoutForOneDayGeneration(dailyExercises, k)
                 }
             workout.push({ day: i, exercises: dailyExercises })
         }
@@ -77,8 +70,8 @@ function GeneratePlan(athlete, exercise){
             let dailyExercises = []; // Array of daily exercises
             if(i % 2 === 0){
                 for(let k = 1; k <= 2; k++){ // How many muscles per day 
-                    const tempExercise = exercisesNames[Math.floor(Math.random() * exercisesNames.length)] // get muscle name
-                    exercisesNames = exercisesNames.filter(x => x !== tempExercise); // delete that muscle name from array 
+                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
+                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
             
                     for(let j = 1; j <= 3; j++){ // three exercises for every muscle
                         let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
@@ -91,8 +84,8 @@ function GeneratePlan(athlete, exercise){
                 }
             } else {
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
-                    const tempExercise = exercisesNames[Math.floor(Math.random() * exercisesNames.length)] // get muscle name
-                    exercisesNames = exercisesNames.filter(x => x !== tempExercise); // delete that muscle name from array 
+                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
+                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
             
                     for(let j = 1; j <= 3; j++){ // three exercises for every muscle
                         let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
@@ -117,8 +110,8 @@ function GeneratePlan(athlete, exercise){
             let dailyExercises = []; // Array of daily exercises
             if(i === 1){
                 for(let k = 1; k <= 2; k++){ // How many muscles per day 
-                    const tempExercise = exercisesNames[Math.floor(Math.random() * exercisesNames.length)] // get muscle name
-                    exercisesNames = exercisesNames.filter(x => x !== tempExercise); // delete that muscle name from array 
+                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
+                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
             
                     for(let j = 1; j <= 3; j++){ // three exercises for every muscle
                         let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
@@ -131,8 +124,8 @@ function GeneratePlan(athlete, exercise){
                 }
             } else {
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
-                    const tempExercise = exercisesNames[Math.floor(Math.random() * exercisesNames.length)] // get muscle name
-                    exercisesNames = exercisesNames.filter(x => x !== tempExercise); // delete that muscle name from array 
+                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
+                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
             
                     for(let j = 1; j <= 3; j++){ // three exercises for every muscle
                         let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
@@ -151,74 +144,181 @@ function GeneratePlan(athlete, exercise){
         return workout;
     }
 
+    function WorkoutForOneDayGeneration(dailyExercises, k){
+        const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] 
+        muscleNames = muscleNames.filter(x => x !== tempExercise);
+         if(k == 1) {
+             GetWarmUpExercise(stretchingExercises, dailyExercises);
+         }
+         HowManyExercisesPerMucle(tempExercise, dailyExercises)
+    }
+
     function HowManyMusclesPerDay(day){
         switch(day){
             case 2:
-                return musclesPerDay = 3;
+                return musclesPerDay = muscleNames.length / 2;
             case 3:
-                return musclesPerDay = 2;
+                return musclesPerDay = muscleNames.length / 3;
             case 6:
-                return musclesPerDay = 1;
+                return musclesPerDay = muscleNames.length / 6;
         }
     }
     function HowManyExercisesPerMucle(tempExercise, dailyExercises){
-        let isolation = null;
-        let compound = null;
-        if(gender === 'female'){
-            if(days == 2){
-                if(level === 'beginner'){
-                    isolation = 2;
-                    compound = 1;
-                } else {
-                    isolation = 2;
-                    compound = 1;
+        let isolationNumber = null;
+        let compoundNumber = null;
+            if(days == 6){
+                if(gender === 'male'){
+                    if(level === 'beginner'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 5;
+                            compoundNumber = 1;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 2;
+                            compoundNumber = 4;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 3;
+                            compoundNumber = 3;
+                        }
+                    } else if(level === 'intermediate'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 5;
+                            compoundNumber = 1;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 2;
+                            compoundNumber = 4;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 3;
+                            compoundNumber = 3;
+                        }
+                    }
+                } else if (gender === 'female'){
+                    if(level === 'beginner'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 6;
+                            compoundNumber = 0;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 4;
+                            compoundNumber = 2;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 1;
+                            compoundNumber = 5;
+                        }
+                    } else if(level === 'intermediate'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 5;
+                            compoundNumber = 1;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 4;
+                            compoundNumber = 2;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 5;
+                            compoundNumber = 1;
+                        }
+                    }
                 }
-            } else if(days == 3){
-                if(level === 'beginner'){
-                    isolation = 2;
-                    compound = 1;
-                } else {
-                    isolation = 2;
-                    compound = 1;
+             } else if (days == 2){
+                if(gender === 'male'){
+                    if(level === 'beginner'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 2;
+                            compoundNumber = 0;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 1;
+                            compoundNumber = 1;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 1;
+                            compoundNumber = 1;
+                        }
+                    } else if(level === 'intermediate'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 2;
+                            compoundNumber = 1;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 1;
+                            compoundNumber = 3;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 2;
+                            compoundNumber = 2;
+                        }
+                    }
+                } else if (gender === 'female'){
+                    if(level === 'beginner'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 2;
+                            compoundNumber = 0;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 1;
+                            compoundNumber = 1;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 1;
+                            compoundNumber = 1;
+                        }
+                    } else if(level === 'intermediate'){
+                        if(goal === 'lose fat'){
+                            isolationNumber = 3;
+                            compoundNumber = 0;
+                        } else if(goal === 'build muscle'){
+                            isolationNumber = 2;
+                            compoundNumber = 2;
+                        } else if(goal === 'get stronger'){
+                            isolationNumber = 2;
+                            compoundNumber = 1;
+                        }
+                    }
                 }
-            } else if(days == 6){
-                if(level === 'beginner'){
-                    isolation = 2;
-                    compound = 2;
-                } else {
-                    isolation = 2;
-                    compound = 4;
+                } else if (days == 3){
+                    if(gender === 'male'){
+                        if(level === 'beginner'){
+                            if(goal === 'lose fat'){
+                                isolationNumber = 3;
+                                compoundNumber = 0;
+                            } else if(goal === 'build muscle'){
+                                isolationNumber = 1;
+                                compoundNumber = 2;
+                            } else if(goal === 'get stronger'){
+                                isolationNumber = 2;
+                                compoundNumber = 1;
+                            }
+                        } else if(level === 'intermediate'){
+                            if(goal === 'lose fat'){
+                                isolationNumber = 4;
+                                compoundNumber = 1;
+                            } else if(goal === 'build muscle'){
+                                isolationNumber = 2;
+                                compoundNumber = 3;
+                            } else if(goal === 'get stronger'){
+                                isolationNumber = 3;
+                                compoundNumber = 2;
+                            }
+                        }
+                    } else if (gender === 'female'){
+                        if(level === 'beginner'){
+                            if(goal === 'lose fat'){
+                                isolationNumber = 3;
+                                compoundNumber = 0;
+                            } else if(goal === 'build muscle'){
+                                isolationNumber = 1;
+                                compoundNumber = 2;
+                            } else if(goal === 'get stronger'){
+                                isolationNumber = 2;
+                                compoundNumber = 1;
+                            }
+                        } else if(level === 'intermediate'){
+                            if(goal === 'lose fat'){
+                                isolationNumber = 4;
+                                compoundNumber = 0;
+                            } else if(goal === 'build muscle'){
+                                isolationNumber = 2;
+                                compoundNumber = 3;
+                            } else if(goal === 'get stronger'){
+                                isolationNumber = 3;
+                                compoundNumber = 2;
+                            }
+                        }
+                    }
                 }
-            }
-        } else if(gender === 'male'){
-            if(days == 2){
-                if(level === 'beginner'){
-                    isolation = 2;
-                    compound = 1;
-                } else {
-                    isolation = 2;
-                    compound = 1;
-                }
-            } else if(days == 3){
-                if(level === 'beginner'){
-                    isolation = 2;
-                    compound = 1;
-                } else {
-                    isolation = 2;
-                    compound = 1;
-                }
-            } else if(days == 6){
-                if(level === 'beginner'){
-                    isolation = 2;
-                    compound = 2;
-                } else {
-                    isolation = 2;
-                    compound = 4;
-                }
-            }
-        }
         
-        for(let j = 1; j <= isolation; j++){
+        for(let j = 1; j <= isolationNumber; j++){
             if(level === 'beginner'){
                 GetIsolationExercise(tempExercise, isolationExercisesForBeginner, dailyExercises);
             } else {
@@ -226,7 +326,7 @@ function GeneratePlan(athlete, exercise){
             }
             
         } 
-        for(let l = 1; l <= compound; l++){
+        for(let l = 1; l <= compoundNumber; l++){
             if(level === 'beginner'){
                 GetCompoundExercise(tempExercise, compoundExercisesForBeginner, dailyExercises);
             } else {
@@ -288,42 +388,75 @@ function GeneratePlan(athlete, exercise){
     }
     
     function GetIsolationExercise(tempExercise, isolationExercises, dailyExercises){
-        let isolation = null;
+        let isolationExercise = null;
         if(tempExercise === 'legs' && gender === 'female'){
-            isolation = isolationExercises['legsForWomen'][Math.floor(Math.random() * isolationExercises['legsForWomen'].length)]
+            isolationExercise = isolationExercises['legsForWomen'][Math.floor(Math.random() * isolationExercises['legsForWomen'].length)]
         } else {
-            isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
+            isolationExercise = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
         }
-        if(level === 'beginner'){
-            if(goal === 'lose fat'){
-                sets = 3;
-                reps = 12;
-                rest = 45;
-            } else if(goal === 'build muscle'){
-                sets = 4;
-                reps = 8;
-                rest = 120;
-            } else if(goal === 'get stronger'){
-                sets = 3;
-                reps = 10;
-                rest = 90;
+        if(gender === 'male'){
+            if(level === 'beginner'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 12;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 3;
+                    reps = 8;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 90;
+                }
+            } else if(level === 'intermediate'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 15;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 4;
+                    reps = 8;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 90;
+                }
             }
-        } else if(level === 'intermediate'){
-            if(goal === 'lose fat'){
-                sets = 3;
-                reps = 15;
-                rest = 45;
-            } else if(goal === 'build muscle'){
-                sets = 5;
-                reps = 5;
-                rest = 120;
-            } else if(goal === 'get stronger'){
-                sets = 4;
-                reps = 8;
-                rest = 90;
+        } else if(gender === 'female'){
+            if(level === 'beginner'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 12;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 3;
+                    reps = 8;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 90;
+                }
+            } else if(level === 'intermediate'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 15;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 12;
+                    rest = 90;
+                }
             }
         }
-        return dailyExercises.push({ sets, reps, rest, exercise: isolation })
+
+        return dailyExercises.push({ sets, reps, rest, exercise: isolationExercise })
     }
     
     function GetCompoundExercise(tempExercise, compoundExercises, dailyExercises){
@@ -333,33 +466,65 @@ function GeneratePlan(athlete, exercise){
         } else {
             compound = compoundExercises[tempExercise][Math.floor(Math.random() * compoundExercises[tempExercise].length)]
         }
-        if(level === 'beginner'){
-            if(goal === 'lose fat'){
-                sets = 3;
-                reps = 12;
-                rest = 45;
-            } else if(goal === 'build muscle'){
-                sets = 4;
-                reps = 8;
-                rest = 120;
-            } else if(goal === 'get stronger'){
-                sets = 3;
-                reps = 10;
-                rest = 90;
+        if(gender === 'male'){
+            if(level === 'beginner'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 60;
+                } else if(goal === 'build muscle'){
+                    sets = 4;
+                    reps = 6;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 8;
+                    rest = 90;
+                }
+            } else if(level === 'intermediate'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 5;
+                    reps = 5;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 4;
+                    reps = 6;
+                    rest = 90;
+                }
             }
-        } else if(level === 'intermediate'){
-            if(goal === 'lose fat'){
-                sets = 3;
-                reps = 15;
-                rest = 45;
-            } else if(goal === 'build muscle'){
-                sets = 5;
-                reps = 5;
-                rest = 120;
-            } else if(goal === 'get stronger'){
-                sets = 4;
-                reps = 8;
-                rest = 90;
+        } else if(gender === 'female'){
+            if(level === 'beginner'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 12;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 4;
+                    reps = 8;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 90;
+                }
+            } else if(level === 'intermediate'){
+                if(goal === 'lose fat'){
+                    sets = 3;
+                    reps = 10;
+                    rest = 45;
+                } else if(goal === 'build muscle'){
+                    sets = 4;
+                    reps = 8;
+                    rest = 120;
+                } else if(goal === 'get stronger'){
+                    sets = 3;
+                    reps = 8;
+                    rest = 90;
+                }
             }
         }
         return dailyExercises.push({ sets, reps, rest, exercise: compound })
