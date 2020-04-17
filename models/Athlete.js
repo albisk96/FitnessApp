@@ -5,10 +5,6 @@ const AthleteSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
   },
-  plan: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'plan'
-  },
   DOB: {
     type: Date,
     required: true
@@ -71,6 +67,7 @@ const AthleteSchema = new mongoose.Schema({
       type: Number
     }
   ],
+  workout: [],
   date: {
     type: Date,
     default: Date.now

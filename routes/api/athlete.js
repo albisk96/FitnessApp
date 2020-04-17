@@ -8,7 +8,6 @@ const PlanHelper = require('../../helpers/plan-helper');
 
 const User = require('../../models/User');
 const Athlete = require('../../models/Athlete');
-const Plan = require('../../models/Plan');
 const Exercise = require('../../models/Exercise');
 
 // @route    GET api/athlete
@@ -192,31 +191,33 @@ router.delete('/', auth, async (req, res) => {
 });
 
 
-// @route   GET api/athlete/plan
+// @route   PUT api/athlete/plan
 // @desc    Create an athlete workout program
 // @access  Private
-router.get(
+router.put(
   '/plan',
   [
     auth,
   ],
   async (req, res) => {
-
+  
     try {
         const athlete = await Athlete.findOne({ user: req.user.id });
         const exercise = await Exercise.find();
         const plan = PlanHelper.GeneratePlan(athlete, exercise);
-        // const newPLan = new Plan(plan);
-  
-        // const plan = await newPLan.save();
-  
-        res.json(plan);
+
+        athlete.workout.push(plan);
+
+        await athlete.save();
+
       } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
       }
     }
   );
+
+  
 
 
 

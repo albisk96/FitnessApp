@@ -58,7 +58,7 @@ function GeneratePlan(athlete, exercise){
             let dailyExercises = [];
             GetCardioExercise(i, dailyExercises)            
                 for(let k = 1; k <= musclesPerDay; k++){ // how many muscles per day
-                    WorkoutForOneDayGeneration(dailyExercises, k)
+                    WorkoutForOneDayGeneration(dailyExercises, k, days)
                 }
             workout.push({ day: i, exercises: dailyExercises })
         }
@@ -68,33 +68,14 @@ function GeneratePlan(athlete, exercise){
         for(let i = 1; i <= days; i++){ // Push an exercises to every day
 
             let dailyExercises = []; // Array of daily exercises
+            GetCardioExercise(i, dailyExercises) 
             if(i % 2 === 0){
                 for(let k = 1; k <= 2; k++){ // How many muscles per day 
-                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
-                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
-            
-                    for(let j = 1; j <= 3; j++){ // three exercises for every muscle
-                        let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: isolation })
-                    } 
-                    for(let l = 1; l <= 1; l++){ // three exercises for every muscle
-                        let compound = compoundExercises[tempExercise][Math.floor(Math.random() * compoundExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: compound })
-                    }
+                    WorkoutForOneDayGeneration(dailyExercises, k, 3) // Two muscles per day every two days 1 2 1 2
                 }
             } else {
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
-                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
-                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
-            
-                    for(let j = 1; j <= 3; j++){ // three exercises for every muscle
-                        let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: isolation })
-                    } 
-                    for(let l = 1; l <= 1; l++){ // three exercises for every muscle
-                        let compound = compoundExercises[tempExercise][Math.floor(Math.random() * compoundExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: compound })
-                    }
+                    WorkoutForOneDayGeneration(dailyExercises, k, 6) // One muscle per day every two days 1 2 1 2
                 }
             }
                 
@@ -108,33 +89,14 @@ function GeneratePlan(athlete, exercise){
         for(let i = 1; i <= days; i++){ // Push an exercises to every day
 
             let dailyExercises = []; // Array of daily exercises
+            GetCardioExercise(i, dailyExercises) 
             if(i === 1){
                 for(let k = 1; k <= 2; k++){ // How many muscles per day 
-                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
-                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
-            
-                    for(let j = 1; j <= 3; j++){ // three exercises for every muscle
-                        let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: isolation })
-                    } 
-                    for(let l = 1; l <= 1; l++){ // three exercises for every muscle
-                        let compound = compoundExercises[tempExercise][Math.floor(Math.random() * compoundExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: compound })
-                    }
+                    WorkoutForOneDayGeneration(dailyExercises, k, 3) // in first workout day of the week - 2 muscles with 3 exercises per muscle
                 }
             } else {
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
-                    const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // get muscle name
-                    muscleNames = muscleNames.filter(x => x !== tempExercise); // delete that muscle name from array 
-            
-                    for(let j = 1; j <= 3; j++){ // three exercises for every muscle
-                        let isolation = isolationExercises[tempExercise][Math.floor(Math.random() * isolationExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: isolation })
-                    } 
-                    for(let l = 1; l <= 1; l++){ // three exercises for every muscle
-                        let compound = compoundExercises[tempExercise][Math.floor(Math.random() * compoundExercises[tempExercise].length)]
-                        dailyExercises.push({ sets, reps, rest, exercise: compound })
-                    }
+                    WorkoutForOneDayGeneration(dailyExercises, k, 6) // other days one muscle per week with 6 exercises per muscle
                 }
             }
 
@@ -144,13 +106,13 @@ function GeneratePlan(athlete, exercise){
         return workout;
     }
 
-    function WorkoutForOneDayGeneration(dailyExercises, k){
+    function WorkoutForOneDayGeneration(dailyExercises, k, daysPerWeek){
         const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] 
         muscleNames = muscleNames.filter(x => x !== tempExercise);
          if(k == 1) {
              GetWarmUpExercise(stretchingExercises, dailyExercises);
          }
-         HowManyExercisesPerMucle(tempExercise, dailyExercises)
+         HowManyExercisesPerMucle(tempExercise, dailyExercises, daysPerWeek)
     }
 
     function HowManyMusclesPerDay(day){
@@ -163,10 +125,10 @@ function GeneratePlan(athlete, exercise){
                 return musclesPerDay = muscleNames.length / 6;
         }
     }
-    function HowManyExercisesPerMucle(tempExercise, dailyExercises){
+    function HowManyExercisesPerMucle(tempExercise, dailyExercises, daysPerWeek){
         let isolationNumber = null;
         let compoundNumber = null;
-            if(days == 6){
+            if(daysPerWeek == 6){ // it means 1 muscle per day
                 if(gender === 'male'){
                     if(level === 'beginner'){
                         if(goal === 'lose fat'){
@@ -216,7 +178,7 @@ function GeneratePlan(athlete, exercise){
                         }
                     }
                 }
-             } else if (days == 2){
+             } else if (daysPerWeek == 2){ // 3 muscles per day
                 if(gender === 'male'){
                     if(level === 'beginner'){
                         if(goal === 'lose fat'){
@@ -266,7 +228,7 @@ function GeneratePlan(athlete, exercise){
                         }
                     }
                 }
-                } else if (days == 3){
+                } else if (daysPerWeek == 3){ // 2 muscles per day
                     if(gender === 'male'){
                         if(level === 'beginner'){
                             if(goal === 'lose fat'){
