@@ -25,7 +25,6 @@ const AthleteSchema = new mongoose.Schema({
   ],
   days_per_week: {
       type: Number,
-      required: true
   },
   goal: {
       type: String,
@@ -33,7 +32,7 @@ const AthleteSchema = new mongoose.Schema({
   },
   level: {
       type: String,
-      enum: ['beginner', 'intermediate', 'expert']
+      enum: ['beginner', 'intermediate']
   },
   bmi: [
     {
@@ -42,10 +41,6 @@ const AthleteSchema = new mongoose.Schema({
   ],
   bmi_status: {
     type: String
-  },
-  bodyType : {
-    type: String,
-    enum: ['ectomorph', 'mesomorph', 'endomorph']
   },
   bodyFat: [
     {

@@ -21,6 +21,7 @@
     "mathjs": "^6.6.2",
     "mongoose": "^5.8.10",
     "normalize-url": "^5.0.0",
+    "react-datepicker": "^2.14.1",
     "react-stripe-checkout": "^2.6.3",
     "request": "^2.88.0"
   },

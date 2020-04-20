@@ -198,18 +198,38 @@ router.put(
   '/plan',
   [
     auth,
+    [
+      check('days_per_week', 'Days per week is required')
+        .not()
+        .isEmpty(),
+      check('level', 'Level is required')
+        .not()
+        .isEmpty(),
+      check('goal', 'Your goal is required')
+        .not()
+        .isEmpty(),
+    ]
   ],
   async (req, res) => {
-  
-    try {
-        const athlete = await Athlete.findOne({ user: req.user.id });
-        const exercise = await Exercise.find();
-        const plan = PlanHelper.GeneratePlan(athlete, exercise);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
+    const {
+      days_per_week,
+      level,
+      goal
+    } = req.body;
+
+    const athlete = await Athlete.findOne({ user: req.user.id });
+    const exercise = await Exercise.find();
+    const plan = PlanHelper.GeneratePlan(athlete, exercise, days_per_week, level, goal);
+    try {
         athlete.workout.push(plan);
 
         await athlete.save();
-
+        res.json(athlete);
       } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

@@ -1,14 +1,12 @@
 
-function GeneratePlan(athlete, exercise){
+function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
     
-    let days = athlete.days_per_week;
-    let level = athlete.level;
-    let goal = athlete.goal;
     let sets = null;
     let reps = null;
     let rest = null;
     let gender = athlete.gender;
-
+    console.log(level);
+    console.log(goal)
     const isolationExercises = {
         chest: exercise.filter(x => x.muscles === 'chest' && x.mechanicsType === 'isolation'),
         back: exercise.filter(x => (x.muscles === 'middle back' || x.muscles === 'lower back' || x.muscles === 'lats') && x.mechanicsType === 'isolation'),
@@ -50,22 +48,22 @@ function GeneratePlan(athlete, exercise){
     let musclesPerDay = null;
     let muscleNames = ['chest', 'back', 'shoulders', 'legs', 'triceps', 'biceps']
 
-    HowManyMusclesPerDay(days);
+    HowManyMusclesPerDay();
 
-    if(days == 2 || days == 3 || days == 6){ // How many days per week athlete can workout
+    if(daysPerWeek == 2 || daysPerWeek == 3 || daysPerWeek || 6){ // How many days per week athlete can workout
         let workout = []
-        for(let i = 1; i <= days; i++){ 
+        for(let i = 1; i <= daysPerWeek; i++){ 
             let dailyExercises = [];
             GetCardioExercise(i, dailyExercises)            
                 for(let k = 1; k <= musclesPerDay; k++){ // how many muscles per day
-                    WorkoutForOneDayGeneration(dailyExercises, k, days)
+                    WorkoutForOneDayGeneration(dailyExercises, k, daysPerWeek)
                 }
             workout.push({ day: i, exercises: dailyExercises })
         }
         return workout;
-    } else if(days == 4){ // How many days per week athlete can workout
+    } else if(daysPerWeek == 4){ // How many days per week athlete can workout
         let workout = []
-        for(let i = 1; i <= days; i++){ // Push an exercises to every day
+        for(let i = 1; i <= daysPerWeek; i++){ // Push an exercises to every day
 
             let dailyExercises = []; // Array of daily exercises
             GetCardioExercise(i, dailyExercises) 
@@ -84,9 +82,9 @@ function GeneratePlan(athlete, exercise){
         }
         
         return workout;
-    } else if(days == 5){ // How many days per week athlete can workout
+    } else if(daysPerWeek == 5){ // How many days per week athlete can workout
         let workout = []
-        for(let i = 1; i <= days; i++){ // Push an exercises to every day
+        for(let i = 1; i <= daysPerWeek; i++){ // Push an exercises to every day
 
             let dailyExercises = []; // Array of daily exercises
             GetCardioExercise(i, dailyExercises) 
@@ -115,16 +113,16 @@ function GeneratePlan(athlete, exercise){
          HowManyExercisesPerMucle(tempExercise, dailyExercises, daysPerWeek)
     }
 
-    function HowManyMusclesPerDay(day){
-        switch(day){
-            case 2:
-                return musclesPerDay = muscleNames.length / 2;
-            case 3:
-                return musclesPerDay = muscleNames.length / 3;
-            case 6:
-                return musclesPerDay = muscleNames.length / 6;
+    function HowManyMusclesPerDay(){
+        if(daysPerWeek == 2){
+            musclesPerDay = muscleNames.length / 2;
+        } else if(daysPerWeek == 3){
+            musclesPerDay = muscleNames.length / 3;
+        } else if(daysPerWeek == 6){
+            musclesPerDay = muscleNames.length / 6;
         }
     }
+
     function HowManyExercisesPerMucle(tempExercise, dailyExercises, daysPerWeek){
         let isolationNumber = null;
         let compoundNumber = null;
