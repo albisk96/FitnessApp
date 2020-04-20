@@ -5,16 +5,16 @@ import { selectAthleteIsFetching } from '../../redux/athlete/athlete.selectors';
 
 import WithSpinner from '../with-spinner/with-spinner.component';
 
-import AthleteOverview from './athlete.component';
+import PlanOverview from './plan.component';
 
 const mapStateToProps = createStructuredSelector({
     loading: selectAthleteIsFetching
 });
 
 
-const AthletePageContainer = compose (
+const WorkoutPlanPageContainer = compose (
     connect(mapStateToProps),
     WithSpinner
-)(AthleteOverview)
+)(PlanOverview)
 
-export default AthletePageContainer;
+export default WorkoutPlanPageContainer;

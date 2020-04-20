@@ -30,7 +30,7 @@ const NavBar = () => {
             <LinkNav to='/dashboard'>Dashboard</LinkNav>
             <Nav.Link href="/coach">Coaches</Nav.Link>
             <LinkNav to='/workouts'>Workouts</LinkNav>
-            <Nav.Link href="#link">Shop</Nav.Link>
+            <LinkNav to='/plan'>Workout Plan</LinkNav>
             <button className="btn btn-outline-danger my-2 my-sm-0 mr-3" onClick={removeSession} type="submit">Logout</button>
         </Nav>
     )
@@ -44,7 +44,9 @@ const NavBar = () => {
 
     return(
     <div>
-    <Navbar collapseOnSelect style={{ height: '20%', zIndex: '999'}} expand="lg" bg="dark" variant="dark">
+    
+    <Navbar collapseOnSelect 
+    style={{ height: '20%', background: !session ? '#000' : '#0f0f0f'}} expand="lg" variant="dark" sticky="top">
     <div className="container">
         <Navbar.Brand href="#home">Fitness App</Navbar.Brand>
         <Navbar.Toggle style={{ zIndex: '999'}}  aria-controls="responsive-navbar-nav" />

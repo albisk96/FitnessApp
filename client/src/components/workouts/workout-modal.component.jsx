@@ -12,7 +12,7 @@ const WorkoutModal = ({ workout }) => {
                 <Button variant="link" onClick={() => setModalShow(true)}>Read More</Button>
             </center>
             <Modal 
-                bodyStyle={{ padding: '0rem'}} containerStyle={{ padding: '0rem'}} 
+                bodyStyle={{ padding: '0rem'}} containerStyle={{ padding: '0rem', height: '30vh'}} 
                 show={modalShow} 
                 size="modal-90w" onHide={() => setModalShow(false)} 
                 title="Workout Information" 

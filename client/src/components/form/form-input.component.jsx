@@ -8,7 +8,6 @@ export const InputFeedback = ({ error }) =>
   <Form.Row>
     <Form.Group as={Col} md="12" controlId={controlId}>
       <Form.Label>{label}</Form.Label>
-
         <Form.Control 
         id={id} 
         name={name} 

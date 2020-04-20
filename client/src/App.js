@@ -6,10 +6,11 @@ import ErrorBoundary from './components/error-boundary/error-boundary.component'
 import Landing from './components/layout/landing.component';
 import Routes from './components/routing/Routes';
 import Navbar from './components/layout/navbar.component';
+import './App.css';
 
 const App = () => {  
     return (
-      <div>
+      <div className='background'>
       <Navbar />
         <Switch>
           <ErrorBoundary>

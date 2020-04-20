@@ -13,7 +13,7 @@ const Bmi = ({ bmi }) => {
     };
 
     return(
-        <div>
+        <div style={{ width: '50%'}}>
             <h3>BMI Data</h3>
             <ZingChart data={bmiData}/>
         </div>

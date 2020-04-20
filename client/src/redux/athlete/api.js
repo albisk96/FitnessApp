@@ -18,11 +18,8 @@ export function getCurrentProfile() {
     formData
   ) => async dispatch => {
     try {  
-      console.log(formData)
       const res = await axios.post('/api/athlete', formData);
-      console.log('hey')
       dispatch(getAthleteSuccess(res.data));
-      window.location.reload();
     } catch (error) { 
       dispatch(getAthleteError(error.message));
     }
@@ -47,3 +44,14 @@ export const calcBMI = (formData) => async dispatch => {
       dispatch(getAthleteError(error.message));
     }
   };
+
+    // Update BMI
+  export const generatePlan = (formData) => async dispatch => {
+      try {
+        console.log(` Form Data ${formData}`)
+        const res = await axios.put('/api/athlete/plan', formData);
+        dispatch(UpdateAthleteSuccess(res.data));
+      } catch (error) {
+        dispatch(getAthleteError(error.message));
+      }
+    };

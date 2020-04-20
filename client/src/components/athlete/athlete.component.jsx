@@ -1,67 +1,82 @@
 import React, { useState } from 'react';
-import { ListGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { JumboContainer, Center, Avatar, ProfileInfoContainer, PortfolioContainer, StyledWrap } from './athlete.styles'
+import { JumboContainer, Center, Avatar, ProfileInfoContainer, StyledNav, BackgroundImage } from './athlete.styles'
 import BmiData from '../charts/bmi.component';
 import BodyFat from '../charts/body-fat.component';
 import AdditionalData from '../charts/additional-data.component';
 import AthleteForm from '../athlete-form/athlete-create.component';
 import UpdateWeight from '../athlete-form/bmi-form.component';
 import BodyFatForm from '../athlete-form/bodyFat-form.component';
-import { Button, Tabs, Tab } from 'react-bootstrap'
+import { Button, Tabs, Tab, Nav } from 'react-bootstrap';
+import ProfileInfo from './athlete-profile.component'
+import Modal from '../modal/modal.component';
+
 
 const Athlete = ({ athlete: {athlete} }) => {
-  const [key, setKey] = useState('profile');
+  const [modalShow, setModalShow] = useState(false);
 
     return(
         <div>
         { athlete ? 
-            <div>
             <JumboContainer>
             <Center>
-                <Avatar alt="" src={`https://picsum.photos/id/${Math.floor((Math.random() * 100) + 1)}/300/200`} />
+                <Avatar alt="" src={athlete.user.avatar} />
             </Center>
-        </JumboContainer>
+        
         <div className="container">
         <ProfileInfoContainer>
         <Tabs 
             id="controlled-tab-example"
-            activeKey={key}
-            onSelect={(k) => setKey(k)}
             >
-            <StyledWrap eventKey="profile" title="Profile">
+            <Nav eventKey="profile" title="Profile">
+            <ProfileInfo athlete={athlete} />
+            </Nav>
+            <Nav eventKey="bmi" title="BMI Data">
             <Center>
-            <h1>{athlete.user.name}</h1>
-            <h3>{`Status: ${athlete.bmi_status}`}</h3>
-            <h3>{`Body Type: ${athlete.bodyType}`}</h3>
-            </Center>
-            </StyledWrap>
-            <StyledWrap eventKey="charts" title="Charts">
-            <Center>
-            <h1>Profile Data</h1>
-            <div style={{ display: "flex", justifyContent: "space-between", margin: "10% 20%"}}>
-              <UpdateWeight />
-              <BodyFatForm />
+            <h1>BMI Data</h1>
+            <div style={{ marginTop: '3%', marginBottom: '3%' }}>
+            <center>
+                <button className="btn btn-outline-primary" onClick={() => setModalShow(true)}>Update Data</button>
+            </center>
+            <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Update your BMI data" component={<UpdateWeight />} />
             </div>
             <div>
               <BmiData bmi={athlete.bmi}/>
             </div>
-            <div>
+            </Center>
+            </Nav>
+            <Nav eventKey="bodyFat" title="Body Data">
+            <Center>
+            <h1>Body Data</h1>
+            <div style={{ marginTop: '3%', marginBottom: '3%'  }}>
+            <center>
+                <button className="btn btn-outline-primary" onClick={() => setModalShow(true)}>Update Data</button>
+            </center>
+            <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Update your body fat data" component={<BodyFatForm />} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{ width: '50%', margin: '1%'}}>
               <BodyFat bodyFat={athlete.bodyFat} />
             </div>
-            <div>
+            <div style={{ width: '50%', margin: '1%'}}>
               <AdditionalData neck={athlete.neck} waist={athlete.waist} hip={athlete.hip} />
             </div>
+            </div>
             </Center>
-            </StyledWrap>
+            </Nav>
           </Tabs>
         </ProfileInfoContainer>
         </div>
-        </div> 
+        </JumboContainer>
         : 
-        <div>
-            <AthleteForm />
-        </div>
+          <BackgroundImage>
+        <div className="container" style={{ marginTop: '1%'}}>
+                <Center>
+                    <h1 style={{ color: 'white'}}>Please, create your Athlete profile!</h1>
+                </Center>
+                <AthleteForm />
+            </div>
+            </BackgroundImage>
     }
         </div>
     );

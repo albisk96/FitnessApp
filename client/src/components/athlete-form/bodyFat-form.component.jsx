@@ -11,7 +11,6 @@ const bodyFatForm = ({ bodyFat }) => {
       };
 
   return (
-    <FormContainer>
     <Formik
         onSubmit={SubmitForm}
         initialValues={{
@@ -88,7 +87,6 @@ const bodyFatForm = ({ bodyFat }) => {
         </Form>
     )}
   </Formik>
-  </FormContainer>
     );
 }
 

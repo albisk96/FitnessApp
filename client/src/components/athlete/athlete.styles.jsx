@@ -1,25 +1,17 @@
 import styled from 'styled-components';
-
 import { Jumbotron, Tabs, Tab, Nav } from 'react-bootstrap'
+import Background from '../../img/background.jpg';
 
 export const JumboContainer = styled(Jumbotron)`
-    width: 100vw;
-    height: 40%;
-    padding: 0;
-    margin: 0;
+    width: 100%;
+    height: 150vh;
     position: absolute;
-    background-image: url("https://picsum.photos/id/1021/1800/500");
-    border-top-width: 0;
-    border-bottom-width: 2px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    background-image: url(${Background});
+    margin-bottom: -5px;
+    margin-top: -5px;
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
 `;
 
 export const Center = styled.div`
@@ -35,20 +27,21 @@ export const Avatar = styled.img`
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    margin-top: 10%;
 `;
 
 export const ProfileInfoContainer = styled(Jumbotron)`
     position: absolute;
-    background: #ffd0d0;
+    color: white;
+    background: #000000ab;
     border-radius:20px!important;
     width: 65%;
     background-size: cover;
-    margin-top: 60vh;
+    margin-top: 5%;
 `;
 
 export const Line = styled.hr`
     width: 50%;
+    color: white;
 `;
 
 export const PortfolioContainer = styled.div`
@@ -57,6 +50,10 @@ export const PortfolioContainer = styled.div`
     display: flex;
 `;
 
-export const StyledWrap = styled(Nav)`
-    color: black;
-`
+export const BackgroundImage = styled(Jumbotron)`
+    border: 0px;
+    height: 140vh;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    background-image: url('https://images.pexels.com/photos/685530/pexels-photo-685530.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+`;

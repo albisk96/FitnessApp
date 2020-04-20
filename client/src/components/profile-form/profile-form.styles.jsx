@@ -5,7 +5,6 @@ export const FormContainer = styled.div`
     width: 50%;
     margin-left: 25%;
 `;
-
 export const SubmitButton = styled(Button)`
     margin: 5% 35%;
 `;
@@ -17,9 +16,11 @@ export const Center = styled.div`
 
 export const JumboContainer = styled(Jumbotron)`
     position: absolute;
-    background: #F7F7F7;
+    color: white;
+    background: #000000ab;
     border-radius:20px!important;
+    border: 1px solid #00000030;
     width: 65%;
     background-size: cover;
-    margin-top: 5%;
+    margin-top: 1%;
 `;

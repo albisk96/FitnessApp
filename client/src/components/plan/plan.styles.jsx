@@ -1,16 +1,13 @@
 import styled from 'styled-components';
-import Background from '../../img/background-1939128_1280.jpg';
+import Background from '../../img/dumbbell.jpg';
 import { Jumbotron, Tabs, Tab, Nav } from 'react-bootstrap'
 
-export const JumboContainer = styled(Jumbotron)`
-    width: 100%;
-    height: 300vh;
+export const JumboContainer = styled.div`
+   width: 100%;
+    height: 100vh;
     position: absolute;
-
-    background: rgb(0,0,0);
-background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(23,23,23,1) 31%, rgba(20,20,20,1) 62%, rgba(0,0,0,1) 93%);
+    background-image: url(${Background});
     margin-bottom: -5px;
-    margin-top: -5px;
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
     overflow: auto;
@@ -31,13 +28,14 @@ export const Avatar = styled.img`
     border-radius: 50%;
 `;
 
-export const ProfileInfoContainer = styled(Jumbotron)`
+export const PlanContainer = styled(Jumbotron)`
     position: absolute;
-    background: white;
+    color: white;
+    background: #000000ab;
     border-radius:20px!important;
     width: 65%;
     background-size: cover;
-    margin-top: 50vh;
+    margin-top: 5%;
 `;
 
 export const Line = styled.hr`
@@ -52,4 +50,13 @@ export const PortfolioContainer = styled.div`
 
 export const StyledWrap = styled(Nav)`
     color: black;
-`
+`;
+
+export const BackgroundImage = styled(Jumbotron)`
+    border: 0px;
+    height: 140vh;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    background-image: url('https://images.pexels.com/photos/685530/pexels-photo-685530.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+`;
+
