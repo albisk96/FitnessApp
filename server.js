@@ -57,6 +57,9 @@ app.get('/confirmation', auth, async (req, res) => {
  });
 
 
-const PORT = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(port, error => {
+  if (error) throw error;
+  console.log('Server running on port ' + port);
+});

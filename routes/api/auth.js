@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const cookie = require('cookie');
 const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const EMAIL_SECRET = 'asdf1093KMnzxcvnkljvasdu091asdasdasdsadaswqedwedfew23nlasdasdf';
