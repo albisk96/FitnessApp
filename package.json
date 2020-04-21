@@ -31,7 +31,6 @@
     "stripe": "^8.32.0"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
-    "nodemailer": "^6.4.6"
+    "concurrently": "^5.1.0"
   }
 }
