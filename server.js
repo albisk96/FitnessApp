@@ -5,8 +5,6 @@ const auth = require('./middleware/auth');
 
 const User = require('./models/User');
 
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
-
 const app = express();
 // Connect Database
 connectDB();
