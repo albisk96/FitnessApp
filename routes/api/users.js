@@ -14,8 +14,8 @@ const User = require('../../models/User');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: config.get('myGmailUser'),
-    pass: config.get('myGmailPassword'),
+    user: process.env.MY_GMAIL_USER,
+    pass: process.env.MY_GMAIL_PASSWORD,
   },
 });
 
@@ -79,7 +79,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.JWT_SECRET,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
