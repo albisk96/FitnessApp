@@ -31,6 +31,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+const port = process.env.PORT || 4000;
+
 app.listen(port, error => {
   if (error) throw error;
   console.log('Server running on port ' + port);
@@ -55,11 +57,3 @@ app.get('/confirmation', auth, async (req, res) => {
     });
     return res.redirect('http://localhost:3000');
  });
-
-
-const port = process.env.PORT || 4000;
-
-app.listen(port, error => {
-  if (error) throw error;
-  console.log('Server running on port ' + port);
-});
