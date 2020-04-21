@@ -1,19 +1,16 @@
 const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const connectDB = require('./config/db');
 const path = require('path');
 const auth = require('./middleware/auth');
+
 const User = require('./models/User');
 
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
-
 const app = express();
-const port = process.env.PORT || 4000;
+// Connect Database
+connectDB();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(cors());
+// Init Middleware
+app.use(express.json());
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
@@ -24,18 +21,15 @@ app.use('/api/payment', require('./routes/api/payment'));
 app.use('/api/athlete', require('./routes/api/athlete'));
 app.use('/api/exercise', require('./routes/api/exercise'));
 
+// Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Set static folder
+  app.use(express.static('client/build'));
 
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-app.listen(port, error => {
-  if (error) throw error;
-  console.log('Server running on port ' + port);
-});
 
 app.get('/confirmation', auth, async (req, res) => {
   var userId = req.user.id;
@@ -56,3 +50,8 @@ app.get('/confirmation', auth, async (req, res) => {
     });
     return res.redirect('http://localhost:3000');
  });
+
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

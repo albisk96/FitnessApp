@@ -3,6 +3,7 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 const cookie = require('cookie');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
@@ -13,8 +14,8 @@ const User = require('../../models/User');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.MY_GMAIL_USER,
-    pass: process.env.MY_GMAIL_PASSWORD,
+    user: config.get('myGmailUser'),
+    pass: config.get('myGmailPassword'),
   },
 });
 
@@ -78,7 +79,7 @@ router.post(
 
       jwt.sign(
         payload,
-        process.env.JWT_SECRET,
+        config.get('jwtSecret'),
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;

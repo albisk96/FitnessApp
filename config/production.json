@@ -1,0 +1,7 @@
+{
+    "mongoURI": "mongodb+srv://sports:sU22x9LBMs1pMPfc@cluster0-k9t42.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "veryverygoodjwtSecret",
+    "stripeSecretKey": "sk_test_aT968jd6ymJK4PYV9c5D3nnE00y4wG8sdE",
+    "myGmailUser": "albertas.kruzintaitis24@gmail.com",
+    "myGmailPassword": "Albertas865619940"
+}

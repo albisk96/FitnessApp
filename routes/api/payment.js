@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 const cookie = require('cookie');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const config = require('config');
+const stripeSecretKey = config.get('stripeSecretKey');
 const stripe = require('stripe')(stripeSecretKey);
 const nodemailer = require('nodemailer'); 
 
@@ -16,8 +17,8 @@ const User = require('../../models/User');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.MY_GMAIL_USER,
-    pass: process.env.MY_GMAIL_PASSWORD,
+    user: config.get('myGmailUser'),
+    pass: config.get('myGmailPassword'),
   },
 });
 
