@@ -1,8 +1,8 @@
 {
   "name": "bakalauras",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Fitness App",
+  "main": "server.js",
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
