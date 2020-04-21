@@ -7,7 +7,7 @@ const cookie = require('cookie');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const config = require('config');
-const stripeSecretKey = config.get('stripeSecretKey');
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = require('stripe')(stripeSecretKey);
 const nodemailer = require('nodemailer'); 
 
