@@ -6,8 +6,6 @@
 /client/.pnp
 /client/.pnp.js
 
-/.env
-
 # testing
 /client/coverage
 
@@ -20,7 +18,6 @@
 /client/.env.development.local
 /client/.env.test.local
 /client/.env.production.local
-
 
 /config/default.json
 
