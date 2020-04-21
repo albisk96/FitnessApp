@@ -8,6 +8,7 @@ const User = require('./models/User');
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const app = express();
+const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,8 +31,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
-
-const port = process.env.PORT || 4000;
 
 app.listen(port, error => {
   if (error) throw error;
