@@ -21,16 +21,6 @@ app.use('/api/payment', require('./routes/api/payment'));
 app.use('/api/athlete', require('./routes/api/athlete'));
 app.use('/api/exercise', require('./routes/api/exercise'));
 
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
-
 app.get('/confirmation', auth, async (req, res) => {
   var userId = req.user.id;
 
@@ -51,6 +41,15 @@ app.get('/confirmation', auth, async (req, res) => {
     return res.redirect('http://localhost:3000');
  });
 
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 4000;
 
