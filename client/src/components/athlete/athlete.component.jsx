@@ -75,7 +75,7 @@ const Athlete = ({ athlete: {athlete} }) => {
                     <h1 style={{ color: 'white'}}>Please, create your Athlete profile!</h1>
                 </Center>
                 <AthleteForm />
-            </div>
+          </div>
             </BackgroundImage>
     }
         </div>

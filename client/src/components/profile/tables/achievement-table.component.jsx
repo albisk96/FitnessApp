@@ -6,7 +6,7 @@ import { deleteAchievements } from '../../../redux/profile/api';
 
 const AchievementTable = ({ achievements, deleteAchievements }) => {
     return(
-        <div style={{ marginTop: '2%'}}>
+        <div style={{ marginTop: '2%', backgroundColor: 'white'}}>
         <Table  striped bordered>
         <thead>
             <tr>

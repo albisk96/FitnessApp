@@ -12,9 +12,6 @@ const CreateAthlete = ({ createProfile }) => {
         gender: yup.string().required('Your gender is required'),
         height: yup.string().required('Height is required'),
         weight: yup.string().required('weight is required'),
-        //days_per_week: yup.string().required('Days per week is required'),
-        //goal: yup.string().required('Your workout goal is required'),
-        //level: yup.string().required('Your workout level is required'),
         neck: yup.number().required('neck is required'),
         waist: yup.number().required('waist is required'),
         hip: yup.number().required('hip is required'),
@@ -35,9 +32,6 @@ const CreateAthlete = ({ createProfile }) => {
             gender: 'male',
             height: '',
             weight: '',
-            //days_per_week: '1',
-            //goal: 'lose fat',
-            //level: 'beginner',
             neck: '',
             waist: '',
             hip: '',
@@ -95,54 +89,6 @@ const CreateAthlete = ({ createProfile }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             /> 
-        {// <FormInput
-        //     name='level'
-        //     type='text'
-        //     label='Workout Level'
-        //     id='level'
-        //     error={touched.level && errors.level}
-        //     value={values.level}
-        //     onChange={handleChange}
-        //     onBlur={handleBlur}
-        //     as='select'
-        // >
-        //     <option value="beginner">Beginner</option>
-        //     <option value="intermediate">Intermediate</option>
-        //     <option value="expert">Expert</option>
-        // </FormInput> 
-        // <FormInput
-        //     name='days_per_week'
-        //     type='text'
-        //     label='How many days per week you can workout?'
-        //     id='days_per_week'
-        //     error={touched.days_per_week && errors.days_per_week}
-        //     value={values.days_per_week}
-        //     onChange={handleChange}
-        //     onBlur={handleBlur}
-        //     as='select'
-        // >
-        //     <option value="2">2</option>
-        //     <option value="3">3</option>
-        //     <option value="4">4</option>
-        //     <option value="5">5</option>
-        //     <option value="6">6</option>
-        // </FormInput> 
-        // <FormInput
-        //     name='goal'
-        //     type='text'
-        //     label='Workout Goal'
-        //     id='goal'
-        //     error={touched.goal && errors.goal}
-        //     value={values.goal}
-        //     onChange={handleChange}
-        //     onBlur={handleBlur}
-        //     as='select'
-        // > 
-        //     <option value="lose fat">Lose fat</option>
-        //     <option value="build muscle">Build muscle</option>
-        //     <option value="get stronger">Get stronger</option>
-        // </FormInput> 
-        }
         <FormInput
             name='neck'
             type='text'

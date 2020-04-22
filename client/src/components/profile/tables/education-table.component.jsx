@@ -5,7 +5,7 @@ import { deleteEducation } from '../../../redux/profile/api';
 
 const EducationTable = ({ education, deleteEducation }) => {
     return(
-        <div style={{ marginTop: '2%'}}>
+        <div style={{ marginTop: '2%', backgroundColor: 'white'}}>
         <Table  striped bordered>
         <thead>
             <tr>

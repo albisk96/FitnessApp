@@ -31,9 +31,9 @@ const AdminPage = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-    <div>
-        <table className="table table-striped table-bordered" style={{ width: '50vw', marginTop: '5%'}}>
-            <thead className="thead-dark">
+    <div className='container'>
+        <table className="table table-striped table-bordered" style={{ width: '50vw', marginTop: '5%', backgroundColor: 'white'}}>
+            <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
@@ -61,7 +61,7 @@ const AdminPage = () => {
                 ))}
             </tbody>
         </table> 
-        <center style={{ marginLeft: '48%'}}>
+        <center style={{ marginLeft: '46%', color: 'black'}}>
         <Pagination postsPerPage={usersPerPage} totalPosts={users.length} paginate={paginate}/>
         </center>
         <AddUser className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Register" buttonName="Add user" />

@@ -1,14 +1,12 @@
 import styled from 'styled-components';
-import Background from '../../img/background-1939128_1280.jpg';
 import { Jumbotron, Tabs, Tab, Nav } from 'react-bootstrap'
 
 export const JumboContainer = styled(Jumbotron)`
     width: 100%;
-    height: 300vh;
+    height: 320vh;
     position: absolute;
-
     background: rgb(0,0,0);
-background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(23,23,23,1) 31%, rgba(20,20,20,1) 62%, rgba(0,0,0,1) 93%);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(23,23,23,1) 31%, rgba(20,20,20,1) 62%, rgba(0,0,0,1) 93%);
     margin-bottom: -5px;
     margin-top: -5px;
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -53,3 +51,15 @@ export const PortfolioContainer = styled.div`
 export const StyledWrap = styled(Nav)`
     color: black;
 `
+export const FormBackground = styled.div`
+    width: 100%;
+    height: 120vh;
+    position: absolute;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(23,23,23,1) 31%, rgba(20,20,20,1) 62%, rgba(0,0,0,1) 93%);
+    margin-bottom: -5px;
+    margin-top: -5px;
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    overflow: auto;
+`;

@@ -11,7 +11,6 @@ export const JumboContainer = styled(Jumbotron)`
     margin-top: -5px;
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
-
 `;
 
 export const Center = styled.div`
@@ -52,7 +51,7 @@ export const PortfolioContainer = styled.div`
 
 export const BackgroundImage = styled(Jumbotron)`
     border: 0px;
-    height: 140vh;
+    height: 95vh;
     margin-top: -5px;
     margin-bottom: -5px;
     background-image: url('https://images.pexels.com/photos/685530/pexels-photo-685530.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
