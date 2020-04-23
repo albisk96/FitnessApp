@@ -102,9 +102,9 @@ router.post(
           if (err) throw err;
           let url = null;  
           if (process.env.NODE_ENV === 'production') {
-            url = `https://tranquil-dawn-70222.herokuapp.com/confirmation`
+            url = `https://tranquil-dawn-70222.herokuapp.com/api/confirmation`
           } else {
-            url = `http://localhost:4000/confirmation`
+            url = `http://localhost:4000/api/confirmation`
           } 
 
           res.set('Set-Cookie', cookie.serialize('jwtToken', token, {path: '/', httpOnly: true }))

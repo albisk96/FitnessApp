@@ -1,9 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
-const auth = require('./middleware/auth');
 
-const User = require('./models/User');
 
 const app = express();
 // Connect Database
@@ -20,34 +18,9 @@ app.use('/api/workouts', require('./routes/api/workouts'));
 app.use('/api/payment', require('./routes/api/payment'));
 app.use('/api/athlete', require('./routes/api/athlete'));
 app.use('/api/exercise', require('./routes/api/exercise'));
+app.use('/api/confirmation', require('./routes/api/confirmation'));
 
-app.get('/confirmation', auth, async (req, res) => {
-  var userId = req.user.id;
 
-  var conditions = {
-    _id : userId 
-  }
-
-  var update = {
-    confirmed: true
-  }
-
-  console.log(userId)
-  console.log(confirmed)
-
-    User.findOneAndUpdate(conditions,update,function(error,result){
-      if(error){
-        console.log(error);
-      }else{
-        console.log(result);
-      }
-    });
-    if (process.env.NODE_ENV === 'production') {
-      return res.redirect('http://tranquil-dawn-70222.herokuapp.com')
-    } else {
-      return res.redirect('http://localhost:3000');
-    }
- });
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
