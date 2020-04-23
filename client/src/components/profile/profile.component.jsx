@@ -98,7 +98,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
             </div>
             </Fragment> : 
             <FormBackground>
-                <div className="container" style={{ marginTop: '2%'}}>
+                <div className="container" style={{ marginTop: '1%'}}>
                     <Center>
                         <h1 style={{ color: 'white'}}>Please, create your Coach profile!</h1>
                     </Center>

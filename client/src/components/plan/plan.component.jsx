@@ -7,17 +7,16 @@ import PlanTable from './plan-table.component'
 
 const Plan = ({ athlete: {athlete} }) => {
 
-    console.log(athlete.workout.map(plan => plan.map(d => d.exercises)))
     return(
     <JumboContainer>
     <div className='container'>
     <Center>
+    {athlete ? 
         <PlanContainer>
             <h1 style={{ color: 'white'}}>Plan</h1>
             <div style={{ width: '50%'}}>
             <PlanForm />
             </div>
-            
             <Accordion>
             {
                 athlete.workout.map((plan, index) => (
@@ -38,10 +37,14 @@ const Plan = ({ athlete: {athlete} }) => {
                 </Card.Body>
                 </Accordion.Collapse>
                 </Card>
-                ))
+                )) 
             }
             </Accordion>
         </PlanContainer>
+        : <PlanContainer>
+                <div>Please, create your Profile first</div>
+                </PlanContainer>
+    }
         </Center>
         </div>
     </JumboContainer>

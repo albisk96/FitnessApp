@@ -70,7 +70,7 @@ const Athlete = ({ athlete: {athlete} }) => {
         </JumboContainer>
         : 
           <BackgroundImage>
-        <div className="container" style={{ marginTop: '1%'}}>
+        <div className="container">
                 <Center>
                     <h1 style={{ color: 'white'}}>Please, create your Athlete profile!</h1>
                 </Center>

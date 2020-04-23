@@ -4,6 +4,7 @@ import { Button, Jumbotron } from 'react-bootstrap';
 export const FormContainer = styled.div`
     width: 50%;
     margin-left: 25%;
+    margin: -3% 25%;
 `;
 export const SubmitButton = styled(Button)`
     margin: 5% 35%;
