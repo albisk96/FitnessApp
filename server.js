@@ -32,14 +32,18 @@ app.get('/confirmation', auth, async (req, res) => {
     confirmed: true
   }
 
+  console.log(userId)
+  console.log(confirmed)
+
     User.findOneAndUpdate(conditions,update,function(error,result){
       if(error){
+        console.log(error);
       }else{
         console.log(result);
       }
     });
     if (process.env.NODE_ENV === 'production') {
-      return res.redirect('https://tranquil-dawn-70222.herokuapp.com/')
+      return res.redirect('http://tranquil-dawn-70222.herokuapp.com')
     } else {
       return res.redirect('http://localhost:3000');
     }
