@@ -25,19 +25,21 @@ router.get('/', auth, async (req, res) => {
         }
       });
 
-    // User.updateOne(
-    //     {
-    //       _id: userId,
-    //     },
-    //     {
-    //      update
-    //     }
-    //   )
-
       console.log(req.user.confirmed)
 
       if (process.env.NODE_ENV === 'production') {
-        return res.redirect('http://tranquil-dawn-70222.herokuapp.com')
+        if(req.user.confirmed === true){
+          window.alert('Confirmation Successful')
+          return res.redirect('http://tranquil-dawn-70222.herokuapp.com')
+        } else {
+          User.findOneAndUpdate(conditions,update,function(error,result){
+            if(error){
+              window.alert('error')
+            }else{
+              console.log(result);
+            }
+          });
+          }
       } else {
         return res.redirect('http://localhost:3000');
       }
