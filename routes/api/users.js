@@ -8,14 +8,31 @@ const cookie = require('cookie');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const nodemailer = require('nodemailer'); 
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 
 const User = require('../../models/User');
+
+const oauth2Client = new OAuth2(
+  config.get('clientId'),
+  config.get('clientSecret'),
+  "https://developers.google.com/oauthplayground"
+);
+
+oauth2Client.setCredentials({
+  refresh_token: config.get('refreshToken')
+});
+const accessToken = oauth2Client.getAccessToken()
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: config.get('myGmailUser'),
-    pass: config.get('myGmailPassword'),
+    type: "OAuth2",
+       user: "albertas.kruzintaitis24@gmail.com", 
+       clientId: config.get('clientId'),
+       clientSecret: config.get('clientSecret'),
+       refreshToken: config.get('refreshToken'),
+       accessToken: accessToken
   },
 });
 
