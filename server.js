@@ -38,7 +38,11 @@ app.get('/confirmation', auth, async (req, res) => {
         console.log(result);
       }
     });
-    return res.redirect('http://localhost:3000');
+    if (process.env.NODE_ENV === 'production') {
+      return res.redirect('https://tranquil-dawn-70222.herokuapp.com/')
+    } else {
+      return res.redirect('http://localhost:3000');
+    }
  });
 
 // Serve static assets in production

@@ -83,7 +83,12 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          const url = `http://localhost:4000/confirmation`;   
+          let url = null;  
+          if (process.env.NODE_ENV === 'production') {
+            url = `https://tranquil-dawn-70222.herokuapp.com/confirmation`
+          } else {
+            url = `http://localhost:4000/confirmation`
+          } 
 
           res.set('Set-Cookie', cookie.serialize('jwtToken', token, {path: '/', httpOnly: true }))
           res.json({ token });
