@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import profileReducer from './profile/profile.reducer';
 import workoutsReducer from './workouts/workouts.reducer';
 import athleteReducer from './athlete/athlete.reducer';
+import exercisesReducer from './exercises/exercises.reducer';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 const rootReducer =  combineReducers({
   profile: profileReducer,
   workout: workoutsReducer,
-  athlete: athleteReducer
+  athlete: athleteReducer,
+  exercises: exercisesReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

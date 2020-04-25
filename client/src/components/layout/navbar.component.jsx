@@ -28,6 +28,7 @@ const NavBar = () => {
     const UserLinks = (
         <Nav className="mr-auto">
             <LinkNav to='/dashboard'>Dashboard</LinkNav>
+            <LinkNav to='/exercises'>Exercises</LinkNav>
             <Nav.Link href="/coach">Coaches</Nav.Link>
             <LinkNav to='/workouts'>Workouts</LinkNav>
             <LinkNav to='/plan'>Workout Plan</LinkNav>

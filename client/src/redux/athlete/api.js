@@ -20,6 +20,7 @@ export function getCurrentProfile() {
     try {  
       const res = await axios.post('/api/athlete', formData);
       dispatch(getAthleteSuccess(res.data));
+      window.location.reload();
     } catch (error) { 
       dispatch(getAthleteError(error.message));
     }
