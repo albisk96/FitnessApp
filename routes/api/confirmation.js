@@ -16,7 +16,9 @@ router.get('/:id', async (req, res) => {
       confirmed: true
     }
 
-    const user = await User.findOneAndUpdate(conditions,update)
+    const user = await User.findOneAndUpdate(conditions,update, {
+      new: true
+    })
         
       if(user.confirmed){
         if (process.env.NODE_ENV === 'production'){
