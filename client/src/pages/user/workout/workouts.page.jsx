@@ -1,5 +1,6 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
+import { search } from '../../../helpers/search';
 
 import { fetchWorkoutData } from '../../../redux/workouts/workouts.action';
 
@@ -10,20 +11,22 @@ const WorkoutsListContainer = lazy(() =>
 );
 
 export const WorkoutsPage = ({ fetchWorkoutData, match }) => {
+  const page = search.useQuery().get('page');
+
   useEffect(() => {
-    fetchWorkoutData();
-  }, [fetchWorkoutData]);
+    fetchWorkoutData(page);
+  }, [page]);
 
   console.log(match);
   return (
     <Suspense fallback={<Spinner />}>
-      <WorkoutsListContainer />
+      <WorkoutsListContainer page={page} />
   </Suspense>
   );
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchWorkoutData: () => dispatch(fetchWorkoutData())
+    fetchWorkoutData: (page) => dispatch(fetchWorkoutData(page))
 });
 
 export default connect(

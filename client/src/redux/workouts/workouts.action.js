@@ -1,9 +1,9 @@
 import WorkoutsActionTypes from './workouts.types';
 import axios from 'axios';
 
-export function fetchWorkoutData(pageNumber) {
+export function fetchWorkoutData() {
   return (dispatch) => {
-    return axios.get(`/api/workouts?page=${pageNumber}`)
+    return axios.get(`/api/workouts`)
       .then(response => {
         const workouts = response.data
         dispatch(fetchWorkoutsSuccess(workouts))

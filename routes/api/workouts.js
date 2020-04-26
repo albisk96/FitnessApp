@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
+const { getPagingQuery } = require('../../helpers/api-pagination');
 
 const Workout = require('../../models/Workout');
 const User = require('../../models/User');
@@ -63,8 +64,13 @@ router.post(
 // @desc     Get all workouts
 // @access   Private
 router.get('/', auth, async (req, res) => {
+  const perPage = req.query.page;
+  const { size, page } = getPagingQuery(perPage - 1)
   try {
-    const workouts = await Workout.find().sort({ date: -1 });
+
+    const workouts = await Workout.find().limit(size).skip(page * size).sort({ date: -1 });
+    const workoutsCount = await Workout.countDocuments({});
+    res.setHeader('x-total-count', workoutsCount)
     res.json(workouts);
   } catch (err) {
     console.error(err.message);

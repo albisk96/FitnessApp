@@ -1,41 +1,46 @@
-import React, {useState} from 'react';
-import { connect } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import WorkoutCard from '../cards/workout-card.component';
 import Pagination from '../pagination/pagination';
+import axios from 'axios';
+import { search } from '../../helpers/search';
 import { CardColumnsContainer } from './workouts.styles';
-import Moment from 'react-moment';
 
-const WorkoutList = ({ workout: {workouts} }) => {
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(6);
+const WorkoutList = () => {
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = workouts.filter(x => new Date(x.when) - new Date > 0).slice(indexOfFirstPost, indexOfLastPost);
-  
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const [workouts, setWorkouts] = useState([]);
+
+  const [itemsCount, setItemsCount] = useState(1);
+  const page = search.useQuery().get('page');
+
+  useEffect(() => {
+    async function fetchWorkoutData(){
+    const res = await axios.get(`/api/workouts?page=${page || 1}`)
+    setWorkouts(res.data)
+    setItemsCount(+res.headers['x-total-count'] || 1);
+} 
+fetchWorkoutData()
+}, [page])
+
 
   return (
     <div className='container'>
       <div style={{ marginTop: '5%'}}>
       { 
         <CardColumnsContainer>
-          {currentPosts.map((workout, index) => (
+          {workouts.map((workout, index) => (
             <WorkoutCard key={index} workout={workout} />
           ))}
-          </CardColumnsContainer>
+        </CardColumnsContainer>
       }
-      <Pagination postsPerPage={postsPerPage} totalPosts={workouts.length} paginate={paginate}/>
+      <Pagination
+      selectedPage={page ? +page : 1}
+      pagesCount={Math.ceil(itemsCount / 5)}
+      />
       </div>
     </div>
     )
 }
 
-const mapStateToProps = state => ({
-  workout: state.workout
-});
-
-
-
-export default connect(mapStateToProps)(WorkoutList);
+export default WorkoutList;
