@@ -5,8 +5,6 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
     let reps = null;
     let rest = null;
     let gender = athlete.gender;
-    console.log(level);
-    console.log(goal)
     const isolationExercises = {
         chest: exercise.filter(x => x.muscles === 'chest' && x.mechanicsType === 'isolation'),
         back: exercise.filter(x => (x.muscles === 'middle back' || x.muscles === 'lower back' || x.muscles === 'lats') && x.mechanicsType === 'isolation'),
@@ -50,7 +48,7 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
 
     HowManyMusclesPerDay();
 
-    if(daysPerWeek == 2 || daysPerWeek == 3 || daysPerWeek || 6){ // How many days per week athlete can workout
+    if(daysPerWeek == 2 || daysPerWeek == 3 || daysPerWeek == 6){ // How many days per week athlete can workout
         let workout = []
         for(let i = 1; i <= daysPerWeek; i++){ 
             let dailyExercises = [];
@@ -66,14 +64,18 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
         for(let i = 1; i <= daysPerWeek; i++){ // Push an exercises to every day
 
             let dailyExercises = []; // Array of daily exercises
+            console.log(i)
             GetCardioExercise(i, dailyExercises) 
+            
             if(i % 2 === 0){
                 for(let k = 1; k <= 2; k++){ // How many muscles per day 
                     WorkoutForOneDayGeneration(dailyExercises, k, 3) // Two muscles per day every two days 1 2 1 2
+                    console.log('Hello')
                 }
             } else {
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
                     WorkoutForOneDayGeneration(dailyExercises, k, 6) // One muscle per day every two days 1 2 1 2
+                    console.log('Hello 2')
                 }
             }
                 
@@ -331,7 +333,8 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
                 GetStrongerCardio(thisDay)
             }
         }
-        function BuildMuscleCardion(day){
+
+        function BuildMuscleCardion(day){ // Push cardio exercises by goal
             if(day % 3 > 1){
                 let cardio = cardioExercises[Math.floor(Math.random() * cardioExercises.length)]
                 dailyExercises.push({ min, exercise: cardio })

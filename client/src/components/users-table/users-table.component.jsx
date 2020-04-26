@@ -4,31 +4,32 @@ import EditUser from './edit-user.component';
 import DeleteUser from './delete-user.component';
 import Pagination from '../pagination/pagination';
 import axios from 'axios';
+import { search } from '../../helpers/search';
 
 const AdminPage = () => {
 
     const [users, setUsers] = useState([]);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [usersPerPage] = useState(5);
+    const [itemsCount, setItemsCount] = useState(1);
+    const page = search.useQuery().get('page');
   
     useEffect(() => {
-        function getUsers(){
-        axios.get('/api/users')
-        .then(
-            res => setUsers(res.data)
-        ).catch(function(err){
-            console.log(err)
-        })
+        async function getUsers(){
+        const res = await axios.get(`/api/users?page=${page || 1}`)
+        setUsers(res.data)
+        setItemsCount(+res.headers['x-total-count'] || 1);
     } 
     getUsers()
-    }, [])
+    }, [page])
 
-    const indexOfLastUser = currentPage * usersPerPage;
-    const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    // useEffect(() => {
+    //     async function getTrainers() {
+    //       const res = await axios.get(`/api/trainer?page=${page || 1}`);
+    //       setTrainers(res.data);
+    //       setItemsCount(+res.headers['x-total-count'] || 1);
+    //     }
+    //     getTrainers();
+    //   }, [page]);
 
     return (
     <div className='container'>
@@ -44,7 +45,7 @@ const AdminPage = () => {
             </tr>
             </thead>
             <tbody>
-                {currentUsers.map((user, index) => (
+                {users.map((user, index) => (
                     <tr key={index}>
                     <th scope="col">{index + 1}</th>
                     <td>{user.name}</td>
@@ -62,7 +63,12 @@ const AdminPage = () => {
             </tbody>
         </table> 
         <center style={{ marginLeft: '46%', color: 'black'}}>
-        <Pagination postsPerPage={usersPerPage} totalPosts={users.length} paginate={paginate}/>
+
+        <Pagination
+        selectedPage={page ? +page : 1}
+        pagesCount={Math.ceil(itemsCount / 5)}
+        />
+
         </center>
         <AddUser className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Register" buttonName="Add user" />
     </div>

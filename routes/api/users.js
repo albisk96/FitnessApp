@@ -9,6 +9,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const nodemailer = require('nodemailer'); 
 const { google } = require("googleapis");
+const { getPagingQuery } = require('../../helpers/api-pagination');
 const OAuth2 = google.auth.OAuth2;
 
 const User = require('../../models/User');
@@ -128,8 +129,12 @@ router.post(
 // @desc     Get all users
 // @access   Private
 router.get('/', auth, async (req, res) => {
+  const perPage = req.query.page;
+  const { size, page } = getPagingQuery(perPage - 1)
   try {
-    const users = await User.find({}).sort({ date: -1 });
+    const users = await User.find({}).limit(size).skip(page * size).sort({ date: -1 });
+    const userCount = await User.countDocuments({})
+    res.setHeader('x-total-count', userCount)
     res.json(users);
   } catch (err) {
     console.error(err.message);
