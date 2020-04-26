@@ -89,35 +89,18 @@ router.post(
 
       await user.save();
 
-      const payload = {
-        user: {
-          id: user.id,
-        }
-      };
+      let url = null;  
+      if (process.env.NODE_ENV === 'production') {
+        url = `https://tranquil-dawn-70222.herokuapp.com/api/confirmation/${user.id}`
+      } else {
+        url = `http://localhost:4000/api/confirmation/${user.id}`
+      }
 
-      jwt.sign(
-        payload,
-        config.get('jwtSecret'),
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err;
-          let url = null;  
-          if (process.env.NODE_ENV === 'production') {
-            url = `https://tranquil-dawn-70222.herokuapp.com/api/confirmation/${user.id}`
-          } else {
-            url = `http://localhost:4000/api/confirmation/${user.id}`
-          } 
-
-          res.set('Set-Cookie', cookie.serialize('jwtToken', token, {path: '/', httpOnly: true }))
-          res.json({ token });
-
-          transporter.sendMail({
-            to: email,
-            subject: 'Confirm Email',
-            html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
-          })
-        },
-      );
+      transporter.sendMail({
+        to: email,
+        subject: 'Confirm Email',
+        html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
+      })
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
