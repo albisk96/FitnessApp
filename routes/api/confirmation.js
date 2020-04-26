@@ -16,19 +16,17 @@ router.get('/:id', async (req, res) => {
       confirmed: true
     }
 
-    await User.findOneAndUpdate(conditions,update,function(error, result){
-        if(error){
-          console.log(error);
-        } else {
-          if(result.confirmed){
-            if (process.env.NODE_ENV === 'production'){
-              return res.redirect('http://tranquil-dawn-70222.herokuapp.com')
-          } else {
+    const user = await User.findOneAndUpdate(conditions,update)
+        
+      if(user.confirmed){
+        if (process.env.NODE_ENV === 'production'){
+          return res.redirect('http://tranquil-dawn-70222.herokuapp.com')
+                  } else {
             return res.redirect('http://localhost:3000');
           }
-          }
-        }
-      });  
+      } else {
+        console.log('error')
+      }
    });
 
    module.exports = router;
