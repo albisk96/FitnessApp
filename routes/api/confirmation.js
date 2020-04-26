@@ -16,7 +16,7 @@ router.get('/:id', auth, async (req, res) => {
       confirmed: true
     }
 
-      User.findOneAndUpdate(conditions,update,function(error){
+    await User.findOneAndUpdate(conditions,update,function(error){
         if(error){
           console.log(error);
         }
