@@ -10,7 +10,7 @@ import MyProfile from '../../pages/profile/profile.page';
 import CoachProfile from '../../components/coaches/coach-profile.component';
 import Dashboard from '../../pages/user/user.page';
 import Plan from '../../pages/user/plan.page';
-import Exercises from '../../pages/exercises/exercises.page';
+import Exercises from '../../components/exercises/exercises-list.component';
 
 const Routes = () => {
 

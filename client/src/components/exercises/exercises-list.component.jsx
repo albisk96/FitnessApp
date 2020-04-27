@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import Exercise from './exercises.component';
 import Pagination from '../pagination/pagination';
-import { SearchBox } from '../search-box/search-box.component';
+import Search from '../search-box/search-box.component';
+import { search } from '../../helpers/search';
+import axios from 'axios';
 
-const ExercisesList = ({ exercises: {exercises} }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(10);
+const ExercisesList = () => {
 
-    const [search, setSearch] = useState('')
-  
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [exercises, setExercises] = useState([]);
+    const query = search.useQuery().get('query');
+    const [itemsCount, setItemsCount] = useState(1);
+    const page = search.useQuery().get('page');
 
-    const onSearchCange = event => {
-        setSearch(event.target.value)
+   useEffect(() => {
+    async function getExercisesList() {
+          const res = await axios.get(`/api/exercise?page=${page || 1}${query ? `&query=${query}` : ''}`)
+          setExercises(res.data)
+          setItemsCount(+res.headers['x-total-count'] || 1)
       }
-
-    const filteredExercises = exercises.filter(exercise => (
-        exercise.name.slice(indexOfFirstPost, indexOfLastPost).toLowerCase().includes(search.toLowerCase())
-    ));
+      getExercisesList()
+   }, [page, query]) 
+   console.log(query)
 
     return(
         <div className="container">
-        <SearchBox onChange={onSearchCange} />
-        {filteredExercises.map((ex, index) => (
+        <Search />
+        {exercises.map((ex, index) => (
             <Exercise key={index} exercise={ex} />
         ))}
         <div style={{ marginLeft: '30%', marginBottom: '5%'}}>
-        <Pagination postsPerPage={postsPerPage} totalPosts={exercises.length} paginate={paginate}/>
+        <Pagination
+        selectedPage={page ? +page : 1}
+        pagesCount={Math.ceil(itemsCount / 8)}
+        />
         </div>
         </div>
     )
 }
 
-const mapStateToProps = state => ({
-    exercises: state.exercises,
-});
-
-export default connect(mapStateToProps)(ExercisesList);
+export default ExercisesList;

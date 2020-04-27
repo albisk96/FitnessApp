@@ -13,6 +13,7 @@ const nodemailer = require('nodemailer');
 
 const Workout = require('../../models/Workout');
 const User = require('../../models/User');
+const Athlete = require('../../models/Athlete');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -23,6 +24,7 @@ const transporter = nodemailer.createTransport({
 });
 
   router.post('/:id', auth, async(req, res) => {
+
     const body = {
         source: req.body.token.id,
         amount: req.body.amount,
@@ -33,18 +35,28 @@ const transporter = nodemailer.createTransport({
       await Workout.findByIdAndUpdate(
         {_id: req.params.id},
         {$inc: {entries: -1}})
+
+      
+
       
       let workout = await Workout.findById(req.params.id);
       const user = await User.findById(req.user.id).select('-password');
-  
+      const athlete = await Athlete.findOne({user: req.user.id});
+
+
       const newReservation = {
         email: user.email,
         name: user.name,
         user: req.user.id
       };
 
-      workout.reservations.unshift(newReservation);
+      await workout.reservations.unshift(newReservation);
+     
       await workout.save();
+      await athlete.myWorkoutList.unshift({workout: workout._id});
+      
+      await athlete.save();
+      
 
         stripe.charges.create(body, (stripeErr, stripeRes) => {
             if (stripeErr || workout.entries < 0) {

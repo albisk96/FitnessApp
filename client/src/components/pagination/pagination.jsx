@@ -74,6 +74,7 @@ function Pagination({ pagesCount, selectedPage = 1 }) {
 
   return <BtPagination>{generatePaginationPages()}</BtPagination>;
 }
+
 Pagination.propTypes = {
   pagesCount: PropTypes.number,
   selectedPage: PropTypes.number,

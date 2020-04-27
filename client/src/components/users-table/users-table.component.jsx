@@ -22,15 +22,6 @@ const AdminPage = () => {
     getUsers()
     }, [page])
 
-    // useEffect(() => {
-    //     async function getTrainers() {
-    //       const res = await axios.get(`/api/trainer?page=${page || 1}`);
-    //       setTrainers(res.data);
-    //       setItemsCount(+res.headers['x-total-count'] || 1);
-    //     }
-    //     getTrainers();
-    //   }, [page]);
-
     return (
     <div className='container'>
         <table className="table table-striped table-bordered" style={{ width: '50vw', marginTop: '5%', backgroundColor: 'white'}}>

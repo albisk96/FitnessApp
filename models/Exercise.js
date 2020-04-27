@@ -24,10 +24,18 @@ const ExerciseSchema = new mongoose.Schema({
       type: String,
       enum: ['beginner', 'intermediate', 'expert']
   },
+  index: {
+      type: String
+  },
   date: {
     type: Date,
     default: Date.now
   }
 });
+
+ExerciseSchema.pre('save', function() {
+    this.index = [this.name, this.muscles, this.exerciseType].join(' ').toLowerCase()
+})
+
 
 module.exports = Exercise = mongoose.model('exercise', ExerciseSchema);

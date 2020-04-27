@@ -15,7 +15,7 @@ const Exercise = require('../../models/Exercise');
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
-    const athlete = await Athlete.findOne({user: req.user.id}).populate('user');
+    const athlete = await Athlete.findOne({user: req.user.id}).populate('user').populate('workout');
 
     if (!athlete) {
       return res.status(400).json('There is no athlete for this user');
@@ -236,6 +236,17 @@ router.put(
       }
     }
   );
+
+  router.get('/migrate', async (req, res) => {
+    try {
+      const athlete = await Athlete.find({});
+      athlete.forEach(async x => await x.save());
+      res.send('migrated')
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
 
   
 

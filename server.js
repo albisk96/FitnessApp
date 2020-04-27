@@ -1,7 +1,5 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const path = require('path');
-const User = require('./models/User');
 const compression = require('compression');
 const enforce = require('express-sslify');
 

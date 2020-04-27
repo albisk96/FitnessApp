@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const { getPagingQuery } = require('../../helpers/api-pagination');
+const { getSearchQuery } = require('../../helpers/search');
 
 const Exercise = require('../../models/Exercise');
 
@@ -49,8 +51,27 @@ router.post(
 // @access   Private
 router.get('/', async (req, res) => {
     try {
-      const exercise = await Exercise.find().sort({ date: -1 });
+      const perPage = req.query.page;
+      const { size, page } = getPagingQuery(perPage - 1)
+
+      const searchQuery = getSearchQuery(req.query.query || '', 'index')
+
+      const exercise = await Exercise.find({...searchQuery}).limit(size).skip(page * size).sort({ date: -1 });
+      const exercisesCount = await Exercise.countDocuments({...searchQuery})
+      console.log(searchQuery)
+      res.setHeader('x-total-count', exercisesCount)
       res.json(exercise);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
+  router.get('/migrate', async (req, res) => {
+    try {
+      const exercise = await Exercise.find({});
+      exercise.forEach(async x => await x.save());
+      res.send('migrated')
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

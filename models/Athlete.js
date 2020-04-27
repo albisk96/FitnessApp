@@ -63,6 +63,18 @@ const AthleteSchema = new mongoose.Schema({
     }
   ],
   workout: [],
+  myWorkoutList: [
+    {
+      workout: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'workout'
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now
