@@ -70,7 +70,6 @@ router.get('/', auth, async (req, res) => {
 
     const workouts = await Workout.find().limit(size).skip(page * size).sort({ date: -1 });
     const workoutsCount = await Workout.countDocuments({});
-    console.log('DFSGLKMRELWFMRELIMFCIMEQWDIOPMCDSLIKVMJOLRIJMG')
     res.setHeader('x-total-count', workoutsCount)
     res.json(workouts);
   } catch (err) {
