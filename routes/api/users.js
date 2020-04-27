@@ -117,6 +117,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const users = await User.find({}).limit(size).skip(page * size).sort({ date: -1 });
     const userCount = await User.countDocuments({})
+    console.log('DFSGLKMRELWFMRELIMFCIMEQWDIOPMCDSLIKVMJOLRIJMG')
     res.setHeader('x-total-count', userCount)
     res.json(users);
   } catch (err) {
