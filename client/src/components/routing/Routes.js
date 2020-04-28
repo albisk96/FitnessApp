@@ -4,7 +4,7 @@ import UserPage from '../../pages/user/user.page';
 import CoachPage from '../../pages/coach/coach.page';
 import ProtectedRoutes from './ProtectedRoutes';
 import AdminPage from '../../pages/admin/admin.component.';
-import Workout from '../../components/workouts/workout-list.component';
+import Workout from '../../pages/user/workout/workouts.page';
 import AddWorkout from '../workouts/add-workout.component';
 import MyProfile from '../../pages/profile/profile.page';
 import CoachProfile from '../../components/coaches/coach-profile.component';

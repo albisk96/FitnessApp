@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form/form-input.component';
 import { createWorkout } from '../../redux/workouts/workouts.action';
+import "react-datepicker/dist/react-datepicker.css"
 import { Formik, Form } from 'formik';
+import {DatePickerField} from '../../helpers/datepicker';
 import * as yup from 'yup';
 
 const AddWorkoutForm = ({ createWorkout }) => {
@@ -34,7 +36,7 @@ const AddWorkoutForm = ({ createWorkout }) => {
             level: 'beginner',
             entries: '',
             description: '',
-            when: '',
+            when: new Date(),
         }}
     >
         {({
@@ -93,16 +95,15 @@ const AddWorkoutForm = ({ createWorkout }) => {
             onChange={handleChange}
             onBlur={handleBlur}
         /> 
-        <FormInput
-            name='when'
-            type='date'
-            label='When it starts'
-            id='when'
-            error={touched.when && errors.when}
-            value={values.when}
-            onChange={handleChange}
-            onBlur={handleBlur}
-        /> 
+        <label>Choose Date and Time</label> <br />
+        <DatePickerField 
+        name="when"  
+        showTimeSelect
+      timeFormat="HH:mm"
+      timeIntervals={15}
+      timeCaption="time"
+      dateFormat="MMMM d, yyyy h:mm aa"
+        />
         <FormInput
             name='price'
             type='text'

@@ -13,7 +13,7 @@ import AddWorkout from '../workouts/add-workout.component';
 import Comments from './comments/comments.component';
 import { Button, Tabs, Tab } from 'react-bootstrap'
 import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
-import { Center, ProfileInfoContainer, Line, PortfolioContainer, StyledWrap, FormBackground } from './profile.styles.jsx'
+import { Center, ProfileInfoContainer, Line, PortfolioContainer, StyledWrap, FormBackground, JumboContainer } from './profile.styles.jsx'
 import { useAuth } from '../../contexts';
 
 const Profile = ({ profile: { profile }, workout: {workouts} }) => {
@@ -31,7 +31,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
     return(
         <div>
             {profile ? 
-            <Fragment>
+            <JumboContainer>
             <div>
                 <ProfileAvatar profile={profile} />
             </div>
@@ -96,7 +96,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
             </Tabs>
                 </ProfileInfoContainer>
             </div>
-            </Fragment> : 
+            </JumboContainer> : 
             <FormBackground>
                 <div className="container" style={{ marginTop: '1%'}}>
                     <Center>

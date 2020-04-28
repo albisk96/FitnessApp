@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { search } from '../../../helpers/search';
 
 import { fetchWorkoutData } from '../../../redux/workouts/workouts.action';
+import { getCurrentProfile } from '../../../redux/athlete/api'
 
 import Spinner from '../../../components/spinner/spinner.component';
 
@@ -10,26 +11,36 @@ const WorkoutsListContainer = lazy(() =>
   import('./workouts.container')
 );
 
-export const WorkoutsPage = ({ fetchWorkoutData, match }) => {
+export const WorkoutsPage = ({ fetchWorkoutData, getCurrentProfile, athlete: {athlete, loading} }) => {
   const page = search.useQuery().get('page');
-
+  const nullAthlete = !athlete;
   useEffect(() => {
     fetchWorkoutData(page);
-  }, [page]);
+  }, [page, nullAthlete]);
 
-  console.log(match);
+  useEffect(() => {
+    getCurrentProfile();
+  }, [getCurrentProfile]);
+
   return (
-    <Suspense fallback={<Spinner />}>
-      <WorkoutsListContainer page={page} />
-  </Suspense>
+    <div>
+    {athlete === null || loading ? (
+      <Spinner />
+    ) : (<WorkoutsListContainer page={page} />)}
+    </div>
   );
 };
 
+const mapStateToProps = state => ({
+  athlete: state.athlete
+});
+
 const mapDispatchToProps = dispatch => ({
-    fetchWorkoutData: (page) => dispatch(fetchWorkoutData(page))
+    fetchWorkoutData: (page) => dispatch(fetchWorkoutData(page)),
+    getCurrentProfile: () => dispatch(getCurrentProfile())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(WorkoutsPage);

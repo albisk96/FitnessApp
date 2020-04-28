@@ -15,7 +15,7 @@ const Exercise = require('../../models/Exercise');
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
-    const athlete = await Athlete.findOne({user: req.user.id}).populate('user').populate('workout');
+    const athlete = await Athlete.findOne({user: req.user.id}).populate('user');
 
     if (!athlete) {
       return res.status(400).json('There is no athlete for this user');

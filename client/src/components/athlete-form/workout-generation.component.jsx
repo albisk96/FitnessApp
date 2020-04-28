@@ -50,7 +50,6 @@ const CreateAthlete = ({ generatePlan }) => {
         >
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
-            <option value="expert">Expert</option>
         </FormInput> 
         <FormInput
             name='days_per_week'

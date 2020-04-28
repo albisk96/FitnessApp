@@ -9,12 +9,9 @@ import UpdateWeight from '../athlete-form/bmi-form.component';
 import BodyFatForm from '../athlete-form/bodyFat-form.component';
 import { Button, Tabs, Tab, Nav } from 'react-bootstrap';
 import ProfileInfo from './athlete-profile.component'
-import Modal from '../modal/modal.component';
-
+import Trainings from './trainings.component';
 
 const Athlete = ({ athlete: {athlete} }) => {
-  const [modalShow, setModalShow] = useState(false);
-
     return(
         <div>
         { athlete ? 
@@ -34,11 +31,8 @@ const Athlete = ({ athlete: {athlete} }) => {
             <Nav eventKey="bmi" title="BMI Data">
             <Center>
             <h1>BMI Data</h1>
-            <div style={{ marginTop: '3%', marginBottom: '3%' }}>
-            <center>
-                <button className="btn btn-outline-primary" onClick={() => setModalShow(true)}>Update Data</button>
-            </center>
-            <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Update your BMI data" component={<UpdateWeight />} />
+            <div style={{ marginTop: '3%', marginBottom: '3%', width: '50%'}}>
+            <UpdateWeight />
             </div>
             <div>
               <BmiData bmi={athlete.bmi}/>
@@ -48,11 +42,8 @@ const Athlete = ({ athlete: {athlete} }) => {
             <Nav eventKey="bodyFat" title="Body Data">
             <Center>
             <h1>Body Data</h1>
-            <div style={{ marginTop: '3%', marginBottom: '3%'  }}>
-            <center>
-                <button className="btn btn-outline-primary" onClick={() => setModalShow(true)}>Update Data</button>
-            </center>
-            <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Update your body fat data" component={<BodyFatForm />} />
+            <div style={{ marginTop: '3%', marginBottom: '3%', width: '50%' }}>
+            <BodyFatForm />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between'}}>
             <div style={{ width: '50%', margin: '1%'}}>
@@ -63,6 +54,9 @@ const Athlete = ({ athlete: {athlete} }) => {
             </div>
             </div>
             </Center>
+            </Nav>
+            <Nav eventKey="myWorkouts" title="Trainings">
+              <Trainings />
             </Nav>
           </Tabs>
         </ProfileInfoContainer>

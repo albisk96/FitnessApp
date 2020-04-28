@@ -63,11 +63,32 @@ const AthleteSchema = new mongoose.Schema({
     }
   ],
   workout: [],
-  myWorkoutList: [
+  reservations: [
     {
       workout: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'workout'
+      },
+      coach: {
+        type: String
+      },
+      name: {
+        type: String
+      },
+      title: {
+        type: String
+      },
+      kind: {
+        type: String
+      },
+      address: {
+        type: String
+      },
+      price: {
+        type: String
+      },
+      when: {
+        type: Date
       },
       date: {
         type: Date,

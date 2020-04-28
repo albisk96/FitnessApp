@@ -53,7 +53,18 @@ const transporter = nodemailer.createTransport({
       await workout.reservations.unshift(newReservation);
      
       await workout.save();
-      await athlete.myWorkoutList.unshift({workout: workout._id});
+
+      const newWorkout = {
+        workout: workout.id,
+        name: workout.name,
+        title: workout.title,
+        kind: workout.kind,
+        address: workout.address,
+        price: workout.price,
+        when: workout.when
+      }
+
+      await athlete.reservations.unshift(newWorkout);
       
       await athlete.save();
       

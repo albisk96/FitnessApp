@@ -3,7 +3,7 @@ import { Jumbotron, Tabs, Tab, Nav } from 'react-bootstrap'
 
 export const JumboContainer = styled(Jumbotron)`
     width: 100%;
-    height: 320vh;
+    height: auto !important;
     position: absolute;
     background: rgb(0,0,0);
     background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(23,23,23,1) 31%, rgba(20,20,20,1) 62%, rgba(0,0,0,1) 93%);
@@ -11,7 +11,10 @@ export const JumboContainer = styled(Jumbotron)`
     margin-top: -5px;
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
-    overflow: auto;
+    -webkit-background-size: cover;
+   -moz-background-size: cover;
+   background-size: cover;
+   -o-background-size: cover;
 `;
 
 export const Center = styled.div`
@@ -30,12 +33,10 @@ export const Avatar = styled.img`
 `;
 
 export const ProfileInfoContainer = styled(Jumbotron)`
-    position: absolute;
     background: white;
     border-radius:20px!important;
-    width: 65%;
     background-size: cover;
-    margin-top: 50vh;
+    margin-top: 10vh;
 `;
 
 export const Line = styled.hr`
