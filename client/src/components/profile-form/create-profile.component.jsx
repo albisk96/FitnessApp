@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form/form-input.component';
 import { createProfile } from '../../redux/profile/api';
-import { FormContainer, SubmitButton, Center, JumboContainer } from './profile-form.styles';
+import { FormContainer, SubmitButton, Center, JumboContainer } from '../profile-form/profile-form.styles';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 
 const CreateMyProfile = ({ createProfile }) => {
     const schema = yup.object({
-        location: yup.string().required('City is required'),
         bio: yup.string().required('Description is required'),
       });
 

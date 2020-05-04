@@ -37,6 +37,7 @@ export const getProfileById = (userId) => async dispatch => {
 
   // Create or update profile
   export const createProfile = (formData) => async dispatch => {
+    console.log(formData)
     try {  
       const res = await axios.post('/api/coach', formData);
       dispatch(getProfileSuccess(res.data));

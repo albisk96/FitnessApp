@@ -11,6 +11,7 @@ import IconButton from '../icon-button/icon.component';
 import ProfileAvatar from './avatar/avatar.component';
 import AddWorkout from '../workouts/add-workout.component';
 import Comments from './comments/comments.component';
+import Schedule from './schedule/schedule.component';
 import { Button, Tabs, Tab } from 'react-bootstrap'
 import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
 import { Center, ProfileInfoContainer, Line, PortfolioContainer, StyledWrap, FormBackground, JumboContainer } from './profile.styles.jsx'
@@ -42,7 +43,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
             activeKey={key}
             onSelect={(k) => setKey(k)}
             >
-                <StyledWrap eventKey="profile" title="Profile">
+                <Tab eventKey="profile" title="Profile">
                 { profile.user._id === session.id ? 
                     <Fragment>
                     <Center style={{marginBottom: "2%"}}>
@@ -84,9 +85,12 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                         }
                         <Button onClick={handleClick} variant="outline-dark">{!more ? 'Show less' : 'Show All'}</Button>
                     </Center>
-                </StyledWrap>
+                </Tab>
                 <Tab eventKey="Reviews" title="Reviews">
                     <Comments profile={profile} id={session.id} />
+                </Tab>
+                <Tab eventKey="schedule" title="Schedule">
+                    <Schedule  />
                 </Tab>
                 { profile.user._id === session.id ? 
                     <Tab eventKey="Archive" title="Archive Workouts">

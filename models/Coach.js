@@ -100,14 +100,14 @@ const CoachSchema = new mongoose.Schema({
       }
     }
   ],
-  workSchedule: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'WorkSchedule' 
-  },
-  reservedWorkouts: {  
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Workout' 
-  },
+  // workSchedule: { 
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref: 'WorkSchedule' 
+  // },
+  // reservedWorkouts: {  
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref: 'Workout' 
+  // },
   date: {
     type: Date,
     default: Date.now

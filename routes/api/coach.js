@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const wrap = require('express-async-wrap');
 // bring in normalize to give us a proper url, regardless of what user entered
 const normalize = require('normalize-url');
 
 const Coach = require('../../models/Coach');
 const User = require('../../models/User');
 const Workout = require('../../models/Workout');
+const WorkSchedule = require('../../models/WorkSchedule');
 
 // @route    GET api/coach/me
 // @desc     Get current users coach
@@ -42,6 +44,7 @@ router.post(
     ]
   ],
   async (req, res) => {
+    console.log('asdasdasdsad')
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -83,6 +86,7 @@ router.post(
         { $set: coachFields },
         { new: true, upsert: true }
       );
+      console.log(coach)
       res.json(coach);
     } catch (err) {
       console.error(err.message);
@@ -365,5 +369,33 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
     return res.status(500).send('Server Error');
   }
 });
+
+
+// router.get('/:id/schedule', wrap(async (req, res) => {
+//   const id = req.params.id;
+//   const { workSchedule } = await Coach.findById(id).lean().populate('workSchedule', '-_id').populate({ path: 'workSchedule', populate: { path: 'workouts'}});
+//   if(!workSchedule) {
+//      console.log(workSchedule)
+//   }
+//   else {
+//       res.json(workSchedule);
+//   }
+// }))
+
+
+// router.get('/:id/workout/:date', async (req, res) => {
+//   const id = req.params.id;
+//   const date = req.params.date;
+//   const coach = await Coach.findById(id);
+//   const workSchedule = await WorkSchedule.find({ _id: coach.workSchedule }).populate({ path: 'workouts' });
+//   const formatted_date = new Date(date).getFullYear() + "-" + (new Date(date).getMonth() + 1) + "-" + new Date(date).getDate() + " " + new Date(date).getHours() + ":" + new Date(date).getMinutes()
+//   if(workSchedule[0].workouts && workSchedule[0].workouts.some(x => 
+//       x.date.getFullYear() + "-" + (x.date.getMonth() + 1) + "-" + x.date.getDate() + " " + x.date.getHours() + ":" + x.date.getMinutes() === formatted_date)) {
+//       res.status(400).send('Data jau rezervuota');
+//   }
+//   else {
+//       res.sendStatus(200);
+//   }
+// })
 
 module.exports = router;
