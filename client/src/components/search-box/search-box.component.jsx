@@ -17,7 +17,7 @@ function Search() {
   }
 
   return (
-    <Form onSubmit={e => handleSearchSubmit(e)}>
+    <Form style={{ marginTop: '5%'}} onSubmit={e => handleSearchSubmit(e)}>
       <Row className="justify-content-md-center">
         <Col md="6">
           <InputGroup>
@@ -26,7 +26,7 @@ function Search() {
               value={query}
               onChange={e => setQuery(e.target.value)}
             />
-            <button className="search-btn" type="submit">
+            <button style={{ display: 'none'}} className="search-btn" type="submit">
             </button>
           </InputGroup>
         </Col>

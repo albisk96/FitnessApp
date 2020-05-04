@@ -46,6 +46,9 @@ const WorkoutSchema = new Schema({
     type: Date,
     required: true
   },
+  duration: {
+    type: Number
+  },
   reservations: [
     {
       user: {

@@ -23,9 +23,8 @@ fetchWorkoutData()
 }, [page])
 
   const reservation = reservations.map(x => x.workout)
-  
+  console.log(reservations.workout)
   const x = workouts.filter(x => x._id !== reservations.workout)
-  console.log(x)
   const openWorkouts = workouts.filter(x => new Date(x.when) - new Date > 0)
   return (
     <div className='container'>

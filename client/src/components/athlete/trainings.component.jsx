@@ -5,8 +5,8 @@ import Moment from 'react-moment';
 
 const Trainings = () => {
     const { reservations } = useSelector(state => state.athlete.athlete);
+    
     return(
-
         <div style={{ marginTop: '5%' }}>
             <Table striped bordered hover style={{ backgroundColor: 'white'}}>
         <thead>

@@ -32,7 +32,8 @@
     "react-datepicker": "^2.14.1",
     "react-stripe-checkout": "^2.6.3",
     "request": "^2.88.0",
-    "stripe": "^8.32.0"
+    "stripe": "^8.32.0",
+    "express-async-wrap": "^1.0.0"
   },
   "heroku-run-build-script": true
 }

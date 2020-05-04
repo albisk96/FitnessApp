@@ -15,9 +15,9 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
   const reservation = reservations.map(x => x.workout)
   const mySession = ( session.id === workout.user ) 
   const closed = (new Date(workout.when) - new Date < 0)
-  const reserved = reservation !== workout._id
-  console.log(reserved)
-  console.log(`${reservation} === ${workout._id}`)
+  const reserved = reservations.workout !== workout._id
+
+  console.log(workout._id.includes(reservations))
 
   const myCard = !mySession
   ? <StripeCheckoutButton id={workout._id} price={workout.price} /> 
