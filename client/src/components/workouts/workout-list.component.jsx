@@ -29,11 +29,13 @@ fetchWorkoutData()
     <div className='container'>
       <div style={{ marginTop: '5%'}}>
       { 
+        openWorkouts ?
         <CardColumnsContainer>
           {openWorkouts.map((workout, index) => (
             <WorkoutCard key={index} workout={workout} />
           ))}
-        </CardColumnsContainer>
+        </CardColumnsContainer> :
+        <h3>Workout does not exist yet</h3>
       }
       <Pagination
       selectedPage={page ? +page : 1}
