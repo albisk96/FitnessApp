@@ -9,21 +9,26 @@ const PlanTable = ({ workout, day, exercises }) => {
             <tr>
                 <th>{day}</th>
                 <th>Minutes</th>
-                <th>Reps</th>
-                <th>Sets</th>
+                <th>Reps x Sets</th>
+
             </tr>
         </thead>
         <tbody>
             {exercises.map(x => (
                 <tr>
                 <td style={{ width: '50%'}}> 
-                    {x.exercise.name}  {x.exercise.muscles ? `(${x.exercise.muscles})` : ''}  {x.exercise.mechanicsType ? `(${x.exercise.mechanicsType})` : ''}
+                    {x.exercise.name}  
+                    {x.exercise.muscles ? `(${x.exercise.muscles})` : ''}  
+                    {x.exercise.mechanicsType ? `(${x.exercise.mechanicsType})` : ''}
+                    {x.exercise.exerciseType === 'cardio' || x.exercise.exerciseType === 'stretching' ? `(${x.exercise.exerciseType})` : ''}
                 </td>
                 {
-                    x.min ? <td>{x.min}</td> : <td>{'X'}</td>
+                    x.min ? <td>{x.min}</td> : <td>{''}</td>
                 }
-                <td>{x.reps}</td>
-                <td>{x.sets}</td>
+                {
+                    x.reps ? <td>{x.reps} x {x.sets}</td> : 
+                    x.exercise.muscles === 'abs' ? <td> 3 x Max </td> : <td>{' '}</td>
+                }
                 </tr>
             ))}  
         </tbody>

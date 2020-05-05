@@ -8,6 +8,7 @@ const cookie = require('cookie');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const nodemailer = require('nodemailer'); 
+const normalize = require('normalize-url');
 const { google } = require("googleapis");
 const { getPagingQuery } = require('../../helpers/api-pagination');
 const OAuth2 = google.auth.OAuth2;
@@ -69,11 +70,14 @@ router.post(
           .json({ errors: [{ msg: 'User already exists' }] });
       }
 
-      const avatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      });
+      const avatar = normalize(
+        gravatar.url(email, {
+          s: '200',
+          r: 'pg',
+          d: 'mm'
+        }),
+        { forceHttps: true }
+      );
 
       user = new User({
         name,

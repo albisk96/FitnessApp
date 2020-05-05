@@ -10,7 +10,6 @@ import * as yup from 'yup';
 const AddWorkoutForm = ({ createWorkout }) => {
     const schema = yup.object({
         title: yup.string().required('title is required'),
-        kind: yup.string().required('kind is required'),
         address: yup.string().required('address of Study is required'),
         price: yup.string().required('price from is required'),
         description: yup.string().required('Description is required'),
@@ -30,7 +29,6 @@ const AddWorkoutForm = ({ createWorkout }) => {
         onSubmit={SubmitForm}
         initialValues={{
             title: '',
-            kind: 'personal',
             address: '',
             price: '',
             level: 'beginner',
@@ -68,23 +66,7 @@ const AddWorkoutForm = ({ createWorkout }) => {
             onBlur={handleBlur}
             as='textarea'
             rows='3'
-        /> 
-        <FormInput
-            name='kind'
-            type='text'
-            label='Workout Type'
-            id='kind'
-            error={touched.kind && errors.kind}
-            value={values.kind}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            as='select'
-        >
-        <option value="personal">Personal</option>
-        <option value="group">Group</option>
-        </FormInput> 
-        
-
+        />     
         <FormInput
             name='address'
             type='text'

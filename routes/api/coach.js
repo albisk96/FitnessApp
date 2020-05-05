@@ -5,6 +5,8 @@ const { check, validationResult } = require('express-validator');
 const wrap = require('express-async-wrap');
 // bring in normalize to give us a proper url, regardless of what user entered
 const normalize = require('normalize-url');
+const { getPagingQuery } = require('../../helpers/api-pagination');
+const { getSearchQuery } = require('../../helpers/search');
 
 const Coach = require('../../models/Coach');
 const User = require('../../models/User');
@@ -100,7 +102,13 @@ router.post(
 // @access   Public
 router.get('/', async (req, res) => {
   try {
-    const coaches = await Coach.find().populate('user', ['name', 'avatar', 'email']);
+    const perPage = req.query.page;
+    const { size, page } = getPagingQuery(perPage - 1)
+    const searchQuery = getSearchQuery(req.query.query || '', 'index')
+
+    const coaches = await Coach.find({...searchQuery}).limit(size).skip(page * size).populate('user', ['name', 'avatar', 'email', 'bio']);
+    const coachesCount = await Coach.countDocuments({...searchQuery})
+    res.setHeader('x-total-count', coachesCount)
     res.json(coaches);
   } catch (err) {
     console.error(err.message);
@@ -115,7 +123,7 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const coach = await Coach.findOne({
       user: req.params.user_id
-    }).populate('user', ['name', 'avatar']);
+    }).populate('user', ['name', 'avatar', 'email', 'bio']);
 
     if (!coach) return res.status(400).json({ msg: 'coach not found' });
 
@@ -371,31 +379,42 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 });
 
 
-// router.get('/:id/schedule', wrap(async (req, res) => {
-//   const id = req.params.id;
-//   const { workSchedule } = await Coach.findById(id).lean().populate('workSchedule', '-_id').populate({ path: 'workSchedule', populate: { path: 'workouts'}});
-//   if(!workSchedule) {
-//      console.log(workSchedule)
-//   }
-//   else {
-//       res.json(workSchedule);
-//   }
-// }))
+router.get('/:id/schedule', wrap(async (req, res) => {
+  const id = req.params.id;
+  const { workSchedule } = await Coach.findById(id).lean().populate('workSchedule', '-_id').populate({ path: 'workSchedule', populate: { path: 'workouts'}});
+  if(!workSchedule) {
+     console.log(workSchedule)
+  }
+  else {
+      res.json(workSchedule);
+  }
+}))
 
 
-// router.get('/:id/workout/:date', async (req, res) => {
-//   const id = req.params.id;
-//   const date = req.params.date;
-//   const coach = await Coach.findById(id);
-//   const workSchedule = await WorkSchedule.find({ _id: coach.workSchedule }).populate({ path: 'workouts' });
-//   const formatted_date = new Date(date).getFullYear() + "-" + (new Date(date).getMonth() + 1) + "-" + new Date(date).getDate() + " " + new Date(date).getHours() + ":" + new Date(date).getMinutes()
-//   if(workSchedule[0].workouts && workSchedule[0].workouts.some(x => 
-//       x.date.getFullYear() + "-" + (x.date.getMonth() + 1) + "-" + x.date.getDate() + " " + x.date.getHours() + ":" + x.date.getMinutes() === formatted_date)) {
-//       res.status(400).send('Data jau rezervuota');
-//   }
-//   else {
-//       res.sendStatus(200);
-//   }
-// })
+router.get('/:id/workout/:date', async (req, res) => {
+  const id = req.params.id;
+  const date = req.params.date;
+  const coach = await Coach.findById(id);
+  const workSchedule = await WorkSchedule.find({ _id: coach.workSchedule }).populate({ path: 'workouts' });
+  const formatted_date = new Date(date).getFullYear() + "-" + (new Date(date).getMonth() + 1) + "-" + new Date(date).getDate() + " " + new Date(date).getHours() + ":" + new Date(date).getMinutes()
+  if(workSchedule[0].workouts && workSchedule[0].workouts.some(x => 
+      x.date.getFullYear() + "-" + (x.date.getMonth() + 1) + "-" + x.date.getDate() + " " + x.date.getHours() + ":" + x.date.getMinutes() === formatted_date)) {
+      res.status(400).send('Data jau rezervuota');
+  }
+  else {
+      res.sendStatus(200);
+  }
+})
+
+router.get('/migrate', async (req, res) => {
+  try {
+    const coach = await Coach.find({});
+    coach.forEach(async x => await x.save());
+    res.send('migrated')
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

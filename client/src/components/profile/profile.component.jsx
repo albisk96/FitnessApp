@@ -11,7 +11,8 @@ import IconButton from '../icon-button/icon.component';
 import ProfileAvatar from './avatar/avatar.component';
 import AddWorkout from '../workouts/add-workout.component';
 import Comments from './comments/comments.component';
-import Schedule from './schedule/schedule.component';
+import MySchedule from './schedule/schedule.component';
+import Schedule from './schedule/reserve-schedule.component';
 import { Button, Tabs, Tab } from 'react-bootstrap'
 import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
 import { Center, ProfileInfoContainer, Line, PortfolioContainer, StyledWrap, FormBackground, JumboContainer } from './profile.styles.jsx'
@@ -27,7 +28,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
     // const myClosed = me.filter(x => new Date(x.when) - new Date < 0)
     // const myOpen = me.filter(x => new Date(x.when) - new Date > 0)
     // const coachOpen = coach.filter(x => new Date(x.when) - new Date > 0)
-    
+    console.log(profile)
     const handleClick = () => setMore(!more);
     return(
         <div>
@@ -57,7 +58,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                     </Fragment>
                     : '' }
                     <Center>
-                        <Information user={profile.user} profile={profile} />
+                        <Information profile={profile} />
                     </Center>
                     <Center style={{ marginBottom: '5%', marginTop: '5%'}}>
                         <h3>Education</h3>
@@ -89,12 +90,20 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                 <Tab eventKey="Reviews" title="Reviews">
                     <Comments profile={profile} id={session.id} />
                 </Tab>
-                <Tab eventKey="schedule" title="Schedule">
-                    <Schedule  />
-                </Tab>
+                {// { profile.user._id !== session.id ? 
+                //     <Tab eventKey="Schedule" title="Schedule">
+                //     <Schedule />
+                //     </Tab> : ''
+                // }
+                }
                 { profile.user._id === session.id ? 
                     <Tab eventKey="Archive" title="Archive Workouts">
                     <WorkoutList workouts={workouts.filter(x => x.user === session.id && new Date(x.when) - new Date < 0) } />
+                    </Tab> : ''
+                }
+                { profile.user._id === session.id ? 
+                    <Tab eventKey="MySchedule" title="MySchedule">
+                    <MySchedule />
                     </Tab> : ''
                 }
             </Tabs>

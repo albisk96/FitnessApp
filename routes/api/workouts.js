@@ -40,7 +40,6 @@ router.post(
         title: req.body.title,
         name: user.name,
         description: req.body.description,
-        kind: req.body.kind,
         address: req.body.address,
         price: req.body.price,
         level: req.body.level,

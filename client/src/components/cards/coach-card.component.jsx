@@ -3,13 +3,13 @@ import LinkButton from '../links/link-button.component';
 import { CardContainer, CardImage, CardBody, CardFooter } from './card.styles';
 
 const CoachCard = ({ coach: { 
-    user: { _id, name },
+    user: { _id, name, avatar },
     city, bio }
   }) => {
   return (
     
         <CardContainer>
-          <CardImage src={`https://picsum.photos/id/${Math.floor((Math.random() * 100) + 1)}/200/100`} alt="Card image cap" />
+          <CardImage src={avatar} alt="Card image cap" style={{ height: '170px'}} />
           <CardBody>
             <h5 className="card-title">{name}</h5>
             <p className="card-text">{city}</p>

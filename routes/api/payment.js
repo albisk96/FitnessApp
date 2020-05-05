@@ -58,7 +58,6 @@ const transporter = nodemailer.createTransport({
         workout: workout.id,
         name: workout.name,
         title: workout.title,
-        kind: workout.kind,
         address: workout.address,
         price: workout.price,
         when: workout.when

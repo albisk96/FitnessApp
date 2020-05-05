@@ -24,11 +24,6 @@ const WorkoutSchema = new Schema({
     type: Number,
     required: true
   },
-  kind: {
-    type: String,
-    enum: ['group', 'personal'],
-    default: 'group'
-  },
   address: {
     type: String,
     required: true

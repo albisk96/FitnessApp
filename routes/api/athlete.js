@@ -192,7 +192,7 @@ router.delete('/', auth, async (req, res) => {
 
 
 // @route   PUT api/athlete/plan
-// @desc    Create an athlete workout program
+// @desc    Create workout program for athlete
 // @access  Private
 router.put(
   '/plan',
@@ -227,7 +227,6 @@ router.put(
     const plan = PlanHelper.GeneratePlan(athlete, exercise, days_per_week, level, goal);
     try {
         athlete.workout.push(plan);
-
         await athlete.save();
         res.json(athlete);
       } catch (err) {

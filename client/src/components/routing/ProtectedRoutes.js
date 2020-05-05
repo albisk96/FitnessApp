@@ -7,7 +7,8 @@ function ProtectedRoutes ({ routes }){
     return (
     <Fragment>
     { session ? 
-      routes.filter(x => x.role === session.role).map((x, index) => (<Route key={index} path={x.path} component={x.component} exact={x.exact} />))
+      routes.filter(x => x.role === session.role).map((x, index) => 
+        (<Route key={index} path={x.path} component={x.component} exact={x.exact} />))
     : <Redirect to='/' />
     }
     </Fragment>
@@ -15,3 +16,5 @@ function ProtectedRoutes ({ routes }){
 }
 
 export default ProtectedRoutes
+
+

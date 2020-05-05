@@ -100,18 +100,27 @@ const CoachSchema = new mongoose.Schema({
       }
     }
   ],
-  // workSchedule: { 
-  //   type: mongoose.Schema.Types.ObjectId, 
-  //   ref: 'WorkSchedule' 
-  // },
-  // reservedWorkouts: {  
-  //   type: mongoose.Schema.Types.ObjectId, 
-  //   ref: 'Workout' 
-  // },
+  workSchedule: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'WorkSchedule' 
+  },
+  reservedWorkouts: {  
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Workout' 
+  },
+  index: {
+    type: String
+  },
   date: {
     type: Date,
     default: Date.now
   }
 });
+
+CoachSchema.pre('save', function() {
+  this.index = [this.city, this.bio, this.socal.facebook, this.social.instagram, this.education.school].join(' ').toLowerCase() || 
+  [this.bio, this.city, this.socal.facebook, this.social.instagram, this.education.school].join(' ').toLowerCase() || 
+  [this.education.school, this.city, this.socal.facebook, this.social.instagram, this.bio].join(' ').toLowerCase()
+})
 
 module.exports = Coach = mongoose.model('coach', CoachSchema);

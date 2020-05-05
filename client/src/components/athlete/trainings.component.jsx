@@ -24,7 +24,6 @@ const Trainings = () => {
             <tr key={index}>
             <td>{x.title}</td>
             <td>{x.name}</td>
-            <td>{x.kind}</td>
             <td>{x.address}</td>
             <td>{x.price}</td>
             <td><Moment format="YYYY MMM Do LT">{x.when}</Moment></td>

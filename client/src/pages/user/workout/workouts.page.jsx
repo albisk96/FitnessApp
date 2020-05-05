@@ -23,16 +23,11 @@ export const WorkoutsPage = ({ fetchWorkoutData, getCurrentProfile, athlete: {at
   }, [getCurrentProfile]);
 
   return (
-    // <div>
-    // {athlete === null || loading ? (
-    //   <Spinner />
-    // ) : (<WorkoutsListContainer page={page} />)}
-    // </div>
-    <Suspense fallback={<Spinner />}>
     <div>
-    <WorkoutsListContainer />
+    { athlete === null || loading ? (
+      <Spinner />
+    ) : (<WorkoutsListContainer page={page} />)}
     </div>
-</Suspense>
   );
 };
 

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Form, InputGroup, FormControl, Col, Row } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import useDebounce from '../../helpers/debounce';
+import { search } from '../../helpers/search';
 
 function Search() {
   const [query, setQuery] = useState('');
+  const location = useLocation();
   const debouncedSearchTerm = useDebounce(query, 500);
   const history = useHistory();
-  
+  const { addQuery } = search.useQueryBuilder();
   useEffect(() => {
-    history.push(query ? `?query=${query}` : '/exercises');
+    history.push(
+      `${location.pathname}?${addQuery('query', debouncedSearchTerm)}`
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm]);
 
   function handleSearchSubmit(e) {
@@ -17,17 +22,15 @@ function Search() {
   }
 
   return (
-    <Form style={{ marginTop: '5%'}} onSubmit={e => handleSearchSubmit(e)}>
+    <Form onSubmit={e => handleSearchSubmit(e)}>
       <Row className="justify-content-md-center">
         <Col md="6">
           <InputGroup>
             <FormControl
-              placeholder="Paieška"
+              placeholder="Search"
               value={query}
               onChange={e => setQuery(e.target.value)}
             />
-            <button style={{ display: 'none'}} className="search-btn" type="submit">
-            </button>
           </InputGroup>
         </Col>
       </Row>

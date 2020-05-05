@@ -42,7 +42,8 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
 
     const stretchingExercises = exercise.filter(x => x.exerciseType === 'stretching');
 
-    const cardioExercises = exercise.filter(x => x.exerciseType === 'cardio')
+    const cardioExercises = exercise.filter(x => x.exerciseType === 'cardio');
+    const absExercises = exercise.filter(x => x.muscles === 'abs')
     let musclesPerDay = null;
     let muscleNames = ['chest', 'back', 'shoulders', 'legs', 'triceps', 'biceps']
 
@@ -52,7 +53,10 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
         let workout = []
         for(let i = 1; i <= daysPerWeek; i++){ 
             let dailyExercises = [];
-            GetCardioExercise(i, dailyExercises)            
+            GetCardioExercise(i, dailyExercises)
+            if(i % 2 === 0){
+                GetAbsExercise(absExercises, dailyExercises)
+            }        
                 for(let k = 1; k <= musclesPerDay; k++){ // how many muscles per day
                     WorkoutForOneDayGeneration(dailyExercises, k, daysPerWeek)
                 }
@@ -107,8 +111,8 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
     }
 
     function WorkoutForOneDayGeneration(dailyExercises, k, daysPerWeek){
-        const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] 
-        muscleNames = muscleNames.filter(x => x !== tempExercise);
+        const tempExercise = muscleNames[Math.floor(Math.random() * muscleNames.length)] // Random muscle name
+        muscleNames = muscleNames.filter(x => x !== tempExercise); // Remove that random value from array, to prevent duplication
          if(k == 1) {
              GetWarmUpExercise(stretchingExercises, dailyExercises);
          }
@@ -302,6 +306,13 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
         for(let i = 1; i <= 3; i++){
         let stretching = stretchingExercises[Math.floor(Math.random() * stretchingExercises.length)]
         dailyExercises.push({ exercise: stretching })
+        }
+    }
+
+    function GetAbsExercise(absExercises, dailyExercises){
+        for(let i = 1; i <= 2; i++){
+            let abs = absExercises[Math.floor(Math.random() * absExercises.length)]
+            dailyExercises.push({ exercise: abs })
         }
     }
 

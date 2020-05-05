@@ -25,10 +25,6 @@ const WorkoutInformation = ({ workout }) => {
                 <td>{workout.description}</td>
                 </tr>
                 <tr>
-                <td>Type</td>
-                <td>{workout.kind}</td>
-                </tr>
-                <tr>
                 <td>Level</td>
                 <td>{workout.level}</td>
                 </tr>

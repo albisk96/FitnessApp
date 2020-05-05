@@ -16,9 +16,15 @@ const ExercisesList = ({ exercise, key }) => {
                 </p>
                 <footer className="text-muted">
                 <ul>
-                    <li>{`Best for ${exercise.muscles}`}</li>
-                    <li>{exercise.mechanicsType}</li>
-                    <li>{exercise.exerciseType}</li>
+                {
+                    exercise.muscles ? <li>{`Best for ${exercise.muscles}`}</li> : ''
+                }
+                {
+                    exercise.mechanicsType ? <li>{exercise.mechanicsType}</li> : ''
+                }
+                {
+                    exercise.exerciseType ? <li>{exercise.exerciseType}</li> : ''
+                }
                 </ul>
                 </footer>
                 </blockquote>

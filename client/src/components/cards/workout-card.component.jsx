@@ -24,11 +24,11 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
 
   return(
         <CardContainer>
-        <CardHeader>Featured</CardHeader>
-          <CardImage src={`https://picsum.photos/id/${Math.floor((Math.random() * 100) + 1)}/200/100`} alt="Card image cap" />
+        <CardHeader>{workout.title} for {workout.price} €</CardHeader>
           <CardBody>
-            <h5 className="card-title">{workout.text}</h5>
+            <p className="card-text">{`Entries left: ${workout.entries}`}</p>
             <p className="card-text">{workout.address}</p>
+            
           </CardBody>
           <CardFooter>
             {workout.entries > 0 ? 

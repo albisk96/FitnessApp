@@ -2,15 +2,15 @@ import React from 'react';
 import { Line, SocialNetworks } from './information.styles.jsx'
 import Moment from 'react-moment';
 
-const Information = ({ user: { name, email }, profile }) => {
+const Information = ({ profile }) => {
     const DateNow = Date.now
     return(
         <div>
         <p>Name</p>
-        <h3>{name}</h3>
+        <h3>{profile.user.name}</h3>
         <Line />
         <p>Email</p>
-        <h3>{email}</h3>
+        <h3>{profile.user.email}</h3>
         <Line />
         <p>Age</p>
         <h3>

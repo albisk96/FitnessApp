@@ -1,8 +1,20 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export const search = { useQuery };
+function useQueryBuilder() {
+  const queries = useQuery();
+  const addQuery = (name, value) => {
+    if (!value) {
+      queries.delete(name);
+    } else {
+      queries.set(name, value);
+    }
+    return queries.toString();
+  };
+  return { addQuery };
+}
+
+export const search = { useQuery, useQueryBuilder };
