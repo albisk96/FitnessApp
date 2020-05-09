@@ -3,35 +3,62 @@ import DatePicker from 'react-datepicker';
 import { Table } from 'react-bootstrap';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
+import getMinutes from 'date-fns/getMinutes';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
+import axios from 'axios'
+import StripeCheckoutButtonReservation from '../../stripe-button/stripe-button-reservation.component';
 import { filterDate } from '../../../helpers/dates';
 
-function Scheduler({ schedule, setSchedule }) {
-  const filter = filterDate(schedule.freeDays || []);
+function Scheduler({ id, price }) {
+  const [schedule, setSchedule] = useState({ date: new Date() });
+  useEffect(() => {
+    function getSchedule() {
+      axios
+        .get(`/api/coach/${id}/schedule`)
+        .then(res => {
+          setSchedule({ ...schedule, ...res.data });
+        })
+        .catch(e => {
+          console.log('neveikia')
+        });
+    }
+    getSchedule();
+  }, [id]);
+  console.log(schedule)
+  useEffect(() => {
+    if (getMinutes(schedule.date) !== 0) {
+      console.log('Pasirinkite laiką');
+    } else {
+      console.log('');
+    }
+  }, [schedule.date]);
 
+  const filter = filterDate(schedule.freeDays || []);
   const excludedTimes = useMemo(
     () =>
       (schedule.workouts || [])
-        .filter(workout => {
+        .filter(workout => { console.log(schedule.date)
+          console.log(workout.when)
             return (
               format(schedule.date, 'MM/dd/yyyy') ===
-              format(new Date(workout.date), 'MM/dd/yyyy')
+              format(new Date(workout.when), 'MM/dd/yyyy')
             );
         })
         .map(x => {
-            return new Date(x.date);
+            return new Date(x.when);
         }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [schedule.date]
   );
 
-  const timesColor = time => {
-    console.log(excludedTimes);
+  //const timesColor = time => {
+    //console.log(excludedTimes);
     // return
-  };
+  //};
 
   return (
+    <center>
     <DatePicker
       selected={schedule.date}
       onChange={date => setSchedule({ ...schedule, date })}
@@ -40,7 +67,7 @@ function Scheduler({ schedule, setSchedule }) {
       timeFormat="HH:mm"
       filterDate={filter}
       excludeTimes={excludedTimes}
-      timeClassName={timesColor}
+      //timeClassName={timesColor}
       minTime={setHours(
         setMinutes(new Date(), 0),
         (schedule.workHours && schedule.workHours.from) || 6
@@ -54,6 +81,11 @@ function Scheduler({ schedule, setSchedule }) {
       dateFormat="MMMM d, yyyy h:mm aa"
       inline
     />
+    <div style={{ marginTop: '5%'}}>
+    <StripeCheckoutButtonReservation id={id} price={price} date={schedule.date} /> 
+    </div>
+    </center>
+    
   );
 }
 

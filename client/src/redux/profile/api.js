@@ -16,6 +16,7 @@ export function getCurrentProfile() {
 // Get all profiles
 export const getProfiles = () => async dispatch => {
   try {
+    console.log('Get Profiles')
     const res = await axios.get('/api/coach');
     dispatch(getProfilesSuccess(res.data));
   } catch (error) {
@@ -37,7 +38,6 @@ export const getProfileById = (userId) => async dispatch => {
 
   // Create or update profile
   export const createProfile = (formData) => async dispatch => {
-    console.log(formData)
     try {  
       const res = await axios.post('/api/coach', formData);
       dispatch(getProfileSuccess(res.data));

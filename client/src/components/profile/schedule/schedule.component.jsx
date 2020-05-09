@@ -15,37 +15,18 @@ function TrainerSchedule() {
       to: { value: 17, label: '17' },
     },
     price: 1000,
-    priceGroup: 1000,
-    isGroup: false,
   });
   const [alert, setAlert] = useState('');
-
+console.log(schedule)
   useEffect(() => {
     setAlert('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedule.workDays, schedule.freeDays]);
 
-  function groupWorkouts() {
-    const availableDays = TrainerSchedule.days.filter(
-      x => !schedule.freeDays.some(y => y.value === x.value)
-    );
-    setSchedule({
-      ...schedule,
-      groupWorkouts: [
-        {
-          day: availableDays[0],
-          time: schedule.workHours.from,
-          customersCount: 10,
-        },
-      ],
-      isGroup: !schedule.isGroup,
-    });
-  }
 
   useEffect(() => {
     async function getSchedule() {
-      const res = await axios.get('/api/schedule/');
-      console.log(res.data);
+      const res = await axios.get('/api/coach/schedule');
       if (res.data) {
         setSchedule({
           price: res.data.price || 1000,
@@ -57,12 +38,12 @@ function TrainerSchedule() {
             .filter(x => x),
           workHours: {
             from: {
-              value: res.data.workHours.from,
-              label: `${res.data.workHours.from}`,
+              value: res.data.workHours && res.data.workHours.from,
+              label: `${res.data.workHours && res.data.workHours.from || 8 }`,
             },
             to: {
-              value: res.data.workHours.to,
-              label: `${res.data.workHours.to}`,
+              value:  res.data.workHours && res.data.workHours.to,
+              label: `${res.data.workHours && res.data.workHours.to || 17 }`,
             },
           },
           workDays: res.data.workDays || 7 - res.data.freeDays.length,
@@ -82,14 +63,14 @@ function TrainerSchedule() {
       );
     }
   }
-
+  
   function handeScheduleFormSubmit(e) {
     e.preventDefault();
     if (schedule.freeDays.length !== 7 - schedule.workDays) {
       setAlert(`Turite pasirinkti ${7 - schedule.workDays} laisvas dienas`);
     } else {
       axios
-        .post('/api/schedule', {
+        .put('/api/coach/schedule', {
           ...schedule,
           workHours: {
             from: schedule.workHours.from.value,
@@ -97,6 +78,7 @@ function TrainerSchedule() {
           },
           freeDays: schedule.freeDays.map(x => x.value),
           price: +schedule.price,
+          
         })
         .then(res => console.log(res))
         .catch(err => {

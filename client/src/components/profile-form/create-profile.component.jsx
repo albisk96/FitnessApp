@@ -30,6 +30,7 @@ const CreateMyProfile = ({ createProfile }) => {
             twitter: '',
             instagram: '',
             facebook: '',
+            gym: '',
         }}
     >
         {({
@@ -40,6 +41,16 @@ const CreateMyProfile = ({ createProfile }) => {
         errors,
         }) => (
         <Form>
+        <FormInput
+            name='gym'
+            type='text'
+            label='Gym name and address'
+            id='gym'
+            error={touched.gym && errors.gym}
+            value={values.gym}
+            onChange={handleChange}
+            onBlur={handleBlur}
+        />
         <FormInput
             name='city'
             type='text'

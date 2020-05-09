@@ -21,12 +21,10 @@ const WorkoutSchema = new Schema({
     type: String
   },
   entries: {
-    type: Number,
-    required: true
+    type: Number
   },
   address: {
-    type: String,
-    required: true
+    type: String
   },
   price: {
     type: String,
@@ -44,24 +42,9 @@ const WorkoutSchema = new Schema({
   duration: {
     type: Number
   },
-  reservations: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
-      },
-      name: {
-        type: String
-      },
-      email: {
-        type: String
-      },
-      date: {
-        type: Date,
-        default: Date.now
-      }
-    }
-  ],
+  group: { type: Boolean, default: false },
+  athlete: [{type: mongoose.Schema.Types.ObjectId, ref: 'athlete'}],
+  coach: { type: mongoose.Schema.Types.ObjectId, ref: 'coach'},
   date: {
     type: Date,
     default: Date.now

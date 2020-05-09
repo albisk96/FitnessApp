@@ -21,8 +21,7 @@ const CoachesList =() => {
           }
           getProfiles()
        }, [page, query]) 
-       console.log(query)
-console.log(coaches)
+
     return(
     <div className="container">
     <Search />

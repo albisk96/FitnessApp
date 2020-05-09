@@ -5,6 +5,7 @@ const auth = require('../../middleware/auth');
 const { getPagingQuery } = require('../../helpers/api-pagination');
 
 const Workout = require('../../models/Workout');
+const Coach = require('../../models/Coach');
 const User = require('../../models/User');
 
 // @route    POST api/workouts
@@ -35,6 +36,45 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id).select('-password');
+      const coach = await Coach.findOne({ user: req.user.id })
+
+      const newWorkout = new Workout({
+        title: req.body.title,
+        name: user.name,
+        description: req.body.description,
+        address: req.body.address,
+        price: req.body.price,
+        level: req.body.level,
+        avatar: user.avatar,
+        user: req.user.id,
+        entries: req.body.entries,
+        when: req.body.when,
+        group: true
+      });
+
+      const workout = await newWorkout.save();
+
+      coach.workSchedule.workouts.unshift(workout._id);
+
+      await coach.save();
+
+      res.json(coach)
+
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route    POST api/workouts/:coachId
+// @desc     Create an individual workout
+// @access   Private
+router.post('/:coachId', auth, async (req, res) => {
+    coachId = req.params.coachId
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      const coach = await Coach.findOne({ user: coachId })
 
       const newWorkout = new Workout({
         title: req.body.title,
@@ -51,7 +91,12 @@ router.post(
 
       const workout = await newWorkout.save();
 
-      res.json(workout);
+      coach.workSchedule.workouts.unshift(workout);
+
+      await coach.save();
+
+      res.json(coach)
+
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -67,7 +112,7 @@ router.get('/', auth, async (req, res) => {
   const { size, page } = getPagingQuery(perPage - 1)
   try {
 
-    const workouts = await Workout.find().limit(size).skip(page * size).sort({ date: -1 });
+    const workouts = await Workout.find().limit(size).skip(page * size).sort({ date: -1 }).populate('athlete');
     const workoutsCount = await Workout.countDocuments({});
     res.setHeader('x-total-count', workoutsCount)
     res.json(workouts);

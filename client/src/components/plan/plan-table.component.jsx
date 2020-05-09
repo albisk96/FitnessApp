@@ -27,7 +27,7 @@ const PlanTable = ({ workout, day, exercises }) => {
                 }
                 {
                     x.reps ? <td>{x.reps} x {x.sets}</td> : 
-                    x.exercise.muscles === 'abs' ? <td> 3 x Max </td> : <td>{' '}</td>
+                    x.exercise.muscles === 'abdomen' ? <td> 3 x Max </td> : <td>{' '}</td>
                 }
                 </tr>
             ))}  

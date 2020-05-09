@@ -19,8 +19,8 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
 
 
   const myCard = !mySession
-  ? <StripeCheckoutButton id={workout._id} price={workout.price} /> 
-  : closed ? <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal workout={workout} size="modal-70w" />
+  ? <StripeCheckoutButton workoutId={workout._id} coachId={workout.user} price={workout.price} /> 
+  : closed ? <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal size="modal-70w" />
 
   return(
         <CardContainer>

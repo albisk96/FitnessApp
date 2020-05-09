@@ -90,12 +90,6 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                 <Tab eventKey="Reviews" title="Reviews">
                     <Comments profile={profile} id={session.id} />
                 </Tab>
-                {// { profile.user._id !== session.id ? 
-                //     <Tab eventKey="Schedule" title="Schedule">
-                //     <Schedule />
-                //     </Tab> : ''
-                // }
-                }
                 { profile.user._id === session.id ? 
                     <Tab eventKey="Archive" title="Archive Workouts">
                     <WorkoutList workouts={workouts.filter(x => x.user === session.id && new Date(x.when) - new Date < 0) } />

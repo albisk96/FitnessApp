@@ -13,7 +13,8 @@ const nodemailer = require('nodemailer');
 
 const Workout = require('../../models/Workout');
 const User = require('../../models/User');
-const Athlete = require('../../models/Athlete');
+const Coach = require('../../models/Coach');
+const Athlete = require('../../models/Athlete')
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -23,57 +24,38 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-  router.post('/:id', auth, async(req, res) => {
-
+  router.post('/:workoutId/:coachId', auth, async(req, res) => {
+    
     const body = {
         source: req.body.token.id,
         amount: req.body.amount,
         currency: 'usd'
     };
     try{
+
+      const workoutId = req.params.workoutId;
+      const coachId = req.params.coachId
+      
+      const user = await User.findById(req.user.id).select('-password');
+      const workout = await Workout.findById(workoutId).populate('athlete');
+      const coach = await Coach.findOne({user: coachId});
+      const currentAthlete = await Athlete.findOne({ user: req.user.id})
       
       await Workout.findByIdAndUpdate(
-        {_id: req.params.id},
+        {_id: req.params.workoutId},
         {$inc: {entries: -1}})
-
-      
-
-      
-      let workout = await Workout.findById(req.params.id);
-      const user = await User.findById(req.user.id).select('-password');
-      const athlete = await Athlete.findOne({user: req.user.id});
-
-
-      const newReservation = {
-        email: user.email,
-        name: user.name,
-        user: req.user.id
-      };
-
-      await workout.reservations.unshift(newReservation);
      
+
+      workout.athlete.push(currentAthlete);
+      
+      workout.coach = coach._id;
+
       await workout.save();
-
-      const newWorkout = {
-        workout: workout.id,
-        name: workout.name,
-        title: workout.title,
-        address: workout.address,
-        price: workout.price,
-        when: workout.when
-      }
-
-      await athlete.reservations.unshift(newWorkout);
-      
-      await athlete.save();
-      
 
         stripe.charges.create(body, (stripeErr, stripeRes) => {
             if (stripeErr || workout.entries < 0) {
-              console.log(`Failed: ${workout.entries}`)
               res.status(500).send({ error: stripeErr });
             } else {
-              console.log(`Success: ${workout.entries}`)
               res.status(200).send({ success: stripeRes });
             }
           });
@@ -88,7 +70,68 @@ const transporter = nodemailer.createTransport({
             `,
           })
 
-          console.log(user.email)
+    }catch(error){
+        console.log(error.message);
+
+        res.status(500).send('Server Error')
+    }
+  })
+
+  router.post('/:coachId', auth, async(req, res) => {
+    console.log('ROUTE PAYMENT')
+    const date = req.body.date
+    console.log(date)
+    const body = {
+        source: req.body.token.id,
+        amount: req.body.amount,
+        currency: 'usd'
+    };
+    try{
+      const coachId = req.params.coachId
+      const user = await User.findById(req.user.id).select('-password');
+      const coach = await Coach.findById(coachId).populate('user');
+      const athlete = await Athlete.findOne({ user: req.user.id})
+
+      const newWorkout = new Workout({
+        title: 'Individual workout',
+        name: coach.user.name,
+        description: `Individual workout with ${coach.user.name}`,
+        gym: coach.gym,
+        price: coach.workSchedule.price,
+        level: 'beginner',
+        user: user.id,
+        when: new Date(date),
+        group: false
+      });
+
+      const workout = await newWorkout.save();
+
+      coach.workSchedule.workouts.unshift(workout._id);
+
+      await coach.save();
+     
+      workout.athlete.push(athlete);
+      workout.coach = coach._id;
+      await workout.save();     
+
+        stripe.charges.create(body, (stripeErr, stripeRes) => {
+            if (stripeErr) {
+              console.log(stripeErr)
+              res.status(500).send({ error: stripeErr });
+            } else {
+              res.status(200).send({ success: stripeRes });
+            }
+          });
+
+          transporter.sendMail({
+            to: user.email,
+            subject: 'Workout Confirmation',
+            html: `<h3>Hello, ${user.name},</h3>
+            <h3>Your workout payment and registration was successful</h3> <br />
+            <p>Please show this confirmation to your coach or gym administration and find the details below. Have a good workout!</p>
+            <p>Your workout will be on ${date} at ${coach.gym}. You paid for it ${coach.workSchedule.price}</p>
+            `,
+          })
 
     }catch(error){
         console.log(error.message);

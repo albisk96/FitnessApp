@@ -17,6 +17,9 @@ const CoachSchema = new mongoose.Schema({
   DOB: {
     type: Date
   },
+  gym: {
+    type: String
+  },
   achievements: [
     {
       title: {
@@ -100,13 +103,22 @@ const CoachSchema = new mongoose.Schema({
       }
     }
   ],
-  workSchedule: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'WorkSchedule' 
-  },
-  reservedWorkouts: {  
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Workout' 
+  workSchedule: {
+      workDaysPerWeek: {
+        type: Number
+      },
+      workHours: {
+        from: Number,
+        to: Number,
+      },
+      freeDays: [{ type: String, enum: ['Monday', 'Tuesday', 'Wednesday', 'Thirdsday', 'Friday', 'Saturday', 'Sunday']}],
+      price: {
+        type: Number
+      },
+      workDays: {
+        type: Number
+      },
+      workouts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'workout' }],
   },
   index: {
     type: String
@@ -118,9 +130,7 @@ const CoachSchema = new mongoose.Schema({
 });
 
 CoachSchema.pre('save', function() {
-  this.index = [this.city, this.bio, this.socal.facebook, this.social.instagram, this.education.school].join(' ').toLowerCase() || 
-  [this.bio, this.city, this.socal.facebook, this.social.instagram, this.education.school].join(' ').toLowerCase() || 
-  [this.education.school, this.city, this.socal.facebook, this.social.instagram, this.bio].join(' ').toLowerCase()
+  this.index = [this.city, this.bio].join(' ').toLowerCase()
 })
 
 module.exports = Coach = mongoose.model('coach', CoachSchema);

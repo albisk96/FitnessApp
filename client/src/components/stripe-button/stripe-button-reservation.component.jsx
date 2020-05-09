@@ -1,16 +1,17 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
+import { format } from 'date-fns';
 
-const StripeCheckoutButton = ({ price, workoutId, coachId }) => {
-    const priceForStripe = price * 100;
+const StripeCheckoutButtonReservation = ({ price, id, date }) => {
+    const priceForStripe = price / 10;
     const publishableKey = 'pk_test_KKyvhopuC294zHKtV44xxLg600QQZDVtez';
-
     const onToken = token => {
-        axios.post(`/api/payment/${workoutId}/${coachId}`,
+        axios.post(`/api/payment/${id}`,
           {
               amount: priceForStripe,
-              token: token
+              token: token,
+              date: date
           })
             .then(response => {
               window.location.reload();
@@ -38,4 +39,4 @@ const StripeCheckoutButton = ({ price, workoutId, coachId }) => {
     );
 };
 
-export default StripeCheckoutButton;
+export default StripeCheckoutButtonReservation;

@@ -11,15 +11,13 @@ const { getSearchQuery } = require('../../helpers/search');
 const Coach = require('../../models/Coach');
 const User = require('../../models/User');
 const Workout = require('../../models/Workout');
-const WorkSchedule = require('../../models/WorkSchedule');
 
 // @route    GET api/coach/me
 // @desc     Get current users coach
 // @access   Private
 router.get('/me', auth, async (req, res) => {
   try {
-    const coach = await Coach.findOne({user: req.user.id}).populate('user');
-
+    const coach = await Coach.findOne({user: req.user.id}).populate('user', ['name', 'email', 'avatar']).populate({ path: 'workSchedule.workouts', populate: { path: 'athlete', populate: {path: 'user'}}});
     if (!coach) {
       return res.status(400).json({ msg: 'There is no coach for this user' });
     }
@@ -46,7 +44,6 @@ router.post(
     ]
   ],
   async (req, res) => {
-    console.log('asdasdasdsad')
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -102,12 +99,14 @@ router.post(
 // @access   Public
 router.get('/', async (req, res) => {
   try {
+    //const coaches = await Coach.find({}).populate('user', ['name', 'avatar', 'email', 'bio']);
     const perPage = req.query.page;
     const { size, page } = getPagingQuery(perPage - 1)
     const searchQuery = getSearchQuery(req.query.query || '', 'index')
-
-    const coaches = await Coach.find({...searchQuery}).limit(size).skip(page * size).populate('user', ['name', 'avatar', 'email', 'bio']);
+    console.log(searchQuery)
+    const coaches = await Coach.find({...searchQuery}).limit(size).skip(page * size).populate('user', ['name', 'avatar', 'email', 'bio']).populate({ path: 'workSchedule.workouts', populate: { path: 'athlete'}});
     const coachesCount = await Coach.countDocuments({...searchQuery})
+    console.log(coachesCount)
     res.setHeader('x-total-count', coachesCount)
     res.json(coaches);
   } catch (err) {
@@ -120,10 +119,9 @@ router.get('/', async (req, res) => {
 // @desc     Get coach by user ID
 // @access   Public
 router.get('/user/:user_id', async (req, res) => {
+  id = req.params.user_id
   try {
-    const coach = await Coach.findOne({
-      user: req.params.user_id
-    }).populate('user', ['name', 'avatar', 'email', 'bio']);
+    const coach = await Coach.findById(id).populate('user', ['name', 'avatar', 'email', 'bio']).populate('workout.athlete');
 
     if (!coach) return res.status(400).json({ msg: 'coach not found' });
 
@@ -379,32 +377,41 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 });
 
 
-router.get('/:id/schedule', wrap(async (req, res) => {
-  const id = req.params.id;
-  const { workSchedule } = await Coach.findById(id).lean().populate('workSchedule', '-_id').populate({ path: 'workSchedule', populate: { path: 'workouts'}});
-  if(!workSchedule) {
-     console.log(workSchedule)
+router.get('/:id/schedule', async (req, res) => {
+  try {
+    const {workSchedule} = await Coach.findById(req.params.id).populate('workSchedule.workouts');
+    res.json(workSchedule);
+  } catch (err) {
+    console.log(err)
   }
-  else {
-      res.json(workSchedule);
+})
+
+// @route    PUT api/coach/schedule
+// @desc     Add coach schedule
+// @access   Private
+router.put('/schedule', auth,
+  async (req, res) => {
+    
+    try {
+      //const coach = await Coach.findOne({ user: req.user.id });
+      const coach = await Coach.updateMany({user: req.user.id}, { $set: { workSchedule: req.body } });
+      await coach.save();
+      console.log(coach)
+
+      res.json(coach);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
   }
+);
+
+router.get('/schedule', auth, wrap(async (req, res) => {
+  const { workSchedule } = await Coach.findOne({ user: req.user.id }).lean()
+  res.json(workSchedule);
 }))
 
 
-router.get('/:id/workout/:date', async (req, res) => {
-  const id = req.params.id;
-  const date = req.params.date;
-  const coach = await Coach.findById(id);
-  const workSchedule = await WorkSchedule.find({ _id: coach.workSchedule }).populate({ path: 'workouts' });
-  const formatted_date = new Date(date).getFullYear() + "-" + (new Date(date).getMonth() + 1) + "-" + new Date(date).getDate() + " " + new Date(date).getHours() + ":" + new Date(date).getMinutes()
-  if(workSchedule[0].workouts && workSchedule[0].workouts.some(x => 
-      x.date.getFullYear() + "-" + (x.date.getMonth() + 1) + "-" + x.date.getDate() + " " + x.date.getHours() + ":" + x.date.getMinutes() === formatted_date)) {
-      res.status(400).send('Data jau rezervuota');
-  }
-  else {
-      res.sendStatus(200);
-  }
-})
 
 router.get('/migrate', async (req, res) => {
   try {
@@ -416,5 +423,6 @@ router.get('/migrate', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 module.exports = router;
