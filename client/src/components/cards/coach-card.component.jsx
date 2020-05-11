@@ -8,9 +8,8 @@ const CoachCard = ({ coach: {
     city, bio, _id, workSchedule }
   }) => {
   return (
-    
         <CardContainer>
-          <CardImage src={avatar} alt="Card image cap" style={{ height: '170px'}} />
+          <CardImage src={avatar} alt="Card image cap" />
           <CardBody>
             <h5 className="card-title">{name}</h5>
             <p className="card-text">{city}</p>
@@ -18,7 +17,8 @@ const CoachCard = ({ coach: {
           <CardFooter>
           <div style={{ display: 'flex', justifyContent: 'space-between'}}>
           <LinkButton to={`/coach/user/${_id}`}>View Profile</LinkButton>
-          <Reserve id={_id} price={workSchedule.price} />
+          { workSchedule.workDays ? <Reserve id={_id} price={workSchedule.price} /> : ''}
+          
           </div>
           </CardFooter>
           </CardContainer>

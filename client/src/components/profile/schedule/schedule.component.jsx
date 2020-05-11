@@ -14,7 +14,7 @@ function TrainerSchedule() {
       from: { value: 8, label: '8' },
       to: { value: 17, label: '17' },
     },
-    price: 1000,
+    price: 10,
   });
   const [alert, setAlert] = useState('');
 console.log(schedule)
@@ -90,12 +90,11 @@ console.log(schedule)
 
   return (
     <Container style={{ marginTop: '2em' }}>
-      <h2 className="text-center">Tvarkaraštis</h2>
+      <h2 className="text-center">Schedule</h2>
       <Form onSubmit={handeScheduleFormSubmit}>
-        <h3 className="text-center">Darbo dienos</h3>
         <Form.Row style={{ justifyContent: 'center' }}>
           <Form.Group as={Col} md="4" controlId="workDays">
-            <Form.Label>Kiek dienų dirbsite per savaitę?</Form.Label>
+            <Form.Label>How many days per week will you work?</Form.Label>
             <Form.Control
               as="select"
               onChange={e =>
@@ -114,7 +113,7 @@ console.log(schedule)
           </Form.Group>
           {schedule.workDays !== '7' && (
             <Form.Group as={Col} md="4" controlId="freeDays">
-              <Form.Label>kurios dienos bus laisvos?</Form.Label>
+              <Form.Label>Select free days</Form.Label>
               <Select
                 isMulti
                 value={schedule.freeDays}
@@ -129,10 +128,10 @@ console.log(schedule)
         </Form.Row>
         <Form.Row style={{ justifyContent: 'center' }}>
           <Form.Group as={Col} md="4" controlId="Hours">
-            <h4 className="text-center">Valandos</h4>
+            <h4 className="text-center">Work Hours</h4>
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="fromHours">
-                <Form.Label>Nuo </Form.Label>
+                <Form.Label>From</Form.Label>
                 <Select
                   value={schedule.workHours.from}
                   onChange={value =>
@@ -151,7 +150,7 @@ console.log(schedule)
                 />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="toHours">
-                <Form.Label>Iki </Form.Label>
+                <Form.Label>To</Form.Label>
                 <Select
                   value={schedule.workHours.to}
                   onChange={value =>
@@ -171,8 +170,8 @@ console.log(schedule)
             </Form.Row>
           </Form.Group>
           <Form.Group as={Col} md="4" controlId="toHours">
-            <h4 className="text-center">Treniruotės kaina</h4>
-            <Form.Label>Kainą įveskite centais </Form.Label>
+            <h4 className="text-center">Price</h4>
+            <Form.Label>Workout price for hour</Form.Label>
             <Form.Control
               type="number"
               value={schedule.price}
@@ -184,7 +183,7 @@ console.log(schedule)
         </Form.Row>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button variant="primary" type="submit">
-            Išsaugoti
+            Save
           </Button>
         </div>
       </Form>

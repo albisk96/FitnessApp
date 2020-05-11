@@ -61,6 +61,7 @@ export const addAchievments = (formData) => async dispatch => {
 // Add Education
 export const addEducation = (formData) => async dispatch => {
   try {
+    console.log(formData)
     const res = await axios.put('/api/coach/education', formData);
     dispatch(UpdateProfileSuccess(res.data));
     window.location.reload();

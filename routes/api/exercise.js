@@ -58,7 +58,6 @@ router.get('/', async (req, res) => {
 
       const exercise = await Exercise.find({...searchQuery}).limit(size).skip(page * size).sort({ date: -1 });
       const exercisesCount = await Exercise.countDocuments({...searchQuery})
-      console.log(searchQuery)
       res.setHeader('x-total-count', exercisesCount)
       res.json(exercise);
     } catch (err) {

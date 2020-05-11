@@ -6,11 +6,11 @@ import { useSelector } from 'react-redux';
 import { search } from '../../helpers/search';
 import { CardColumnsContainer } from './workouts.styles';
 
-
 const WorkoutList = () => {
   const [workouts, setWorkouts] = useState([]);
   const [itemsCount, setItemsCount] = useState(1);
   const page = search.useQuery().get('page');
+  const { _id } = useSelector(state => state.athlete.athlete);
 
   useEffect(() => {
     async function fetchWorkoutData(){
@@ -21,9 +21,10 @@ const WorkoutList = () => {
 fetchWorkoutData()
 }, [page])
 
-  //const reservation = reservations.map(x => x.workout)
- // const x = workouts.filter(x => x._id !== reservations.workout)
-  const openWorkouts = workouts.filter(x => new Date(x.when) - new Date > 0 && x.group)
+const myWorkouts = workouts.map(x => x.athlete.map( y => y._id !== _id))
+console.log(myWorkouts)
+const openWorkouts = workouts.filter(x => new Date(x.when) - new Date > 0 && x.group)
+  
   return (
     <div className='container'>
       <div style={{ marginTop: '5%'}}>

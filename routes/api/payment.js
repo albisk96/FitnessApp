@@ -25,7 +25,7 @@ const transporter = nodemailer.createTransport({
 });
 
   router.post('/:workoutId/:coachId', auth, async(req, res) => {
-    
+    console.log('Grupine TRENIRUOTE')
     const body = {
         source: req.body.token.id,
         amount: req.body.amount,
@@ -48,9 +48,20 @@ const transporter = nodemailer.createTransport({
 
       workout.athlete.push(currentAthlete);
       
+      
       workout.coach = coach._id;
 
-      await workout.save();
+      await workout.save(function (err) {
+        if (err) return handleError(err);
+        // saved!
+      });
+
+      currentAthlete.workouts.push(workout)
+
+      await currentAthlete.save(function (err) {
+        if (err) return handleError(err);
+        // saved!
+      });
 
         stripe.charges.create(body, (stripeErr, stripeRes) => {
             if (stripeErr || workout.entries < 0) {
@@ -78,7 +89,7 @@ const transporter = nodemailer.createTransport({
   })
 
   router.post('/:coachId', auth, async(req, res) => {
-    console.log('ROUTE PAYMENT')
+    console.log('ROUTE PAYMENT INDIVIDUAL WORKOUT')
     const date = req.body.date
     console.log(date)
     const body = {
@@ -96,7 +107,7 @@ const transporter = nodemailer.createTransport({
         title: 'Individual workout',
         name: coach.user.name,
         description: `Individual workout with ${coach.user.name}`,
-        gym: coach.gym,
+        address: coach.gym,
         price: coach.workSchedule.price,
         level: 'beginner',
         user: user.id,
@@ -113,6 +124,10 @@ const transporter = nodemailer.createTransport({
       workout.athlete.push(athlete);
       workout.coach = coach._id;
       await workout.save();     
+
+      athlete.workouts.push(workout)
+
+      await athlete.save();
 
         stripe.charges.create(body, (stripeErr, stripeRes) => {
             if (stripeErr) {

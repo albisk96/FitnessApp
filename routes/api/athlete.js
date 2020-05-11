@@ -15,7 +15,7 @@ const Exercise = require('../../models/Exercise');
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
-    const athlete = await Athlete.findOne({user: req.user.id}).populate('user', ['name', 'email', 'avatar']);
+    const athlete = await Athlete.findOne({user: req.user.id}).populate('user', ['name', 'email', 'avatar']).populate('workouts');
 
     if (!athlete) {
       return res.status(400).json('There is no athlete for this user');
@@ -226,7 +226,7 @@ router.put(
     const exercise = await Exercise.find();
     const plan = PlanHelper.GeneratePlan(athlete, exercise, days_per_week, level, goal);
     try {
-        athlete.workout.push(plan);
+        athlete.workoutPlan.push(plan);
         await athlete.save();
         res.json(athlete);
       } catch (err) {

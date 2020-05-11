@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import Moment from 'react-moment';
@@ -6,17 +6,10 @@ import axios from 'axios';
 import Spinner from '../spinner/spinner.component';
 
 const Trainings = () => {
-    const [workouts, setWorkouts] = useState()
-    const { _id } = useSelector(state => state.athlete.athlete);
-    useEffect(() => {
-        async function getWorkouts() {
-              const res = await axios.get('/api/workouts')
-              setWorkouts(res.data)
-          }
-          getWorkouts()
-       }, []) 
-    console.log(workouts)
-    console.log(_id)
+    const { workouts } = useSelector(state => state.athlete.athlete);
+
+       console.log(workouts.map( x => x.title ))
+    
     return(
         <div style={{ marginTop: '5%' }}>
             <Table striped bordered hover style={{ backgroundColor: 'white'}}>
@@ -30,8 +23,7 @@ const Trainings = () => {
             </tr>
         </thead>
         <tbody>
-        { workouts === null && workouts.athlete === null ? <Spinner /> : workouts ?
-            workouts.filter(workout => workout.athlete.map(x =>_id === _id)).map((x, index) => (
+        { workouts ? workouts.map(( x, index ) => (
             <tr key={index}>
             <td>{x.title}</td>
             <td>{x.name}</td>

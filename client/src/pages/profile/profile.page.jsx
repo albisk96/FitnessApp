@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getCurrentProfile } from '../../redux/profile/api'
 import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
 import Spinner from '../../components/spinner/spinner.component'
-import {Route} from 'react-router-dom';
+
 
 const ProfilePageContainer = lazy(() =>
   import('../../components/profile/profile.container')

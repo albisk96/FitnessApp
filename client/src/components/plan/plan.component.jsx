@@ -19,7 +19,7 @@ const Plan = ({ athlete: {athlete} }) => {
             </div>
             <Accordion>
             {
-                athlete.workout.map((plan, index) => (
+                athlete.workoutPlan.map((plan, index) => (
                 <Card style={{ border: '0px solid transparent' }}>
                 <Card.Header style={{ backgroundColor: '#343a40' }}>
                 <Accordion.Toggle as={Button} style={{ color: 'white' }} variant="link" eventKey={index}>

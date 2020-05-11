@@ -13,7 +13,6 @@ const UpdateEducation = ({ addEducation, education }) => {
         degree: yup.string().required('degree is required'),
         fieldofstudy: yup.string().required('Field of Study is required'),
         from: yup.string().required('Date from is required'),
-        description: yup.string().required('Description is required'),
       });
 
       const [toDateDisabled, toggleDisabled] = useState(false);

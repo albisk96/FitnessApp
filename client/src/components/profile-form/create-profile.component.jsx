@@ -44,7 +44,7 @@ const CreateMyProfile = ({ createProfile }) => {
         <FormInput
             name='gym'
             type='text'
-            label='Gym name and address'
+            label='Gym name and address which you work in'
             id='gym'
             error={touched.gym && errors.gym}
             value={values.gym}

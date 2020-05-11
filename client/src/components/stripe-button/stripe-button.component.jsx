@@ -5,7 +5,7 @@ import axios from 'axios';
 const StripeCheckoutButton = ({ price, workoutId, coachId }) => {
     const priceForStripe = price * 100;
     const publishableKey = 'pk_test_KKyvhopuC294zHKtV44xxLg600QQZDVtez';
-
+    console.log(price)
     const onToken = token => {
         axios.post(`/api/payment/${workoutId}/${coachId}`,
           {

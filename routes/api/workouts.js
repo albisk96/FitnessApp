@@ -57,6 +57,7 @@ router.post(
       coach.workSchedule.workouts.unshift(workout._id);
 
       await coach.save();
+      console.log(coach)
 
       res.json(coach)
 

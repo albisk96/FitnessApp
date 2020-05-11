@@ -50,6 +50,7 @@ router.post(
     }
     const {
       city,
+      gym,
       website,
       bio,
       DOB,
@@ -64,6 +65,7 @@ router.post(
       name: req.user.name,
       email: req.user.email,
       DOB,
+      gym,
       city,
       website: website === '' ? '' : normalize(website, { forceHttps: true }),
       bio
@@ -85,7 +87,6 @@ router.post(
         { $set: coachFields },
         { new: true, upsert: true }
       );
-      console.log(coach)
       res.json(coach);
     } catch (err) {
       console.error(err.message);
@@ -103,10 +104,8 @@ router.get('/', async (req, res) => {
     const perPage = req.query.page;
     const { size, page } = getPagingQuery(perPage - 1)
     const searchQuery = getSearchQuery(req.query.query || '', 'index')
-    console.log(searchQuery)
     const coaches = await Coach.find({...searchQuery}).limit(size).skip(page * size).populate('user', ['name', 'avatar', 'email', 'bio']).populate({ path: 'workSchedule.workouts', populate: { path: 'athlete'}});
     const coachesCount = await Coach.countDocuments({...searchQuery})
-    console.log(coachesCount)
     res.setHeader('x-total-count', coachesCount)
     res.json(coaches);
   } catch (err) {
@@ -184,9 +183,9 @@ router.put(
     };
 
     try {
-      const coach = await Coach.findOne({ user: req.user.id });
-
-      coach.achievements.unshift(newAch);
+      const coach = await Coach.findOne({user: req.user.id}).populate('user')
+      console.log(coach)
+      coach.achievements.push(newAch);
 
       await coach.save();
 
@@ -204,14 +203,15 @@ router.put(
 
 router.delete('/achievements/:ach_id', auth, async (req, res) => {
   try {
-    const foundCoach = await Coach.findOne({ user: req.user.id });
+    const coach = await Coach.findOne({ user: req.user.id });
+    console.log(coach.achievements)
 
-    foundCoach.achievements = foundCoach.achievements.filter(
+    coach.achievements = coach.achievements.filter(
       ach => ach._id.toString() !== req.params.ach_id
     );
 
-    await foundCoach.save();
-    return res.status(200).json(foundCoach);
+    await coach.save();
+    return res.status(200).json(coach);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: 'Server error' });
@@ -268,13 +268,14 @@ router.put(
     };
 
     try {
-      const coach = await Coach.findOne({ user: req.user.id });
-
+      
+      const coach = await Coach.findOne({user: req.user.id}).populate('user')
+      console.log(coach)
       coach.education.unshift(newEdu);
 
       await coach.save();
 
-      res.json(coach);
+      res.json(coach.education);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -396,7 +397,6 @@ router.put('/schedule', auth,
       //const coach = await Coach.findOne({ user: req.user.id });
       const coach = await Coach.updateMany({user: req.user.id}, { $set: { workSchedule: req.body } });
       await coach.save();
-      console.log(coach)
 
       res.json(coach);
     } catch (err) {

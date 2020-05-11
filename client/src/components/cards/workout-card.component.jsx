@@ -17,7 +17,7 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
   const closed = (new Date(workout.when) - new Date < 0)
   //const reserved = reservations.workout !== workout._id
 
-
+  console.log('Group workout')
   const myCard = !mySession
   ? <StripeCheckoutButton workoutId={workout._id} coachId={workout.user} price={workout.price} /> 
   : closed ? <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal size="modal-70w" />
