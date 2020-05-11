@@ -15,7 +15,7 @@ const NavBar = () => {
         <Nav className="mr-auto">
             <LinkNav to='/profile'>Profile</LinkNav>
             <LinkNav to='/coach'>Coaches</LinkNav>
-            <LinkNav to='/workouts'>Workouts</LinkNav>
+            <LinkNav to='/coach/workouts'>Workouts</LinkNav>
             <button className="btn btn-outline-danger my-2 my-sm-0" onClick={removeSession} type="submit">Logout</button>
         </Nav>
     )
@@ -30,7 +30,7 @@ const NavBar = () => {
             <LinkNav to='/dashboard'>Dashboard</LinkNav>
             <LinkNav to='/exercises'>Exercises</LinkNav>
             <Nav.Link href="/coach">Coaches</Nav.Link>
-            <LinkNav to='/workouts'>Workouts</LinkNav>
+            <LinkNav to='/user/workouts'>Workouts</LinkNav>
             <LinkNav to='/plan'>Workout Plan</LinkNav>
             <button className="btn btn-outline-danger my-2 my-sm-0 mr-3" onClick={removeSession} type="submit">Logout</button>
         </Nav>

@@ -18,8 +18,8 @@ const Routes = () => {
     const routes = [
         { path: "/admin", component: AdminPage, exact: true, role: "admin"},
         { path: "/user", component: UserPage, exact: true, role: "user"},
-        { path: "/workouts", component: AthleteWorkout, exact: true, role: "user"},
-        { path: "/workouts", component: CoachWorkout, exact: true, role: "coach"},
+        { path: "/user/workouts", component: AthleteWorkout, exact: true, role: "user"},
+        { path: "/coach/workouts", component: CoachWorkout, exact: true, role: "coach"},
         { path: "/workouts/create", component: AddWorkout, exact: true, role: "coach"},
         { path: "/profile", component: MyProfile, exact: true, role: "coach"},
         { path: "/coach", component: CoachPage, exact: true, role: "user"},
