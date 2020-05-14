@@ -11,16 +11,7 @@ const WorkoutList = () => {
   const [workouts, setWorkouts] = useState([]);
   const [itemsCount, setItemsCount] = useState(1);
   const page = search.useQuery().get('page');
-  
   //const { _id } = useSelector(state => state.athlete.athlete);
-
-  // useEffect(() => {
-  //   async function getCurrentProfile() {
-  //         const res = await axios.get('/api/coach/me')
-  //         setReservations(res.data.workSchedule.workouts)
-  //     }
-  //     getCurrentProfile()
-  //  }, []) 
 
   useEffect(() => {
     async function fetchWorkoutData(){
@@ -32,9 +23,9 @@ fetchWorkoutData()
 }, [page])
 
 //const myWorkouts = workouts.map(x => x.athlete.map( y => y._id !== _id))
-
+// console.log(myWorkouts)
 const openWorkouts = workouts.filter(x => new Date(x.when) - new Date > 0 && x.group)
-
+  
   return (
     <div className='container'>
       <div style={{ marginTop: '5%'}}>

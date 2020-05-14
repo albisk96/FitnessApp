@@ -20,6 +20,9 @@ const CoachSchema = new mongoose.Schema({
   gym: {
     type: String
   },
+  skype: {
+    type: String
+  },
   achievements: [
     {
       title: {

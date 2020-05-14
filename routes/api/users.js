@@ -106,7 +106,7 @@ router.post(
         (err, token) => {
           if (err) throw err;
           res.set('Set-Cookie', cookie.serialize('jwtToken', token, {path: '/', httpOnly: true }))
-          res.json({ token, role: user.role });
+          res.json({ token, role: user.role, id: user.id });
         }
       );
 

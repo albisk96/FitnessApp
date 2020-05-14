@@ -14,13 +14,13 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
   const { session } = useAuth();
   //const { reservations } = useSelector(state => state.athlete.athlete);
   //const reservation = reservations.map(x => x.workout)
-  const mySession = ( session.id === workout.user ) 
+  const mySession = ( session.id === workout.user._id ) 
   const closed = (new Date(workout.when) - new Date < 0)
   //const reserved = reservations.workout !== workout._id
   const myWorkout = mySession ? workout.athlete : null
   console.log(myWorkout)
   const myCard = !mySession ? 
-  <StripeCheckoutButton workoutId={workout._id} coachId={workout.user} price={workout.price} /> 
+  <StripeCheckoutButton workoutId={workout._id} coachId={workout.user._id} price={workout.price} /> 
   : closed ? 
     <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal workout={workout} size="modal-70w" />
 

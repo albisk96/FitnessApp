@@ -12,6 +12,9 @@ const Information = ({ profile }) => {
         <p>Email</p>
         <h3>{profile.user.email}</h3>
         <Line />
+        <p>Skype</p>
+        <h3>{profile.skype}</h3>
+        <Line />
         <p>Age</p>
         <h3>
             <Moment fromNow ago >{profile.DOB}</Moment>

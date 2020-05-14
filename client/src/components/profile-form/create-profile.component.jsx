@@ -9,6 +9,9 @@ import * as yup from 'yup';
 const CreateMyProfile = ({ createProfile }) => {
     const schema = yup.object({
         bio: yup.string().required('Description is required'),
+        skype: yup.string().required('Skype is required'),
+        city: yup.string().required('City is required'),
+        gym: yup.string().required('Gym is required'),
       });
 
       const SubmitForm = (values) => {
@@ -31,6 +34,7 @@ const CreateMyProfile = ({ createProfile }) => {
             instagram: '',
             facebook: '',
             gym: '',
+            skype: '',
         }}
     >
         {({
@@ -48,6 +52,16 @@ const CreateMyProfile = ({ createProfile }) => {
             id='gym'
             error={touched.gym && errors.gym}
             value={values.gym}
+            onChange={handleChange}
+            onBlur={handleBlur}
+        />
+        <FormInput
+            name='skype'
+            type='text'
+            label='Skype'
+            id='skype'
+            error={touched.skype && errors.skype}
+            value={values.skype}
             onChange={handleChange}
             onBlur={handleBlur}
         />

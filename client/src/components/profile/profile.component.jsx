@@ -22,7 +22,7 @@ import TableReservations from '../users-table/individual-members-table.component
 
 
 const Profile = ({ profile: { profile }, workout: {workouts} }) => {
-
+    
     const { session } = useAuth();
     const [more, setMore] = useState(true);
     const [key, setKey] = useState('profile');
@@ -34,10 +34,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
     const handleClick = () => setMore(!more);
     return(
         <div>
-        {
-
-        }
-            {profile === null && session === null && profile.user === null ? <Spinner /> :
+            { profile ?  
                 <JumboContainer>
             <div>
                 <ProfileAvatar profile={profile} />
@@ -50,7 +47,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
             onSelect={(k) => setKey(k)}
             >
                 <Tab eventKey="profile" title="Profile">
-                { profile.user._id === session.id ? 
+                { !profile ? <Spinner /> : profile.user._id === session.id ? 
                     <Fragment>
                     <Center style={{marginBottom: "2%"}}>
                     <p>Update your portfolio</p>
@@ -82,12 +79,12 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                             <Fragment>
                                 <AddWorkout className="btn btn-outline-danger my-2 my-sm-0" modalTitle="Create a workout" buttonName="Add New" />
                                 <WorkoutList workouts=
-                                {more ? workouts.filter(x => x.user === session.id && new Date(x.when) - new Date > 0).slice(0, 3) 
-                                : workouts.filter(x => x.user === session.id && new Date(x.when) - new Date > 0) } />
+                                {more ? workouts.filter(x => x.user._id === session.id && new Date(x.when) - new Date > 0).slice(0, 3) 
+                                : workouts.filter(x => x.user._id === session.id && new Date(x.when) - new Date > 0) } />
                             </Fragment>
                             : <WorkoutList workouts=
-                            {more ?  workouts.filter(x => x.user === profile.user._id && new Date(x.when) - new Date > 0).slice(0, 3) 
-                            : workouts.filter(x => x.user === profile.user._id && new Date(x.when) - new Date > 0) }/>
+                            {more ?  workouts.filter(x => x.user._id === profile.user._id && new Date(x.when) - new Date > 0).slice(0, 3) 
+                            : workouts.filter(x => x.user._id === profile.user._id && new Date(x.when) - new Date > 0) }/>
                         }
                         <Button onClick={handleClick} variant="outline-dark">{!more ? 'Show less' : 'Show All'}</Button>
                     </Center>
@@ -95,17 +92,17 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                 <Tab eventKey="Reviews" title="Reviews">
                     <Comments profile={profile} id={session.id} />
                 </Tab>
-                { profile.user._id === session.id ? 
+                { !profile ? <Spinner /> : profile.user._id === session.id ? 
                     <Tab eventKey="Archive" title="Archive Workouts">
-                    <WorkoutList workouts={workouts.filter(x => x.user === session.id && new Date(x.when) - new Date < 0) } />
+                    <WorkoutList workouts={workouts.filter(x => x.user._id === session.id && new Date(x.when) - new Date < 0) } />
                     </Tab> : ''
                 }
-                { profile.user._id === session.id ? 
+                { !profile ? <Spinner /> : profile.user._id === session.id ? 
                     <Tab eventKey="MySchedule" title="MySchedule">
                     <MySchedule />
                     </Tab> : ''
                 }
-                { profile.user._id === session.id ? 
+                { !profile ? <Spinner /> : profile.user._id === session.id ? 
                     <Tab eventKey="Individual" title="Calendar">
                     <TableReservations workouts={workouts.filter(x => new Date(x.when) - new Date > 0 && !x.group)} />
                     </Tab> : ''
@@ -113,7 +110,15 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
             </Tabs>
                 </ProfileInfoContainer>
             </div>
-            </JumboContainer>
+            </JumboContainer> : 
+            <FormBackground>
+                <div className="container" style={{ marginTop: '1%'}}>
+                    <Center>
+                        <h1 style={{ color: 'white'}}>Please, create your Coach profile!</h1>
+                    </Center>
+                <ProfileForm />
+                </div>
+            </FormBackground>
         }
         </div>
     )

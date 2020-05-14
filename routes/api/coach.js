@@ -53,6 +53,7 @@ router.post(
       gym,
       website,
       bio,
+      skype,
       DOB,
       youtube,
       twitter,
@@ -66,6 +67,7 @@ router.post(
       email: req.user.email,
       DOB,
       gym,
+      skype,
       city,
       website: website === '' ? '' : normalize(website, { forceHttps: true }),
       bio
