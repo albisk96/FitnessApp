@@ -29,7 +29,6 @@ export function createWorkout(formData) {
 
 // Delete workout
 export const deleteWorkout = id => async dispatch => {
-  console.log(id)
   try {
     await axios.delete(`/api/workouts/${id}`);
     dispatch(DeleteWorkoutSuccess(id));

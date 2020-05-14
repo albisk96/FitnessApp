@@ -16,7 +16,6 @@ export function getCurrentProfile() {
 // Get all profiles
 export const getProfiles = () => async dispatch => {
   try {
-    console.log('Get Profiles')
     const res = await axios.get('/api/coach');
     dispatch(getProfilesSuccess(res.data));
   } catch (error) {
@@ -26,7 +25,6 @@ export const getProfiles = () => async dispatch => {
 
 // Get profile by ID
 export const getProfileById = (userId) => async dispatch => {
-  console.log(userId)
   try {
     const res = await axios.get(`/api/coach/user/${userId}`);
     dispatch(getProfileSuccess(res.data));
@@ -61,7 +59,7 @@ export const addAchievments = (formData) => async dispatch => {
 // Add Education
 export const addEducation = (formData) => async dispatch => {
   try {
-    console.log(formData)
+
     const res = await axios.put('/api/coach/education', formData);
     dispatch(UpdateProfileSuccess(res.data));
     window.location.reload();

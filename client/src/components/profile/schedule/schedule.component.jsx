@@ -17,7 +17,6 @@ function TrainerSchedule() {
     price: 10,
   });
   const [alert, setAlert] = useState('');
-console.log(schedule)
   useEffect(() => {
     setAlert('');
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -15,7 +15,6 @@ const Register = ({ id }) => {
 
 
     useEffect(() => {
-        console.log(id)
         function getUsers(){
         axios.get(`/api/users/${id}`)
         .then(

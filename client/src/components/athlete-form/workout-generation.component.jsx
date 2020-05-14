@@ -14,8 +14,6 @@ const CreateAthlete = ({ generatePlan }) => {
       });
 
       const SubmitForm = (values) => {
-          console.log(values.level);
-          console.log(values.goal);
         generatePlan(values);
       };
 

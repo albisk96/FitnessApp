@@ -7,7 +7,6 @@ import axios from 'axios';
 const WorkoutModal = () => {
     const [modalShow, setModalShow] = useState(false);
     const [athlete, setAthlete] = useState();
-    console.log(athlete)
 
     useEffect(() => {
         async function getCurrentProfile() {

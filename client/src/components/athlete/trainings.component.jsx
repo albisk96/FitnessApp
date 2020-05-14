@@ -7,8 +7,6 @@ import Spinner from '../spinner/spinner.component';
 
 const Trainings = () => {
     const { workouts } = useSelector(state => state.athlete.athlete);
-
-       console.log(workouts.map( x => x.title ))
     
     return(
         <div style={{ marginTop: '5%' }}>

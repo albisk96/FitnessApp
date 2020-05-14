@@ -68,18 +68,15 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
         for(let i = 1; i <= daysPerWeek; i++){ // Push an exercises to every day
 
             let dailyExercises = []; // Array of daily exercises
-            console.log(i)
             GetCardioExercise(i, dailyExercises) 
             
             if(i % 2 === 0){
                 for(let k = 1; k <= 2; k++){ // How many muscles per day 
                     WorkoutForOneDayGeneration(dailyExercises, k, 3) // Two muscles per day every two days 1 2 1 2
-                    console.log('Hello')
                 }
             } else {
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
                     WorkoutForOneDayGeneration(dailyExercises, k, 6) // One muscle per day every two days 1 2 1 2
-                    console.log('Hello 2')
                 }
             }
                 

@@ -7,7 +7,6 @@ import Confirmation from '../../components/layout/confirmation.component';
 
 const Landing = ( ) => {
 
-  console.log('CONFIRMATION')
 
   return (
     <div>

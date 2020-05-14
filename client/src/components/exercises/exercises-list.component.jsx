@@ -20,7 +20,6 @@ const ExercisesList = () => {
       }
       getExercisesList()
    }, [page, query]) 
-   console.log(query)
 
     return(
         <div className="container">

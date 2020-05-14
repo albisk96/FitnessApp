@@ -49,7 +49,6 @@ export const calcBMI = (formData) => async dispatch => {
     // Update BMI
   export const generatePlan = (formData) => async dispatch => {
       try {
-        console.log(` Form Data ${formData}`)
         const res = await axios.put('/api/athlete/plan', formData);
         dispatch(UpdateAthleteSuccess(res.data));
       } catch (error) {

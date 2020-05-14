@@ -17,6 +17,8 @@ import { Button, Tabs, Tab } from 'react-bootstrap'
 import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
 import { Center, ProfileInfoContainer, Line, PortfolioContainer, StyledWrap, FormBackground, JumboContainer } from './profile.styles.jsx'
 import { useAuth } from '../../contexts';
+import Spinner from '../spinner/spinner.component';
+
 
 const Profile = ({ profile: { profile }, workout: {workouts} }) => {
 
@@ -28,12 +30,14 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
     // const myClosed = me.filter(x => new Date(x.when) - new Date < 0)
     // const myOpen = me.filter(x => new Date(x.when) - new Date > 0)
     // const coachOpen = coach.filter(x => new Date(x.when) - new Date > 0)
-    console.log(profile)
     const handleClick = () => setMore(!more);
     return(
         <div>
-            {profile ? 
-            <JumboContainer>
+        {
+
+        }
+            {profile === null && session === null && profile.user === null ? <Spinner /> :
+                <JumboContainer>
             <div>
                 <ProfileAvatar profile={profile} />
             </div>
@@ -103,15 +107,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
             </Tabs>
                 </ProfileInfoContainer>
             </div>
-            </JumboContainer> : 
-            <FormBackground>
-                <div className="container" style={{ marginTop: '1%'}}>
-                    <Center>
-                        <h1 style={{ color: 'white'}}>Please, create your Coach profile!</h1>
-                    </Center>
-                <ProfileForm />
-                </div>
-            </FormBackground>
+            </JumboContainer>
         }
         </div>
     )

@@ -20,17 +20,14 @@ function Scheduler({ id, price }) {
           setSchedule({ ...schedule, ...res.data });
         })
         .catch(e => {
-          console.log('neveikia')
+          console.log('Klaida')
         });
     }
     getSchedule();
   }, [id]);
-  console.log(schedule)
   useEffect(() => {
     if (getMinutes(schedule.date) !== 0) {
       console.log('Pasirinkite laiką');
-    } else {
-      console.log('');
     }
   }, [schedule.date]);
 
@@ -38,8 +35,7 @@ function Scheduler({ id, price }) {
   const excludedTimes = useMemo(
     () =>
       (schedule.workouts || [])
-        .filter(workout => { console.log(schedule.date)
-          console.log(workout.when)
+        .filter(workout => {
             return (
               format(schedule.date, 'MM/dd/yyyy') ===
               format(new Date(workout.when), 'MM/dd/yyyy')

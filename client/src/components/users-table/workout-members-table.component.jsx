@@ -4,7 +4,6 @@ import { Table } from 'react-bootstrap';
 import Moment from 'react-moment';
 
 const WorkoutInformation = ({ reservations }) => {
-    console.log(reservations.map(x => x.athlete.map( ath => ath.user.name)))
     return(
         <Fragment>
         {reservations === null && reservations.athlete === null ? (
