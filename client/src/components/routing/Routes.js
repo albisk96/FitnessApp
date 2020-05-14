@@ -30,7 +30,7 @@ const Routes = () => {
         { path: "/plan", component: Plan, exact: true, role:"user"},
         { path: "/exercises", component: Exercises, exact: true, role:"user"}
       ]
-
+      console.log('hello from protected routes')
   return (
     <div>
       <Switch>

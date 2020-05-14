@@ -139,9 +139,9 @@ const Register = ({ id }) => {
         value={role} 
         onChange={e => setRole(e.target.value)}
     >
-        <option>Choose your main goal</option>
-        <option value="user">To get fit</option>
-        <option value="coach">To help others</option>
+        <option>Choose your system goal</option>
+        <option value="user">Athlete</option>
+        <option value="coach">Trainer</option>
     </Form.Control>
     </div> : ''
   }

@@ -7,6 +7,22 @@ router.get('/:id', async (req, res) => {
 
   let userId = req.params.id;
 
+  try {
+    const user = await User.findById(userId) 
+    console.log('confirmation id get')
+    res.json(user)
+    } catch (err){
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+   });
+  
+   module.exports = router;
+
+router.post('/confirmed/user/:id', async (req, res) => {
+
+  let userId = req.params.id;
+
   let conditions = {
     _id : userId
   }

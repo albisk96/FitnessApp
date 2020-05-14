@@ -6,6 +6,7 @@ import ErrorBoundary from './components/error-boundary/error-boundary.component'
 import Landing from './components/layout/landing.component';
 import Routes from './components/routing/Routes';
 import Navbar from './components/layout/navbar.component';
+import Confirmation from './pages/user/confirmation.page';
 import './App.css';
 
 const App = () => {  
@@ -16,6 +17,7 @@ const App = () => {
           <ErrorBoundary>
             <Suspense fallback={<Spinner />}>
             <Route exact path="/" component={Landing} />
+            <Route exact path="/hello" component={Confirmation} />
             <Route component={Routes} />
             </Suspense>
           </ErrorBoundary>

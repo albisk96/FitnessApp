@@ -93,18 +93,35 @@ router.post(
 
       await user.save();
 
-      let url = null;  
-      if (process.env.NODE_ENV === 'production') {
-        url = `https://tranquil-dawn-70222.herokuapp.com/api/confirmation/${user.id}`
-      } else {
-        url = `http://localhost:4000/api/confirmation/${user.id}`
-      }
+      const payload = {
+        user: {
+          id: user.id,
+        }
+      };
 
-      transporter.sendMail({
-        to: email,
-        subject: 'Confirm Email',
-        html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
-      })
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err;
+          res.set('Set-Cookie', cookie.serialize('jwtToken', token, {path: '/', httpOnly: true }))
+          res.json({ token, role: user.role });
+        }
+      );
+
+      // let url = null;  
+      // if (process.env.NODE_ENV === 'production') {
+      //   url = `https://tranquil-dawn-70222.herokuapp.com/api/confirmation/${user.id}`
+      // } else {
+      //   url = `http://localhost:4000/api/confirmation/${user.id}`
+      // }
+
+      // transporter.sendMail({
+      //   to: email,
+      //   subject: 'Confirm Email',
+      //   html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
+      // })
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
@@ -187,20 +204,5 @@ router.put(
     }
   }
 );
-
-// @route    GET api/users
-// @desc     Get all users
-// @access   Private
-router.get('/:id', auth, async (req, res) => {
-  try {
-    const users = await User.findById(req.params.id).lean().select('name email role');
-    res.json(users);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
-
-
 
 module.exports = router;
