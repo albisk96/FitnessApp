@@ -25,6 +25,7 @@ function Scheduler({ id, price }) {
     }
     getSchedule();
   }, [id]);
+
   useEffect(() => {
     if (getMinutes(schedule.date) !== 0) {
       console.log('Pasirinkite laiką');
@@ -48,6 +49,8 @@ function Scheduler({ id, price }) {
     [schedule.date]
   );
 
+  console.log(format(schedule.date, 'MM/dd/yyyy'))
+
   //const timesColor = time => {
     //console.log(excludedTimes);
     // return
@@ -70,7 +73,7 @@ function Scheduler({ id, price }) {
       )}
       maxTime={setHours(
         setMinutes(new Date(), 0),
-        (schedule.workHours && schedule.workHours.to) || 23
+        (schedule.workHours && schedule.workHours.to -1 ) || 23
       )}
       timeIntervals={60}
       timeCaption="time"

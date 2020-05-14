@@ -383,6 +383,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 router.get('/:id/schedule', async (req, res) => {
   try {
     const {workSchedule} = await Coach.findById(req.params.id).populate('workSchedule.workouts');
+    console.log(workSchedule)
     res.json(workSchedule);
   } catch (err) {
     console.log(err)
@@ -398,7 +399,6 @@ router.put('/schedule', auth,
     try {
       //const coach = await Coach.findOne({ user: req.user.id });
       const coach = await Coach.updateMany({user: req.user.id}, { $set: { workSchedule: req.body } });
-      await coach.save();
 
       res.json(coach);
     } catch (err) {
