@@ -18,6 +18,7 @@ import { fetchWorkoutData } from '../../redux/workouts/workouts.action'
 import { Center, ProfileInfoContainer, Line, PortfolioContainer, StyledWrap, FormBackground, JumboContainer } from './profile.styles.jsx'
 import { useAuth } from '../../contexts';
 import Spinner from '../spinner/spinner.component';
+import TableReservations from '../users-table/individual-members-table.components'
 
 
 const Profile = ({ profile: { profile }, workout: {workouts} }) => {
@@ -102,6 +103,11 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
                 { profile.user._id === session.id ? 
                     <Tab eventKey="MySchedule" title="MySchedule">
                     <MySchedule />
+                    </Tab> : ''
+                }
+                { profile.user._id === session.id ? 
+                    <Tab eventKey="Individual" title="Calendar">
+                    <TableReservations workouts={workouts.filter(x => new Date(x.when) - new Date > 0 && !x.group)} />
                     </Tab> : ''
                 }
             </Tabs>

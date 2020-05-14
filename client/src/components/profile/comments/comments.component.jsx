@@ -11,9 +11,8 @@ const Comments = ({ profile: { comments, _id }, id, deleteComment}) => {
     let rating = null;
 
     comments.forEach((comment) => { rating += comment.stars });
+    
 
-    console.log(comments.map(comment => comment._id));
-    console.log(id)
     return(
         <div>
         <CommentContainer>
@@ -23,10 +22,14 @@ const Comments = ({ profile: { comments, _id }, id, deleteComment}) => {
         <Line />
         <Stars>
             <i style={{ margin: '6%', fontSize: '4rem', color: '#ffe500'}} className="fas fa-star"></i>
-            <Average>
-                    {Math.round((rating / commentCount + Number.EPSILON) * 100) / 100} 
+            { (Math.round((rating / commentCount + Number.EPSILON) * 100) / 100) ? 
+                <Average>
+                    { Math.round((rating / commentCount + Number.EPSILON) * 100) / 100 } 
                     <p style={{ fontSize: '2.5rem', marginTop: '20%', color: 'darkgrey'}}> / 5</p>
-            </Average>
+                </Average> :
+                <h3>Be first to leave a review</h3>
+            }
+            
             <i style={{ margin: '6%', fontSize: '4rem', color: '#ffe500'}} className="fas fa-star"></i>
         </Stars>
         <Line />

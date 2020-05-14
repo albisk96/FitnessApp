@@ -17,12 +17,12 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
   const mySession = ( session.id === workout.user ) 
   const closed = (new Date(workout.when) - new Date < 0)
   //const reserved = reservations.workout !== workout._id
-
-
+  const myWorkout = mySession ? workout.athlete : null
+  console.log(myWorkout)
   const myCard = !mySession ? 
   <StripeCheckoutButton workoutId={workout._id} coachId={workout.user} price={workout.price} /> 
   : closed ? 
-    <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal size="modal-70w" />
+    <Button onClick={() => deleteWorkout(workout._id)} variant="outline-danger">Delete</Button> : <MembersListModal workout={workout} size="modal-70w" />
 
   return(
         <CardContainer>

@@ -11,32 +11,32 @@ const nodemailer = require('nodemailer');
 const normalize = require('normalize-url');
 const { google } = require("googleapis");
 const { getPagingQuery } = require('../../helpers/api-pagination');
-const OAuth2 = google.auth.OAuth2;
+//const OAuth2 = google.auth.OAuth2;
 
 const User = require('../../models/User');
 
-const oauth2Client = new OAuth2(
-  config.get('clientId'),
-  config.get('clientSecret'),
-  "https://developers.google.com/oauthplayground"
-);
+// const oauth2Client = new OAuth2(
+//   config.get('clientId'),
+//   config.get('clientSecret'),
+//   "https://developers.google.com/oauthplayground"
+// );
 
-oauth2Client.setCredentials({
-  refresh_token: config.get('refreshToken')
-});
-const accessToken = oauth2Client.getAccessToken()
+// oauth2Client.setCredentials({
+//   refresh_token: config.get('refreshToken')
+// });
+// const accessToken = oauth2Client.getAccessToken()
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: "OAuth2",
-       user: "albertas.kruzintaitis24@gmail.com", 
-       clientId: config.get('clientId'),
-       clientSecret: config.get('clientSecret'),
-       refreshToken: config.get('refreshToken'),
-       accessToken: accessToken
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     type: "OAuth2",
+//        user: "albertas.kruzintaitis24@gmail.com", 
+//        clientId: config.get('clientId'),
+//        clientSecret: config.get('clientSecret'),
+//        refreshToken: config.get('refreshToken'),
+//        accessToken: accessToken
+//   },
+// });
 
 // @route    POST api/users
 // @desc     Register user

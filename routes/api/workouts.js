@@ -113,7 +113,7 @@ router.get('/', auth, async (req, res) => {
   const { size, page } = getPagingQuery(perPage - 1)
   try {
 
-    const workouts = await Workout.find().limit(size).skip(page * size).sort({ date: -1 }).populate('athlete');
+    const workouts = await Workout.find().limit(size).skip(page * size).sort({ date: -1 }).populate('user').populate('athlete').populate({ path: 'athlete', populate: { path: 'user'}});
     const workoutsCount = await Workout.countDocuments({});
     res.setHeader('x-total-count', workoutsCount)
     res.json(workouts);

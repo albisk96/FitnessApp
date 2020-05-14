@@ -3,31 +3,22 @@ import MemberList from '../users-table/workout-members-table.component';
 import Modal from '../modal/modal.component';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import Spinner from '../spinner/spinner.component';
 
-const WorkoutModal = () => {
+const WorkoutModal = ({ workout }) => {
     const [modalShow, setModalShow] = useState(false);
-    const [athlete, setAthlete] = useState();
-
-    useEffect(() => {
-        async function getCurrentProfile() {
-              const res = await axios.get('/api/coach/me')
-              setAthlete(res.data.workSchedule.workouts)
-          }
-          getCurrentProfile()
-       }, []) 
-
     return(
         <div>
-            <center>
+        <center>
                 <Button variant="link" onClick={() => setModalShow(true)}>View Members</Button>
-            </center>
+        </center>
             <Modal 
                 bodyStyle={{ padding: '0rem'}} containerStyle={{ padding: '0rem'}} 
                 show={modalShow} 
                 size="modal-90w" onHide={() => setModalShow(false)} 
                 title="Workout Information" 
-                component={<MemberList reservations={athlete} />
-        } />
+                component={<MemberList workout={workout} />} 
+            />
         </div>
     );
 }
