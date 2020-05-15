@@ -24,6 +24,7 @@ const CoachesList =() => {
 
     return(
     <div className="container">
+    <p style={{ color: 'red' }}>Credit card data for testing: 4242 4242 4242 4242 exp: 12/23 | 123</p>
     <Search />
     <CardColumns style={{ marginTop: '10%', columnCount: '4'}}>
            { coaches.map(coach => (

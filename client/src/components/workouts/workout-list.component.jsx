@@ -29,6 +29,7 @@ const openWorkouts = workouts.filter(x => new Date(x.when) - new Date > 0 && x.g
   return (
     <div className='container'>
       <div style={{ marginTop: '5%'}}>
+      <p style={{ color: 'red' }}>Credit card data for testing: 4242 4242 4242 4242 exp: 12/23 | 123</p>
       { workouts === null ? <Spinner /> : 
         <div>
           <CardColumnsContainer>
