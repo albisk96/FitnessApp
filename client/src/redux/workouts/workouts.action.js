@@ -1,5 +1,6 @@
 import WorkoutsActionTypes from './workouts.types';
 import axios from 'axios';
+import { alertActions } from '../alert/alert.actions'
 
 export function fetchWorkoutData() {
   return (dispatch) => {
@@ -9,7 +10,7 @@ export function fetchWorkoutData() {
         dispatch(fetchWorkoutsSuccess(workouts))
       })
       .catch(error => {
-      dispatch(WorkoutsFailure(error.message))
+        dispatch(alertActions.error('Cannot get profiles data'))
       })
   };
 };
@@ -20,9 +21,10 @@ export function createWorkout(formData) {
       .then(response => {
         const newWorkout = response.data
         dispatch(postWorkoutsSuccess(newWorkout))
+        dispatch(alertActions.success('Workout created!'))
       })
       .catch(error => {
-        dispatch(WorkoutsFailure(error.message))
+        dispatch(alertActions.error('Cannot get profiles data'))
       })
   };
 };
@@ -32,18 +34,19 @@ export const deleteWorkout = id => async dispatch => {
   try {
     await axios.delete(`/api/workouts/${id}`);
     dispatch(DeleteWorkoutSuccess(id));
+    dispatch(alertActions.success('Workout deleted!'))
     window.location.reload();
   } catch (error) {
-    dispatch(WorkoutsFailure(error.message))
+    dispatch(alertActions.error('Cannot get profiles data'))
   }
 };
 
 export const getWorkoutById = id => async dispatch => {
   try {
     const res = await axios.get(`/api/workouts/${id}`);
-    dispatch(dispatch(fetchWorkoutSuccess(res.data)));
+    await dispatch(dispatch(fetchWorkoutSuccess(res.data)));
   } catch (error) {
-    dispatch(dispatch(WorkoutsFailure(error.message)));
+    dispatch(alertActions.error('Cannot get profiles data'))
   }
 };
 

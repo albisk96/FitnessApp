@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getProfileSuccess, getProfilesSuccess, UpdateProfileSuccess, getProfileError, AddCommentSuccess,  RemoveCommentSuccess} from './profile.actions'
+import { alertActions } from '../alert/alert.actions'
 
 export function getCurrentProfile() {
     return (dispatch) => {
@@ -8,7 +9,7 @@ export function getCurrentProfile() {
           dispatch(getProfileSuccess(response.data))
         })
         .catch(error => {
-        dispatch(getProfileError(error.message))
+          dispatch(getProfileError(error.message))
         })
     };
   };
@@ -19,7 +20,7 @@ export const getProfiles = () => async dispatch => {
     const res = await axios.get('/api/coach');
     dispatch(getProfilesSuccess(res.data));
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Cannot get profiles data'))
   }
 };
 
@@ -29,7 +30,7 @@ export const getProfileById = (userId) => async dispatch => {
     const res = await axios.get(`/api/coach/user/${userId}`);
     dispatch(getProfileSuccess(res.data));
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Cannot get profiles data'))
   }
 };
   
@@ -39,9 +40,10 @@ export const getProfileById = (userId) => async dispatch => {
     try {  
       const res = await axios.post('/api/coach', formData);
       dispatch(getProfileSuccess(res.data));
+      dispatch(alertActions.success('Profile created!'))
       window.location.reload();
     } catch (error) { 
-      dispatch(getProfileError(error.message));
+      dispatch(alertActions.error('Cannot get profile data'))
     }
   };
 
@@ -50,9 +52,10 @@ export const addAchievments = (formData) => async dispatch => {
   try {
     const res = await axios.put('/api/coach/achievements', formData);
     dispatch(UpdateProfileSuccess(res.data));
+    dispatch(alertActions.success('Achievement added!'))
     window.location.reload();
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Something went wrong, please try again'))
   }
 };
 
@@ -62,9 +65,10 @@ export const addEducation = (formData) => async dispatch => {
 
     const res = await axios.put('/api/coach/education', formData);
     dispatch(UpdateProfileSuccess(res.data));
+    dispatch(alertActions.success('Education added!'))
     window.location.reload();
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Something went wrong, please try again'))
   }
 };
 
@@ -73,9 +77,10 @@ export const deleteAchievements = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/coach/achievements/${id}`);
     dispatch(UpdateProfileSuccess(res.data));
+    dispatch(alertActions.success('Achievement deleted!'))
     window.location.reload();
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Something went wrong, please try again'))
   }
 };
 
@@ -84,9 +89,10 @@ export const deleteEducation = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/coach/education/${id}`);
     dispatch(UpdateProfileSuccess(res.data));
+    dispatch(alertActions.success('Education deleted!'))
     window.location.reload();
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Something went wrong, please try again'))
   }
 };
 
@@ -96,8 +102,9 @@ export const addComment = (coachId, formData) => async dispatch => {
     const res = await axios.post(
       `/api/coach/comment/${coachId}`, formData);
     dispatch(AddCommentSuccess(res.data));
+    dispatch(alertActions.success('Comment added!'))
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Something went wrong, please try again'))
   }
 };
 
@@ -107,7 +114,8 @@ export const deleteComment = (coachId, commentId) => async dispatch => {
     await axios.delete(`/api/coach/comment/${coachId}/${commentId}`);
 
     dispatch(RemoveCommentSuccess(commentId));
+    dispatch(alertActions.success('Comment deleted!'))
   } catch (error) {
-    dispatch(getProfileError(error.message));
+    dispatch(alertActions.error('Something went wrong, please try again'))
   }
 };

@@ -8,13 +8,13 @@ import * as yup from 'yup';
 
 const CreateAthlete = ({ createProfile }) => {
     const schema = yup.object({
-        DOB: yup.string().required('Date of birth is required'),
+        DOB: yup.date().max(new Date()).min(new Date('01-01-1920')),
         gender: yup.string().required('Your gender is required'),
-        height: yup.string().required('Height is required'),
-        weight: yup.string().required('weight is required'),
-        neck: yup.number().required('neck is required'),
-        waist: yup.number().required('waist is required'),
-        hip: yup.number().required('hip is required'),
+        height: yup.number().required('Height is required').max(230).min(80),
+        weight: yup.number().required('weight is required').max(230).min(25),
+        neck: yup.number().required('neck is required').max(70).min(10),
+        waist: yup.number().required('waist is required').max(200).min(30),
+        hip: yup.number().required('hip is required').max(200).min(30),
       });
 
       const SubmitForm = (values) => {
@@ -71,7 +71,7 @@ const CreateAthlete = ({ createProfile }) => {
         </FormInput> 
         <FormInput
             name='height'
-            type='text'
+            type='number'
             label='Height in cm'
             id='height'
             error={touched.height && errors.height}
@@ -81,7 +81,7 @@ const CreateAthlete = ({ createProfile }) => {
         /> 
         <FormInput
             name='weight'
-            type='text'
+            type='number'
             label='Weight in kg'
             id='weight'
             error={touched.weight && errors.weight}
@@ -91,7 +91,7 @@ const CreateAthlete = ({ createProfile }) => {
             /> 
         <FormInput
             name='neck'
-            type='text'
+            type='number'
             label='Neck in cm'
             id='neck'
             error={touched.neck && errors.neck}
@@ -101,7 +101,7 @@ const CreateAthlete = ({ createProfile }) => {
         /> 
         <FormInput
             name='waist'
-            type='text'
+            type='number'
             label='Waist in cm'
             id='waist'
             error={touched.waist && errors.waist}
@@ -111,7 +111,7 @@ const CreateAthlete = ({ createProfile }) => {
         /> 
         <FormInput
             name='hip'
-            type='text'
+            type='number'
             label='Hip in cm'
             id='hip'
             error={touched.hip && errors.hip}

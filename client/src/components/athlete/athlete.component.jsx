@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
-import { JumboContainer, Center, Avatar, ProfileInfoContainer, StyledNav, BackgroundImage } from './athlete.styles'
+import { JumboContainer, Center, Avatar, ProfileInfoContainer, BackgroundImage } from './athlete.styles'
 import BmiData from '../charts/bmi.component';
 import BodyFat from '../charts/body-fat.component';
 import AdditionalData from '../charts/additional-data.component';
 import AthleteForm from '../athlete-form/athlete-create.component';
 import UpdateWeight from '../athlete-form/bmi-form.component';
 import BodyFatForm from '../athlete-form/bodyFat-form.component';
-import { Button, Tabs, Tab, Nav } from 'react-bootstrap';
+import { Tabs, Nav } from 'react-bootstrap';
 import ProfileInfo from './athlete-profile.component'
 import Trainings from './trainings.component';
 
@@ -32,7 +32,7 @@ const Athlete = ({ athlete: {athlete} }) => {
             <Center>
             <h1>BMI Data</h1>
             <div style={{ marginTop: '3%', marginBottom: '3%', width: '50%'}}>
-            <UpdateWeight />
+            <UpdateWeight athlete={athlete} />
             </div>
             <div>
               <BmiData bmi={athlete.bmi}/>
@@ -43,7 +43,7 @@ const Athlete = ({ athlete: {athlete} }) => {
             <Center>
             <h1>Body Data</h1>
             <div style={{ marginTop: '3%', marginBottom: '3%', width: '50%' }}>
-            <BodyFatForm />
+            <BodyFatForm athlete={athlete} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between'}}>
             <div style={{ width: '50%', margin: '1%'}}>

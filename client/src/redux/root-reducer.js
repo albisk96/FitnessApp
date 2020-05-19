@@ -5,6 +5,7 @@ import profileReducer from './profile/profile.reducer';
 import workoutsReducer from './workouts/workouts.reducer';
 import athleteReducer from './athlete/athlete.reducer';
 import exercisesReducer from './exercises/exercises.reducer';
+import alertReducer from './alert/alert.reducer';
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +18,7 @@ const rootReducer =  combineReducers({
   workout: workoutsReducer,
   athlete: athleteReducer,
   exercises: exercisesReducer,
+  alert: alertReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

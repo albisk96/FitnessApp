@@ -8,6 +8,16 @@ import Spinner from '../spinner/spinner.component';
 
 const Plan = ({ athlete: {athlete} }) => {
 
+    function calculateData(data){
+        if(data.length > 0){
+            return data[data.length - 1];
+        } else if (data){
+            return data;
+        } else {
+            return 'There is no data'
+        }
+    };
+
     return(
     <JumboContainer>
     <div className='container'>
@@ -20,17 +30,17 @@ const Plan = ({ athlete: {athlete} }) => {
             </div>
             <Accordion>
             {
-                athlete.workout !== null ? athlete.workoutPlan.map((plan, index) => (
+                athlete.workout !== null ? 
                 <Card style={{ border: '0px solid transparent' }}>
                 <Card.Header style={{ backgroundColor: '#343a40' }}>
-                <Accordion.Toggle as={Button} style={{ color: 'white' }} variant="link" eventKey={index}>
-                    {`Workout Number ${index + 1}`}
+                <Accordion.Toggle as={Button} style={{ color: 'white' }} variant="link" eventKey={1}>
+                    Workout Plan 
                 </Accordion.Toggle>
                 </Card.Header>
-                <Accordion.Collapse eventKey={index}>
+                <Accordion.Collapse eventKey={1}>
                 <Card.Body style={{ padding: '0'}}>
-                { plan.map(d => (
-                    <PlanTable day={d.day} exercises={d.exercises} workout={plan}/>
+                { calculateData(athlete.workoutPlan).map(d => (
+                    <PlanTable day={d.day} exercises={d.exercises} workout={calculateData(athlete.workoutPlan)}/>
                 ))
                     
                 }
@@ -38,7 +48,7 @@ const Plan = ({ athlete: {athlete} }) => {
                 </Card.Body>
                 </Accordion.Collapse>
                 </Card>
-                )) : <Spinner />
+                 : <Spinner />
             }
             </Accordion>
         </PlanContainer>

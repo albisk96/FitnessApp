@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
+import Spinner from '../components/spinner/spinner.component';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 
 const AuthContext = createContext({});
 
@@ -12,18 +14,20 @@ export function ProvideAuth({children}){
 }
 
 function useProvideAuth(){
+    const history = useHistory();
     const [session, setSession] = useState(JSON.parse(sessionStorage.getItem('session')) || null)
 
-    function createSession(session){
+    const createSession = session => {
         sessionStorage.setItem('session', JSON.stringify(session))
-
         setSession(session)
-        window.location.replace(`/${session.role}`)
+        history.push(`/${session.role}`)
+        
     }
 
-    function removeSession(){
+    const removeSession = () => {
         sessionStorage.removeItem('session')
         setSession(null)
+        history.push(`/`)
     }
 
     return {session, createSession, removeSession}

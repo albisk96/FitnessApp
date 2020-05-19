@@ -4,10 +4,12 @@ import FormInput from '../form/form-input.component';
 import { createProfile } from '../../redux/profile/api';
 import { FormContainer, SubmitButton, Center, JumboContainer } from '../profile-form/profile-form.styles';
 import { Formik, Form } from 'formik';
+import { compareAsc } from 'date-fns';
 import * as yup from 'yup';
 
 const CreateMyProfile = ({ createProfile }) => {
     const schema = yup.object({
+        DOB: yup.date().max(new Date()),
         bio: yup.string().required('Description is required'),
         skype: yup.string().required('Skype is required'),
         city: yup.string().required('City is required'),

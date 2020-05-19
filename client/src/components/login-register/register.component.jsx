@@ -10,7 +10,8 @@ const Register = ({ id }) => {
     const [password2, setPassword2] = useState('');
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
-    const [confirmed, setConfirmed] = useState('');
+    const [error, setError] = useState('');
+    //const [confirmed, setConfirmed] = useState('');
     const { session, createSession } = useAuth();
 
 
@@ -22,7 +23,7 @@ const Register = ({ id }) => {
                 setEmail(res.data.email)
                 setName(res.data.name)
                 setRole(res.data.role)
-                setConfirmed(res.data.confirmed)
+                //setConfirmed(res.data.confirmed)
             }
         ).catch(function(err){
             console.log(err)
@@ -37,14 +38,17 @@ const Register = ({ id }) => {
   function createUser(e){
     e.preventDefault();
     if(password !== password2){
-      window.alert('Password do not match')
+      setError('Passwords do not match')
     } else {
       axios.post('/api/users', {email, password, name, role}).then(
         res => {
           session && session.role === 'admin' ? window.location.reload() :
           createSession(res.data)
         }
-      )
+      ).catch(function(err){
+        setError('Something went wrong, please double check your information and try again')
+        setTimeout(() => setError(''), 5000)
+    })
     }
   }
     
@@ -103,6 +107,7 @@ const Register = ({ id }) => {
         label='Email'
         required
       /> 
+     
   {
     id === 'new' ? (
     <Fragment>
@@ -146,9 +151,15 @@ const Register = ({ id }) => {
   }
     <br />
     <button onClick={e => createUser(e)} type="submit" className="btn btn-primary">Submit</button> 
+    <center>
+      {error && <p style={{ color: 'red' }}>
+      {error}
+      </p>}
+    </center>
     </Fragment>
     ) :
     <button onClick={e => updateUser(e)} type="submit" className="btn btn-primary">Submit</button>
+
   }
   </Form>
     );

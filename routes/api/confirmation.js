@@ -19,16 +19,17 @@ router.get('/:id', async (req, res) => {
   
    module.exports = router;
 
-router.post('/confirmed/user/:id', async (req, res) => {
+router.post('/', async (req, res) => {
 
-  let userId = req.params.id;
-
+  let userId = req.body.id;
+  console.log(userId)
   let conditions = {
     _id : userId
   }
   let update = {
     confirmed: true
   }
+console.log('confirmed')
   try {
     const user = await User.findOneAndUpdate(conditions,update, {
       new: true

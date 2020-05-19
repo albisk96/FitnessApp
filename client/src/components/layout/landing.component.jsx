@@ -8,7 +8,7 @@ const Landing = ( ) => {
   const { session } = useAuth();
 
   if(session){
-      return <Redirect to='/dashboard' />
+      return <Redirect to={`/${session.role}`} />
   }
 
 
@@ -20,19 +20,19 @@ const Landing = ( ) => {
     </center>
       <TextDialogForAthlete>
       <h1>GET YOUR PERSONAL WORKOUT PLAN!</h1>
-      <p>
+      <div>
         Improve your skills and reach your goals!
         <br />
         <Chip>Lose Fat</Chip>
         <Chip>Gain Muscle</Chip>
         <Chip>Improve Strength</Chip>
-      </p>
+      </div>
       </TextDialogForAthlete>
     </ContainerOne>
     <ContainerTwo>
     <TextDialogForCoach>
       <h1>EVERY KIND OF WORKOUT</h1>
-      <p>
+      <div>
       From cardio and strength to yoga and boxing, we have the perfect workout for everyone!
         <br />
         <Chip>Crossfit</Chip>
@@ -41,7 +41,7 @@ const Landing = ( ) => {
         <Chip>Swimming</Chip>
         <Chip>Fitness</Chip>
         <Chip>Tennis</Chip>
-      </p>
+      </div>
     </TextDialogForCoach>
     </ContainerTwo>
     <ContainerThree>

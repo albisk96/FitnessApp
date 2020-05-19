@@ -13,8 +13,8 @@ const NavBar = () => {
 
     const CoachLinks = (
         <Nav className="mr-auto">
-            <LinkNav to='/profile'>Profile</LinkNav>
-            <LinkNav to='/coach'>Coaches</LinkNav>
+            <LinkNav to='/coach'>Profile</LinkNav>
+            <LinkNav to='/coaches'>Coaches</LinkNav>
             <LinkNav to='/coach/workouts'>Workouts</LinkNav>
             <button className="btn btn-outline-danger my-2 my-sm-0" onClick={removeSession} type="submit">Logout</button>
         </Nav>
@@ -27,9 +27,9 @@ const NavBar = () => {
 
     const UserLinks = (
         <Nav className="mr-auto">
-            <LinkNav to='/dashboard'>Dashboard</LinkNav>
+            <LinkNav to='/user'>Profile</LinkNav>
+            <Nav.Link href="/coaches">Coaches</Nav.Link>
             <LinkNav to='/exercises'>Exercises</LinkNav>
-            <Nav.Link href="/coach">Coaches</Nav.Link>
             <LinkNav to='/user/workouts'>Workouts</LinkNav>
             <LinkNav to='/plan'>Workout Plan</LinkNav>
             <button className="btn btn-outline-danger my-2 my-sm-0 mr-3" onClick={removeSession} type="submit">Logout</button>
@@ -64,7 +64,7 @@ const NavBar = () => {
         </Navbar.Collapse>
     </div>
     </Navbar>
-    <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Please login" component={<Login />} />
+    <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title="Please login" component={<Login modalShow={setModalShow} />} />
     </div>
 )}
 export default NavBar;

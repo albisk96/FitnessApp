@@ -32,6 +32,7 @@ const Profile = ({ profile: { profile }, workout: {workouts} }) => {
     // const myOpen = me.filter(x => new Date(x.when) - new Date > 0)
     // const coachOpen = coach.filter(x => new Date(x.when) - new Date > 0)
     const handleClick = () => setMore(!more);
+    console.log(profile)
     return(
         <div>
             { profile ?  

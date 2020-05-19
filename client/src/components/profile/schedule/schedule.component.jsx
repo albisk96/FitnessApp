@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
-
+import { alertActions } from '../../../redux/alert/alert.actions';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-
+import { useDispatch } from 'react-redux';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function TrainerSchedule() {
+  const dispatch = useDispatch();
   const [schedule, setSchedule] = useState({
     freeDays: TrainerSchedule.days.slice(5),
     workDays: 5,
@@ -19,7 +20,6 @@ function TrainerSchedule() {
   const [alert, setAlert] = useState('');
   useEffect(() => {
     setAlert('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedule.workDays, schedule.freeDays]);
 
 
@@ -57,8 +57,8 @@ function TrainerSchedule() {
       setSchedule({ ...schedule, freeDays: value });
     } else {
       setAlert(
-        `Galite pasirinkti tiktai ${7 -
-          schedule.workDays} laisvas dienas, norėdami pakeisti pašalinkite dieną`
+        `You can choose only ${7 -
+          schedule.workDays} free days`
       );
     }
   }
@@ -66,7 +66,7 @@ function TrainerSchedule() {
   function handeScheduleFormSubmit(e) {
     e.preventDefault();
     if (schedule.freeDays.length !== 7 - schedule.workDays) {
-      setAlert(`Turite pasirinkti ${7 - schedule.workDays} laisvas dienas`);
+      setAlert(`You must choose ${7 - schedule.workDays} free days`);
     } else {
       axios
         .put('/api/coach/schedule', {
@@ -79,9 +79,9 @@ function TrainerSchedule() {
           price: +schedule.price,
           
         })
-        .then(res => console.log(res))
+        .then(res => dispatch(alertActions.success('Work Schedule updated successfully!')))
         .catch(err => {
-          console.log(err.response.data.message);
+          dispatch(alertActions.error('Something went wrong, please try again!'));
         });
     }
   }
@@ -120,7 +120,7 @@ function TrainerSchedule() {
                 options={TrainerSchedule.days}
               />
               {alert && (
-                <Form.Text className="text-muted-alert">{alert}</Form.Text>
+                <Form.Text className="text-muted-alert" style={{ color: 'red' }}>{alert}</Form.Text>
               )}
             </Form.Group>
           )}

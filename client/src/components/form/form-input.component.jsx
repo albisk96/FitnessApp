@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Form, Col } from 'react-bootstrap';
 
 export const InputFeedback = ({ error }) =>

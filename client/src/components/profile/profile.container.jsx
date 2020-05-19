@@ -11,7 +11,6 @@ const mapStateToProps = createStructuredSelector({
     loading: selectProfilesIsFetching,
 });
 
-
 const ProfilePageContainer = compose (
     connect(mapStateToProps),
     WithSpinner

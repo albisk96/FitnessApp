@@ -4,14 +4,36 @@ import FormInput from '../form/form-input.component';
 import { bodyFat } from '../../redux/athlete/api';
 import { FormContainer, SubmitButton } from '../profile-form/profile-form.styles';
 import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 
-const bodyFatForm = ({ bodyFat }) => {
+const bodyFatForm = ({ bodyFat, athlete }) => {
+
+    function calculateData(data){
+
+        if(data.length > 0){
+            return data[data.length - 1];
+        } else if (data){
+            return data;
+        } else {
+            return 'There is no data'
+        }
+    };
+
+    const schema = yup.object({
+        height: yup.number().required('Height is required').max(230).min(80),
+        neck: yup.number().required('neck is required').max(70).min(10),
+        waist: yup.number().required('waist is required').max(200).min(30),
+        hip: yup.number().required('hip is required').max(200).min(30),
+      });
+
       const SubmitForm = (values) => {
+          console.log(values)
         bodyFat(values);
       };
 
   return (
     <Formik
+        validationSchema={schema}
         onSubmit={SubmitForm}
         initialValues={{
             gender: '',
@@ -34,20 +56,16 @@ const bodyFatForm = ({ bodyFat }) => {
             type='text'
             label='Gender'
             id='gender'
-            error={touched.gender && errors.gender}
-            value={values.gender}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            as='select'
+            value={athlete.gender}
+            disabled
         >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
         </FormInput> 
         <FormInput
             name='height'
-            type='text'
+            type='number'
             label='Height in cm'
             id='height'
+            placeholder={calculateData(athlete.height)}
             error={touched.height && errors.height}
             value={values.height}
             onChange={handleChange}
@@ -55,9 +73,10 @@ const bodyFatForm = ({ bodyFat }) => {
         /> 
         <FormInput
             name='neck'
-            type='text'
+            type='number'
             label='Neck in cm'
             id='neck'
+            placeholder={calculateData(athlete.neck)}
             error={touched.neck && errors.neck}
             value={values.neck}
             onChange={handleChange}
@@ -65,9 +84,10 @@ const bodyFatForm = ({ bodyFat }) => {
         /> 
         <FormInput
             name='waist'
-            type='text'
+            type='number'
             label='Waist in cm'
             id='waist'
+            placeholder={calculateData(athlete.waist)}
             error={touched.waist && errors.waist}
             value={values.waist}
             onChange={handleChange}
@@ -75,9 +95,10 @@ const bodyFatForm = ({ bodyFat }) => {
         /> 
         <FormInput
             name='hip'
-            type='text'
+            type='number'
             label='Hip in cm'
             id='hip'
+            placeholder={calculateData(athlete.hip)}
             error={touched.hip && errors.hip}
             value={values.hip}
             onChange={handleChange}
