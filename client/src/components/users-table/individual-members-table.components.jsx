@@ -6,8 +6,6 @@ import Moment from 'react-moment';
 
 const TableReservations = ({ workouts }) => {
     const [current, setCurrent] = useState()
-
-    console.log(workouts)
     useEffect(() => {
         async function getCurrentProfile() {
               const res = await axios.get('/api/coach/me')

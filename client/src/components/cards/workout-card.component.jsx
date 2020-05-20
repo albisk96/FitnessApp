@@ -18,7 +18,6 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
   const closed = (new Date(workout.when) - new Date < 0)
   //const reserved = reservations.workout !== workout._id
   const myWorkout = mySession ? workout.athlete : null
-  console.log(myWorkout)
   const myCard = !mySession ? 
   <StripeCheckoutButton workoutId={workout._id} coachId={workout.user._id} price={workout.price} /> 
   : closed ? 

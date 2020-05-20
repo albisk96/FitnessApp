@@ -4,7 +4,6 @@ import { CardColumnsContainer } from './workouts.styles';
 import Spinner from '../../components/spinner/spinner.component';
 
 const WorkoutList = ({ workouts }) => {
-  console.log(workouts)
   return (
     <div className='container'>
     { !workouts ?  <Spinner /> : workouts === [] ? <h3>No workouts yet</h3> :

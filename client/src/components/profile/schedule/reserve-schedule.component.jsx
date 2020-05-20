@@ -20,7 +20,7 @@ function Scheduler({ id, price }) {
           setSchedule({ ...schedule, ...res.data });
         })
         .catch(e => {
-          console.log('Klaida')
+          console.log('Error')
         });
     }
     getSchedule();
@@ -28,7 +28,7 @@ function Scheduler({ id, price }) {
 
   useEffect(() => {
     if (getMinutes(schedule.date) !== 0) {
-      console.log('Pasirinkite laiką');
+      console.log('Choose time');
     }
   }, [schedule.date]);
 

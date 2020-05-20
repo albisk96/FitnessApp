@@ -27,7 +27,6 @@ const bodyFatForm = ({ bodyFat, athlete }) => {
       });
 
       const SubmitForm = (values) => {
-          console.log(values)
         bodyFat(values);
       };
 
