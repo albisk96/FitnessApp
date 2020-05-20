@@ -11,7 +11,6 @@ const CreateMyProfile = ({ createProfile }) => {
     const schema = yup.object({
         DOB: yup.date().max(new Date()),
         bio: yup.string().required('Description is required'),
-        skype: yup.string().required('Skype is required'),
         city: yup.string().required('City is required'),
         gym: yup.string().required('Gym is required'),
       });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-const PlanTable = ({ workout, day, exercises }) => {
+const PlanTable = ({ day, exercises }) => {
     return(
         <div>
         <Table striped bordered hover>

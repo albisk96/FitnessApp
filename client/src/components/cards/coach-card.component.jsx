@@ -6,11 +6,9 @@ import Spinner from '../spinner/spinner.component';
 import { useAuth } from '../../contexts';
 
 const CoachCard = ({ coach: { 
-    user, city, bio, _id, workSchedule }
+    user, city, _id, workSchedule }
   }) => {
     const { session } = useAuth();
-    console.log(user._id)
-    console.log(session.id)
   return (
       workSchedule === null ? <Spinner /> :
       <CardContainer>

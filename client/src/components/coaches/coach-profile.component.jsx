@@ -15,7 +15,6 @@ const CoachProfile = ({ fetchWorkoutData, getProfileById, profile: {profile, loa
         fetchWorkoutData();
       }, [fetchWorkoutData]);
   
-    console.log(workout)
     return(
         <Fragment>
         {profile === null || loading ? (
