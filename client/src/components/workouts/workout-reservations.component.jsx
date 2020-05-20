@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MemberList from '../users-table/workout-members-table.component';
 import Modal from '../modal/modal.component';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
-import Spinner from '../spinner/spinner.component';
 
 const WorkoutModal = ({ workout }) => {
     const [modalShow, setModalShow] = useState(false);
