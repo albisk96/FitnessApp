@@ -3,7 +3,6 @@ import { Line, SocialNetworks } from './information.styles.jsx'
 import Moment from 'react-moment';
 
 const Information = ({ profile }) => {
-    const DateNow = Date.now
     return(
         <div>
         <p>Name</p>

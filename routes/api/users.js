@@ -205,4 +205,17 @@ router.put(
   }
 );
 
+// @route    Find api/user
+// @desc     Find user
+// @access   Private
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    await User.findByIdAndUpdate({ _id: req.params.id });
+    res.json({ msg: 'User deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

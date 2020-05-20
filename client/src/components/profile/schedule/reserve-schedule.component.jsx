@@ -49,13 +49,6 @@ function Scheduler({ id, price }) {
     [schedule.date]
   );
 
-  console.log(format(schedule.date, 'MM/dd/yyyy'))
-
-  //const timesColor = time => {
-    //console.log(excludedTimes);
-    // return
-  //};
-
   return (
     <center>
     <DatePicker
@@ -66,7 +59,6 @@ function Scheduler({ id, price }) {
       timeFormat="HH:mm"
       filterDate={filter}
       excludeTimes={excludedTimes}
-      //timeClassName={timesColor}
       minTime={setHours(
         setMinutes(new Date(), 0),
         (schedule.workHours && schedule.workHours.from) || 6

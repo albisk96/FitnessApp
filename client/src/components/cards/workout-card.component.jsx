@@ -25,12 +25,24 @@ const WorkoutCard = ({ deleteWorkout, workout }) => {
 
   return(
         <CardContainer>
-        <CardHeader>{workout.title} for {workout.price} €</CardHeader>
-          <CardBody>
-            <p className="card-text">{`Entries left: ${workout.entries}`}</p>
-            <p className="card-text">{workout.address}</p>
+        <CardHeader style={{ backgroundColor: 'white' }}>
+          {workout.title} 
+        </CardHeader>
+          <CardBody style={{ textAlign: 'center', display: 'flex', justifyContent: 'space-between'}}>
+            <div>
+              <i style={{ marginTop: '5%', fontSize: '2rem'}} className="fas fa-dumbbell"></i>
+            </div>
+            <div>
+              <p className="card-text">{`Entries left: ${workout.entries}`}</p>
+              <p className="card-text">{workout.address}</p>
+              <h3>{workout.price} <i style={{ fontSize: '1rem'}} className="fas fa-euro-sign"></i></h3>
+              
+            </div>
+            <div>
+              <i style={{ marginTop: '5%', fontSize: '2rem'}} className="fas fa-dumbbell"></i>
+            </div>
           </CardBody>
-          <CardFooter>
+          <CardFooter style={{ backgroundColor: 'white' }}>
             {workout.entries > 0 ? 
               <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                 <WorkoutModal workout={workout} size='modal-70w'/>

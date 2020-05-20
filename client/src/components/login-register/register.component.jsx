@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts';
 
 const Register = ({ id }) => {
 
+    const [validated, setValidated] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
@@ -37,9 +38,17 @@ const Register = ({ id }) => {
 
   function createUser(e){
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if(password !== password2){
       setError('Passwords do not match')
+    } else if (!role){
+      setError('Please select your role')
     } else {
+      setValidated(true);
       axios.post('/api/users', {email, password, name, role}).then(
         res => {
           session && session.role === 'admin' ? window.location.reload() :
@@ -86,7 +95,7 @@ const Register = ({ id }) => {
     )
 
   return (
-    <Form>
+    <Form noValidate validated={validated} >
     {session && session.role === 'admin' ?
       AdminForm : ''
     }
@@ -98,6 +107,9 @@ const Register = ({ id }) => {
         value={name}
         required
       />
+      <Form.Control.Feedback type="invalid">
+              Please choose a name.
+            </Form.Control.Feedback>
       <Form.Label>Email</Form.Label>
     <Form.Control
         name='email'
@@ -143,7 +155,7 @@ const Register = ({ id }) => {
         value={role} 
         onChange={e => setRole(e.target.value)}
     >
-        <option>Choose your system goal</option>
+        <option>Choose your role...</option>
         <option value="user">Athlete</option>
         <option value="coach">Trainer</option>
     </Form.Control>

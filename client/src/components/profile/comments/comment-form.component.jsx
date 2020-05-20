@@ -9,7 +9,7 @@ import * as yup from 'yup';
 const Login = ({ id, addComment }) => {
 
   const schema = yup.object({
-    text: yup.string().required('text is required'),
+    text: yup.string().required('text is required').max(100),
     stars: yup.string().required('Rating is required'),
   });
 

@@ -9,8 +9,8 @@ const PlanTable = ({ workout, day, exercises }) => {
             <tr>
                 <th>{day}</th>
                 <th>Minutes</th>
-                <th>Reps x Sets</th>
-
+                <th>Sets x Reps</th>
+                <th>Rest</th>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +26,11 @@ const PlanTable = ({ workout, day, exercises }) => {
                     x.min ? <td>{x.min}</td> : <td>{''}</td>
                 }
                 {
-                    x.reps ? <td>{x.reps} x {x.sets}</td> : 
+                    x.reps ? <td>{x.sets} x {x.reps}</td> : 
                     x.exercise.muscles === 'abdomen' ? <td> 3 x Max </td> : <td>{' '}</td>
+                }
+                {
+                    x.rest ? <td>{x.rest}sec.</td> : <td>{''}</td>
                 }
                 </tr>
             ))}  

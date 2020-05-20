@@ -10,7 +10,7 @@ import * as yup from 'yup';
 const UpdateAchievements = ({ addAchievments, achievements }) => {
 
       const schema = yup.object({
-        title: yup.string().required('title is required'),
+        title: yup.string().required('title is required').max(30),
         date: yup.string().required('date is required'),
       });
 

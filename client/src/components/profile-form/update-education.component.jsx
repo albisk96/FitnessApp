@@ -9,9 +9,9 @@ import * as yup from 'yup';
 
 const UpdateEducation = ({ addEducation, education }) => {
     const schema = yup.object({
-        school: yup.string().required('title is required'),
-        degree: yup.string().required('degree is required'),
-        fieldofstudy: yup.string().required('Field of Study is required'),
+        school: yup.string().required('title is required').max(30),
+        degree: yup.string().required('degree is required').max(20),
+        fieldofstudy: yup.string().required('Field of Study is required').max(30),
         from: yup.string().required('Date from is required'),
       });
 

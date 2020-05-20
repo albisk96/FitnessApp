@@ -9,12 +9,12 @@ import * as yup from 'yup';
 
 const AddWorkoutForm = ({ createWorkout }) => {
     const schema = yup.object({
-        title: yup.string().required('title is required'),
-        address: yup.string().required('address of Study is required'),
-        price: yup.string().required('price from is required'),
-        description: yup.string().required('Description is required'),
+        title: yup.string().required('title is required').max(30),
+        address: yup.string().required('address of Study is required').max(40),
+        price: yup.number().required('price from is required').max(200).min(1),
+        description: yup.string().required('Description is required').max(100),
         level: yup.string().required('level is required'),
-        entries: yup.string().required('entries is required'),
+        entries: yup.number().required('entries is required').min(2).max(100),
         when: yup.string().required('Date when it starts required'),
       });
 
@@ -88,7 +88,7 @@ const AddWorkoutForm = ({ createWorkout }) => {
         />
         <FormInput
             name='price'
-            type='text'
+            type='number'
             label='Price'
             id='price'
             error={touched.price && errors.price}
@@ -114,7 +114,7 @@ const AddWorkoutForm = ({ createWorkout }) => {
         </FormInput> 
         <FormInput
             name='entries'
-            type='text'
+            type='number'
             label='Entries'
             id='entries'
             error={touched.entries && errors.entries}
