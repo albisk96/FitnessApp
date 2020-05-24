@@ -133,7 +133,7 @@ const CoachSchema = new mongoose.Schema({
 });
 
 CoachSchema.pre('save', function() {
-  this.index = [this.city, this.bio].join(' ').toLowerCase()
+  this.index = [this.bio, this.city, this.social.facebook, this.skype].join(' ').toLowerCase()
 })
 
 module.exports = Coach = mongoose.model('coach', CoachSchema);

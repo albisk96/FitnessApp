@@ -34,7 +34,7 @@ const ExerciseSchema = new mongoose.Schema({
 });
 
 ExerciseSchema.pre('save', function() {
-    this.index = [this.muscles, this.name, this.exerciseType].join(' ').toLowerCase() || [this.name, this.muscles, this.exerciseType].join(' ').toLowerCase() || [this.exerciseType, this.muscles, this.name].join(' ').toLowerCase()
+    this.index = [this.exerciseType, this.muscles, this.name].join(' ').toLowerCase()
 })
 
 

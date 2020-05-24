@@ -5,10 +5,8 @@ import MembersListModal from '../workouts/workout-reservations.component';
 import StripeCheckoutButton from '../stripe-button/stripe-button.component';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../contexts';
-import { useSelector } from 'react-redux';
 import { deleteWorkout } from '../../redux/workouts/workouts.action';
-import { CardContainer, CardImage, CardBody, CardFooter, CardHeader } from './card.styles';
-import Spinner from '../spinner/spinner.component';
+import { CardContainer, CardBody, CardFooter, CardHeader } from './card.styles';
 
 const WorkoutCard = ({ deleteWorkout, workout }) => {
   const { session } = useAuth();

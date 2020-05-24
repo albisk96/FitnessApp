@@ -75,6 +75,7 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
                     WorkoutForOneDayGeneration(dailyExercises, k, 3) // Two muscles per day every two days 1 2 1 2
                 }
             } else {
+                GetAbsExercise(absExercises, dailyExercises) // abs
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
                     WorkoutForOneDayGeneration(dailyExercises, k, 6) // One muscle per day every two days 1 2 1 2
                 }
@@ -96,6 +97,7 @@ function GeneratePlan(athlete, exercise, daysPerWeek, level, goal){
                     WorkoutForOneDayGeneration(dailyExercises, k, 3) // in first workout day of the week - 2 muscles with 3 exercises per muscle
                 }
             } else {
+                GetAbsExercise(absExercises, dailyExercises) // abs
                 for(let k = 1; k <= 1; k++){ // How many muscles per day 
                     WorkoutForOneDayGeneration(dailyExercises, k, 6) // other days one muscle per week with 6 exercises per muscle
                 }

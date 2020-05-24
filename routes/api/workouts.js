@@ -170,6 +170,37 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+router.put('/:id',
+  async (req, res) => {
+
+    const {
+      title,
+      description,
+      address,
+      level,
+      entries,
+    } = req.body;
+
+    const newWorkout = {
+      title,
+      description,
+      address,
+      level,
+      entries
+    };
+
+    try {
+      await Workout.findOneAndUpdate(
+        {_id: req.params.id}, 
+        {...newWorkout});
+      res.sendStatus(204);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 
 
 module.exports = router;
