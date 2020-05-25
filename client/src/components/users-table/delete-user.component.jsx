@@ -12,7 +12,7 @@ const DeleteUser = ({ user_id }) =>{
     return(
         <div>
             <span onClick={() => deleteUser(user_id)} style={{fontSize: '20px', color: 'red' }}>
-                <i class="far fa-times-circle"></i>
+                <i className="far fa-times-circle"></i>
             </span>
         </div>
     )

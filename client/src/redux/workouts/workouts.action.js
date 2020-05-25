@@ -10,7 +10,7 @@ export function fetchWorkoutData() {
         dispatch(fetchWorkoutsSuccess(workouts))
       })
       .catch(error => {
-        dispatch(alertActions.error('Cannot get profiles data'))
+        dispatch(alertActions.error('Cannot get workouts data'))
       })
   };
 };
@@ -24,20 +24,21 @@ export function createWorkout(formData) {
         dispatch(alertActions.success('Workout created!'))
       })
       .catch(error => {
-        dispatch(alertActions.error('Cannot get profiles data'))
+        dispatch(alertActions.error('Cannot get workout data'))
       })
   };
 };
 
 // Delete workout
 export const deleteWorkout = id => async dispatch => {
+  console.log(id);
   try {
     await axios.delete(`/api/workouts/${id}`);
     dispatch(DeleteWorkoutSuccess(id));
     dispatch(alertActions.success('Workout deleted!'))
     window.location.reload();
   } catch (error) {
-    dispatch(alertActions.error('Cannot get profiles data'))
+    dispatch(alertActions.error('Cannot get workout data'))
   }
 };
 
@@ -46,7 +47,7 @@ export const getWorkoutById = id => async dispatch => {
     const res = await axios.get(`/api/workouts/${id}`);
     await dispatch(dispatch(fetchWorkoutSuccess(res.data)));
   } catch (error) {
-    dispatch(alertActions.error('Cannot get profiles data'))
+    dispatch(alertActions.error('Cannot get workout data'))
   }
 };
 

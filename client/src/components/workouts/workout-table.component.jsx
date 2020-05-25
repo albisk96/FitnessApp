@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import WorkoutCard from '../cards/workout-card.component';
 import Pagination from '../pagination/pagination';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { search } from '../../helpers/search';
-import { CardColumnsContainer } from './workouts.styles';
 import Spinner from '../../components/spinner/spinner.component';
 import { deleteWorkout } from '../../redux/workouts/workouts.action';
 import { Button } from 'react-bootstrap';

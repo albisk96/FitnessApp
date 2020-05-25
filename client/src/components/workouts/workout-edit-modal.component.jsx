@@ -9,7 +9,7 @@ const EditWorkouModal = ({ id }) =>{
         <div>
         <div style={{ justifyContent: 'space-between', marginLeft: '10px'}}> 
             <span onClick={() => setModalShow(true)} style={{fontSize: '20px', color: 'black' }}>
-                <i class="far fa-edit"></i>
+                <i className="far fa-edit"></i>
             </span>
         </div>
         <Modal show={modalShow} size="modal-50w" onHide={() => setModalShow(false)} title='Edit User' component={<EditWorkout id={id} />} />

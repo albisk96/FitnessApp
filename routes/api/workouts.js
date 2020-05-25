@@ -155,10 +155,6 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'workout not found' });
     }
 
-    // Check user
-    if (workout.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'User not authorized' });
-    }
 
     await workout.remove();
 
@@ -170,9 +166,8 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-router.put('/:id',
+router.put('/:id', auth,
   async (req, res) => {
-
     const {
       title,
       description,
