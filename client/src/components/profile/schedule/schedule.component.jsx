@@ -28,7 +28,7 @@ function TrainerSchedule() {
       const res = await axios.get('/api/coach/schedule');
       if (res.data) {
         setSchedule({
-          price: res.data.price || 1000,
+          price: res.data.price || 10,
           freeDays: res.data.freeDays
             .map(x => {
               const days = TrainerSchedule.days.filter(y => y.value === x);

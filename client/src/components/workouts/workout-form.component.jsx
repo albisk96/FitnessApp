@@ -12,7 +12,7 @@ const AddWorkoutForm = ({ createWorkout }) => {
         title: yup.string().required('title is required').max(30),
         address: yup.string().required('address of Study is required').max(40),
         price: yup.number().required('price from is required').max(200).min(1),
-        description: yup.string().required('Description is required').max(100),
+        description: yup.string().required('Description is required').max(200),
         level: yup.string().required('level is required'),
         entries: yup.number().required('entries is required').min(2).max(100),
         when: yup.string().required('Date when it starts required'),

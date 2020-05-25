@@ -186,7 +186,6 @@ router.put(
 
     try {
       const coach = await Coach.findOne({user: req.user.id}).populate('user')
-      console.log(coach)
       coach.achievements.push(newAch);
 
       await coach.save();
@@ -206,7 +205,6 @@ router.put(
 router.delete('/achievements/:ach_id', auth, async (req, res) => {
   try {
     const coach = await Coach.findOne({ user: req.user.id });
-    console.log(coach.achievements)
 
     coach.achievements = coach.achievements.filter(
       ach => ach._id.toString() !== req.params.ach_id

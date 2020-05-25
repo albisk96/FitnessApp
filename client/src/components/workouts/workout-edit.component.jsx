@@ -96,8 +96,10 @@ const Register = ({ id }) => {
         value={level} 
         onChange={e => setLevel(e.target.value)}
     >
-        <option value="beginner">beginner</option>
-        <option value="intermediate">intermediate</option>
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="expert">Expert</option>
+    <option value="all levels">All levels</option>
     </Form.Control>
 
     <button onClick={e => updateWorkout(e)} type="submit" className="btn btn-primary">Submit</button>

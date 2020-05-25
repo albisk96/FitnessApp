@@ -10,7 +10,6 @@ function Confirmation() {
     const { id } = useParams();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    console.log(id)
 
 
     useEffect(() => {

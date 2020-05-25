@@ -2,8 +2,6 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import Moment from 'react-moment';
-import axios from 'axios';
-import Spinner from '../spinner/spinner.component';
 
 const Trainings = () => {
     const { workouts } = useSelector(state => state.athlete.athlete);

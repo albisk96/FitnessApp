@@ -1,6 +1,5 @@
 import React from 'react';
 import Moment from 'react-moment';
-import { Line } from './athlete.styles'
 
 const ProfileInfo = ({ athlete: {height, weight, user, DOB} }) => {
 
