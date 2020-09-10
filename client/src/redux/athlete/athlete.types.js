@@ -1,0 +1,7 @@
+const AthleteActionTypes = {
+    GET_ATHLETE_SUCCESS: 'GET_ATHLETE_SUCCESS',
+    UPDATE_ATHLETE_SUCCESS: 'UPDATE_ATHLETE_SUCCESS',
+    GET_ATHLETE_ERROR: 'GET_ATHLETE_ERROR',
+};
+
+export default AthleteActionTypes;
